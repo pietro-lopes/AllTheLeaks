@@ -23,12 +23,12 @@ Mod is available on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/al
 After installation, the mod will automatically apply the memory fixes that are needed.
 
 ## 🤔 FAQ
-- *Will it increase my FPS?*
-  If you have plenty of memory, probably not.
-  But will certainly help stability, and for people with mid to low memory it will help a ton.
+- *Will it increase my FPS?*<br>
+  If you have plenty of memory, probably not.<br>
+  But will certainly help stability, and for people with mid to low memory it will help a ton.<br>
   *Stability, meaning it will be as smooth as you just logged in through your entire gaming session.*
-- *Does it run on server?*
-  Yes. There are some fixes that are common for server and clients.
+- *Does it run on server?*<br>
+  Yes. There are some fixes that are common for server and clients.<br>
 - *I am using this mod, but I am still having instability over time!*
   I'm developing a tool and guide to make it easier for players to detect leaks.
 
