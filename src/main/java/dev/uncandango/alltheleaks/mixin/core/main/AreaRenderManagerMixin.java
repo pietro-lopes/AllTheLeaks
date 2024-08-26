@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin;
+package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import me.desht.pneumaticcraft.client.render.area.AreaRenderManager;
@@ -30,7 +30,7 @@ public class AreaRenderManagerMixin {
 	private Map<BlockPos, AreaRenderer> showHandlers;
 
 	@Inject(method = "tickEnd", at = @At(value = "TAIL"))
-	private void atl$cleanUp(ClientTickEvent.Post event, CallbackInfo ci, @Local Player player){
+	private void atl$cleanUp(ClientTickEvent.Post event, CallbackInfo ci, @Local Player player) {
 		if (player == null && this.level != null) {
 			this.level = null;
 			if (this.cachedPositionProviderShowers != null) {

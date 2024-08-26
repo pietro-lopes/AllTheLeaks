@@ -1,7 +1,6 @@
-package dev.uncandango.alltheleaks.mixin;
+package dev.uncandango.alltheleaks.mixin.core.plugin;
 
 import dev.uncandango.alltheleaks.leaks.IssueManager;
-import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -23,7 +22,7 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
 //		if (mixinClassName.contains("NeoForgeServerSparkPluginMixin")) return true;
-		return IssueManager.getAllowedMixins().contains(mixinClassName.replace("dev.uncandango.alltheleaks.mixin.", ""));
+		return IssueManager.getAllowedMixins().contains(mixinClassName.replace("dev.uncandango.alltheleaks.mixin.core.", ""));
 	}
 
 	@Override

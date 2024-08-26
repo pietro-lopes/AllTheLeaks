@@ -1,14 +1,21 @@
 {
-  "required": true,
-  "package": "dev.uncandango.alltheleaks.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "minVersion": "0.8",
-  "client": [
-  ],
-  "mixins": [
-    "FakePlayerFactoryMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+	"required": true,
+	"package": "dev.uncandango.alltheleaks.mixin.core",
+	"plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
+	"compatibilityLevel": "JAVA_21",
+	"minVersion": "0.8",
+	"client": ["accessor.BaseScreenAccessor", "accessor.EntityComparatorAccessor", "main.AreaRenderManagerMixin", "main.EntityHelperMixin", "main.GeoArmorRendererMixin", "main.GeoModelMixin", "main.SearchOptionsMixin", "main.SpellSelectionManagerMixin"],
+	"mixins": [
+		"accessor.ChargeProviderImplAccessor",
+		"accessor.JourneymapAccessor",
+		"accessor.PlayerListAccessor",
+		"main.DroneEntityMixin",
+		"main.EntityTickListMixin",
+		"main.FakePlayerFactoryMixin",
+		"main.FakePlayerMixin",
+		"main.ServerPlayerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }

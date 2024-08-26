@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.accessor;
+package dev.uncandango.alltheleaks.mixin.core.accessor;
 
 import mods.railcraft.charge.ChargeNetworkImpl;
 import mods.railcraft.charge.ChargeProviderImpl;

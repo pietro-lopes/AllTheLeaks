@@ -15,8 +15,8 @@ import java.lang.invoke.MethodType;
 import java.lang.invoke.VarHandle;
 import java.util.Map;
 
-@Issue(modId = "neoforge", versionRange = "[21.,)")
-public class UntrackedIssue002 {
+@Issue(issueId = "#1486", modId = "neoforge", versionRange = "[21.,)")
+public class Issue1486 {
 	public static final VarHandle LISTENER_LIST;
 	public static final VarHandle REBUILD;
 	public static final MethodHandle GET_READ_MAP;
@@ -27,7 +27,7 @@ public class UntrackedIssue002 {
 		REBUILD = ReflectionHelper.getFieldFromClass(ListenerList.class, "rebuild", boolean.class, false);
 	}
 
-	public UntrackedIssue002() {
+	public Issue1486() {
 		var gameBus = NeoForge.EVENT_BUS;
 		gameBus.addListener(EventPriority.LOWEST, this::rebuildListenersCache);
 	}

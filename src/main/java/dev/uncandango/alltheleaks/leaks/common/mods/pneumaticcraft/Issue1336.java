@@ -1,25 +1,30 @@
 package dev.uncandango.alltheleaks.leaks.common.mods.pneumaticcraft;
 
+import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
-import dev.uncandango.alltheleaks.mixin_extensions.EventKey;
-import me.desht.pneumaticcraft.common.drone.IDroneBase;
-import me.desht.pneumaticcraft.common.entity.drone.AbstractDroneEntity;
-import me.desht.pneumaticcraft.common.entity.drone.DroneEntity;
+import dev.uncandango.alltheleaks.mixin.EventKey;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 
-@Issue(modId = "pneumaticcraft", versionRange = "(,8.0.3]", mixins = "DroneEntityMixin")
-public class UntrackedIssue001 {
+@Issue(issueId = "#1336", modId = "pneumaticcraft", versionRange = "(,8.0.3]", mixins = "main.DroneEntityMixin")
+public class Issue1336 {
 
-	public UntrackedIssue001() {
+	public Issue1336() {
 		var gameBus = NeoForge.EVENT_BUS;
 		gameBus.addListener(this::unregisterDrones);
 	}
 
-	private void unregisterDrones(EntityLeaveLevelEvent event){
-		if (event.getEntity().level().isClientSide()) return;
+	private void unregisterDrones(EntityLeaveLevelEvent event) {
+		if (event.getEntity().level().isClientSide()) {
+			return;
+		}
 		if (event.getEntity() instanceof EventKey obj) {
-			NeoForge.EVENT_BUS.unregister(obj.atl$getKeyMap().get("onSemiblockEvent"));
+			var key = obj.atl$getKeyMap().get("onSemiblockEvent");
+			if (key != null) {
+				NeoForge.EVENT_BUS.unregister(key);
+			} else {
+				AllTheLeaks.LOGGER.warn("Event Registry key not found for entity {}", obj);
+			}
 		}
 	}
 }

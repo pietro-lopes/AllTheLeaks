@@ -35,7 +35,7 @@ displayName = "${mod_name}" #mandatory
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="examplemod.png" #optional
+logoFile = "icon.png" #optional
 
 # A text field displayed in the mod UI
 #credits="" #optional
@@ -82,6 +82,24 @@ modId = "minecraft"
 type = "required"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "irons_spellbooks"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${iss_version_range}"
+reason = "Update mod above for latest fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "railcraft"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${railcraft_version_range}"
+reason = "Update mod above for latest fixes!"
 ordering = "NONE"
 side = "BOTH"
 

@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin_extensions;
+package dev.uncandango.alltheleaks.mixin;
 
 import java.util.Map;
 import java.util.function.Consumer;

@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin;
+package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,12 +21,12 @@ public class SpellSelectionManagerMixin {
 	private Player player;
 
 	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lio/redspace/ironsspellbooks/api/magic/SpellSelectionManager;init(Lnet/minecraft/world/entity/player/Player;)V"))
-	private void atl$clearPlayer(Player player, CallbackInfo ci){
+	private void atl$clearPlayer(Player player, CallbackInfo ci) {
 		this.player = null;
 	}
 
 	@WrapOperation(method = {"init", "makeLocalSelection", "setSpellSelection"}, at = @At(value = "FIELD", target = "Lio/redspace/ironsspellbooks/api/magic/SpellSelectionManager;player:Lnet/minecraft/world/entity/player/Player;"))
-	private Player atl$replacePlayer(SpellSelectionManager instance, Operation<Player> original){
+	private Player atl$replacePlayer(SpellSelectionManager instance, Operation<Player> original) {
 		return Minecraft.getInstance().player;
 	}
 }

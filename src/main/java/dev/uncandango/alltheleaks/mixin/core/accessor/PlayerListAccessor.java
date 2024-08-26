@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.accessor;
+package dev.uncandango.alltheleaks.mixin.core.accessor;
 
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.players.PlayerList;

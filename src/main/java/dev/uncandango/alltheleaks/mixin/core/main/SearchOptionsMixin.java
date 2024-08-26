@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin;
+package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -23,17 +23,17 @@ public class SearchOptionsMixin {
 	private Player player;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
-	private void atl$clearPlayer(IGuiScreen screen, SearchClientHandler upgradeHandler, CallbackInfo ci){
+	private void atl$clearPlayer(IGuiScreen screen, SearchClientHandler upgradeHandler, CallbackInfo ci) {
 		player = null;
 	}
 
 	@WrapOperation(method = "populateGui", at = @At(value = "FIELD", target = "Lme/desht/pneumaticcraft/client/gui/pneumatic_armor/options/SearchOptions;player:Lnet/minecraft/world/entity/player/Player;"))
-	private Player atl$redirectPlayer(SearchOptions instance, Operation<Player> original){
+	private Player atl$redirectPlayer(SearchOptions instance, Operation<Player> original) {
 		return Minecraft.getInstance().player;
 	}
 
 	@WrapOperation(method = "openSearchGui", at = @At(value = "FIELD", target = "Lme/desht/pneumaticcraft/client/gui/pneumatic_armor/options/SearchOptions;player:Lnet/minecraft/world/entity/player/Player;"))
-	private Player atl$redirectPlayer2(SearchOptions instance, Operation<Player> original){
+	private Player atl$redirectPlayer2(SearchOptions instance, Operation<Player> original) {
 		return Minecraft.getInstance().player;
 	}
 }
