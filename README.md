@@ -1,7 +1,6 @@
-<div align="center">
-    <a href="https://www.curseforge.com/minecraft/mc-mods/altheleaks"><img src="https://raw.githubusercontent.com/pietro-lopes/AllTheLeaks/1.21.x/src/main/resources/icon.png" width=100></a>
-    <br><font size="6"><strong>AllTheLeaks</strong></font>
-</div>
+<img src="https://raw.githubusercontent.com/pietro-lopes/AllTheLeaks/1.21.x/src/main/resources/icon.png" width=100>
+
+# AllTheLeaks
 
 ## 📰 Introduction
 This mod is designed to fix various memory leaks from mods, Minecraft and (Neo)Forge.
