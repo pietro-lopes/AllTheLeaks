@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "dev.uncandango.alltheleaks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "FakePlayerFactoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
