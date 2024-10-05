@@ -1,37 +1,12 @@
 {
-  "required": true,
-  "package": "dev.uncandango.alltheleaks.mixin.core",
-  "plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
-  "compatibilityLevel": "JAVA_21",
-  "minVersion": "0.8",
-  "client": [
-    "accessor.BaseScreenAccessor",
-    "accessor.CustomItemRendererAccessor",
-    "accessor.EntityComparatorAccessor",
-    "main.AreaRenderManagerMixin",
-    "main.CullTaskMixin",
-    "main.EntityHelperMixin",
-    "main.GeoArmorRendererMixin",
-    "main.GeoModelMixin",
-    "main.SearchOptionsMixin",
-		"accessor.RecipeTransferManagerAccessor",
-    "main.SpellSelectionManagerMixin"
-  ],
-  "mixins": [
-    "accessor.ChargeProviderImplAccessor",
-    "accessor.JourneymapAccessor",
-    "accessor.PlayerListAccessor",
-    "main.CasterTomeRegistryMixin",
-    "main.DroneEntityMixin",
-    "main.EntityTickListMixin",
-    "main.FakePlayerFactoryMixin",
-    "main.FakePlayerMixin",
-    "main.FTBQuestsEventHandlerMixin",
-    "main.LootrMixin",
-    "main.PlayerDataMixin",
-    "main.ServerPlayerMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
+	"required": true,
+	"package": "dev.uncandango.alltheleaks.mixin.core",
+	"plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
+	"compatibilityLevel": "JAVA_21",
+	"minVersion": "0.8",
+	"client": ["accessor.BaseScreenAccessor", "accessor.CustomItemRendererAccessor", "accessor.MobLootRecipeAccessor", "accessor.EntityComparatorAccessor", "accessor.EntityEmiStackAccessor", "accessor.RecipeTransferManagerAccessor", "main.AreaRenderManagerMixin", "main.CullTaskMixin", "main.EntityHelperMixin", "main.GeoArmorRendererMixin", "main.GeoModelMixin", "main.SearchOptionsMixin", "main.SpellSelectionManagerMixin"],
+	"mixins": ["accessor.ChargeProviderImplAccessor", "accessor.JourneymapAccessor",  "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.DroneEntityMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.LootrMixin", "main.PlayerDataMixin", "main.ServerPlayerMixin"],
+	"injectors": {
+		"defaultRequire": 1
 	}
 }

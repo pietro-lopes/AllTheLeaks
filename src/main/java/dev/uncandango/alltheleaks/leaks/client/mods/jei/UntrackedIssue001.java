@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import mezz.jei.common.Internal;
 
-@Issue(modId = "jei", versionRange = "[19.19.6.236,)", mixins = "accessor.RecipeTransferManagerAccessor")
+@Issue(modId = "jei", versionRange = "[19.19.5.232,)", mixins = "accessor.RecipeTransferManagerAccessor")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

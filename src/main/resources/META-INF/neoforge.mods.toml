@@ -131,15 +131,6 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${ mod_id }]]
-modId = "jei"
-type = "incompatible"
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "${jei_version_range}"
-reason = "Update mod above to include latest memory leak fixes!"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.${ mod_id }]]
 modId = "pneumaticcraft"
 type = "incompatible"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
