@@ -17,23 +17,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = SearchOptions.class, remap = false)
 public class SearchOptionsMixin {
-	@Mutable
-	@Shadow
-	@Final
-	private Player player;
-
-	@Inject(method = "<init>", at = @At("RETURN"))
-	private void atl$clearPlayer(IGuiScreen screen, SearchClientHandler upgradeHandler, CallbackInfo ci) {
-		player = null;
-	}
-
-	@WrapOperation(method = "populateGui", at = @At(value = "FIELD", target = "Lme/desht/pneumaticcraft/client/gui/pneumatic_armor/options/SearchOptions;player:Lnet/minecraft/world/entity/player/Player;"))
-	private Player atl$redirectPlayer(SearchOptions instance, Operation<Player> original) {
-		return Minecraft.getInstance().player;
-	}
-
-	@WrapOperation(method = "openSearchGui", at = @At(value = "FIELD", target = "Lme/desht/pneumaticcraft/client/gui/pneumatic_armor/options/SearchOptions;player:Lnet/minecraft/world/entity/player/Player;"))
-	private Player atl$redirectPlayer2(SearchOptions instance, Operation<Player> original) {
-		return Minecraft.getInstance().player;
-	}
+//	@Mutable
+//	@Shadow
+//	@Final
+//	private Player player;
+//
+//	@Inject(method = "<init>", at = @At("RETURN"))
+//	private void atl$clearPlayer(IGuiScreen screen, SearchClientHandler upgradeHandler, CallbackInfo ci) {
+//		player = null;
+//	}
+//
+//	@WrapOperation(method = "populateGui", at = @At(value = "FIELD", target = "Lme/desht/pneumaticcraft/client/gui/pneumatic_armor/options/SearchOptions;player:Lnet/minecraft/world/entity/player/Player;"))
+//	private Player atl$redirectPlayer(SearchOptions instance, Operation<Player> original) {
+//		return Minecraft.getInstance().player;
+//	}
+//
+//	@WrapOperation(method = "openSearchGui", at = @At(value = "FIELD", target = "Lme/desht/pneumaticcraft/client/gui/pneumatic_armor/options/SearchOptions;player:Lnet/minecraft/world/entity/player/Player;"))
+//	private Player atl$redirectPlayer2(SearchOptions instance, Operation<Player> original) {
+//		return Minecraft.getInstance().player;
+//	}
 }

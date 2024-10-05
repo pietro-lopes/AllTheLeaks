@@ -19,24 +19,24 @@ import java.util.Map;
 
 @Mixin(value = AreaRenderManager.class, remap = false)
 public class AreaRenderManagerMixin {
-	@Shadow
-	private Level level;
-
-	@Shadow
-	private List<AreaRenderer> cachedPositionProviderShowers;
-
-	@Shadow
-	@Final
-	private Map<BlockPos, AreaRenderer> showHandlers;
-
-	@Inject(method = "tickEnd", at = @At(value = "TAIL"))
-	private void atl$cleanUp(ClientTickEvent.Post event, CallbackInfo ci, @Local Player player) {
-		if (player == null && this.level != null) {
-			this.level = null;
-			if (this.cachedPositionProviderShowers != null) {
-				this.cachedPositionProviderShowers.clear();
-			}
-			showHandlers.clear();
-		}
-	}
+//	@Shadow
+//	private Level level;
+//
+//	@Shadow
+//	private List<AreaRenderer> cachedPositionProviderShowers;
+//
+//	@Shadow
+//	@Final
+//	private Map<BlockPos, AreaRenderer> showHandlers;
+//
+//	@Inject(method = "tickEnd", at = @At(value = "TAIL"))
+//	private void atl$cleanUp(ClientTickEvent.Post event, CallbackInfo ci, @Local Player player) {
+//		if (player == null && this.level != null) {
+//			this.level = null;
+//			if (this.cachedPositionProviderShowers != null) {
+//				this.cachedPositionProviderShowers.clear();
+//			}
+//			showHandlers.clear();
+//		}
+//	}
 }

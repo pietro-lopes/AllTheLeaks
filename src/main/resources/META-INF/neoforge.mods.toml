@@ -90,7 +90,7 @@ modId = "irons_spellbooks"
 type = "incompatible"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange = "${iss_version_range}"
-reason = "Update mod above for latest fixes!"
+reason = "Update mod above to include latest memory leak fixes!"
 ordering = "NONE"
 side = "BOTH"
 
@@ -99,7 +99,52 @@ modId = "railcraft"
 type = "incompatible"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange = "${railcraft_version_range}"
-reason = "Update mod above for latest fixes!"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "geckolib"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${geckolib_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "entityculling"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${entityculling_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "dummmmmmy"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${dummmmmmy_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "jei"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${jei_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "pneumaticcraft"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${pneumaticcraft_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
 ordering = "NONE"
 side = "BOTH"
 

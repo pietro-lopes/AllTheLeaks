@@ -4,7 +4,7 @@ plugins {
     java
     idea
     `maven-publish`
-    id("net.neoforged.moddev") version "2.0.16-beta"
+    id("net.neoforged.moddev") version "2.0.33-beta"
 }
 
 val minecraftVersion: String by project
@@ -23,6 +23,11 @@ val modAuthors: String by project
 val modDescription: String by project
 val issVersionRange: String by project
 val railcraftVersionRange: String by project
+val geckolibVersionRange: String by project
+val entityCullingVersionRange: String by project
+val dummmmmmyVersionRange: String by project
+val jeiVersionRange: String by project
+val pneumaticcraftVersionRange: String by project
 
 repositories {
     mavenLocal()
@@ -98,18 +103,33 @@ sourceSets {
 }
 
 dependencies {
-    // Shame! 🔔
-    val journeymap = "curse.maven:journeymap-32274:5616349" // "1.21-6.0.0-beta.20"
+    // Here we go
+    val journeymap = "curse.maven:journeymap-32274:5772123" // "1.21-6.0.0-beta.26"
     val railcraft = "curse.maven:railcraft-reborn-901491:5650759" // "1.2.2"
-    val spark = "curse.maven:spark-361579:5622205" // "1.10.97-neoforge"
-    val pnmc = "curse.maven:pneumaticcraft-repressurized-281849:5619556" // "8.0.3"
-    val iss = "curse.maven:irons-spells-n-spellbooks-855414:5659880" // "1.21-3.4.5"
-    val geckolib = "1.21:4.5.8"
+    val spark = "curse.maven:spark-361579:5759671" // "1.10.109-neoforge"
+    val pnmc = "curse.maven:pneumaticcraft-repressurized-281849:5776294" // "8.1.4"
+    val iss = "curse.maven:irons-spells-n-spellbooks-855414:5769235" // "1.21-3.7.1"
+    val geckolib = "1.21.1:4.6.6"
     val mousetweaks = "curse.maven:mouse-tweaks-60089:5637846" // 2.26.1
-    val ftblibrary = "curse.maven:ftb-library-forge-404465:5634888" // 2101.1.1
+    val ftblibrary = "curse.maven:ftb-library-forge-404465:5754910" // 2101.1.3
     val jade = "curse.maven:jade-324717:5639932" // 15.1.8+neoforge
-    val enderman = "curse.maven:enderman-overhaul-574409:5518192" //
-
+    val entityCullingCompile = "blank:entityculling:neoforge-1.6.7-mc1.21" // 1.6.7
+    val entityCullingRuntime = "blank:entityculling:neoforge-1.7.0-mc1.21" // 1.7.0
+    val evilcraft = "curse.maven:evilcraft-74610:5776798" // 1.2.58
+    val mekanism = "curse.maven:mekanism-268560:5680395" // 10.7.7.64
+    val easyvillager = "curse.maven:easy-villagers-400514:5724571" // 1.1.23
+    val iceberg = "curse.maven:iceberg-520110:5750025" // 1.2.8
+    val findme = "curse.maven:findme-291936:5511906" // 3.3.1
+    val ars = "curse.maven:ars-nouveau-401955:5721123" // 5.1.0
+    val ftbquests = "curse.maven:ftb-quests-forge-289412:5635133" // 2101.1.0
+    val securitycraft = "curse.maven:security-craft-64760:5655403" // 1.9.10-beta9
+    val lootr = "curse.maven:lootr-361276:5709012" // 10.33.82
+    val dummmmmmy = "curse.maven:mmmmmmmmmmmm-225738:5779508" // 1.21-2.0.6
+    val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
+    val etf = "curse.maven:entity-texture-features-fabric-568563:5734430" // entity_texture_features_neoforge_1.21-6.2.5.jar
+    val emf = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
+    val sereneSeasons = "curse.maven:serene-seasons-291874:5753503" // SereneSeasons-neoforge-1.21.1-10.1.0.1.jar
+    val connectivity = "curse.maven:connectivity-470193:5728632" // connectivity-1.21-5.8.jar
 
     // Required
     compileOnly(journeymap)
@@ -121,7 +141,22 @@ dependencies {
     compileOnly("software.bernie.geckolib:geckolib-neoforge-${geckolib}")
     compileOnly(ftblibrary)
     compileOnly(jade)
-    compileOnly(enderman)
+    compileOnly(entityCullingCompile)
+    compileOnly(evilcraft)
+    compileOnly(mekanism)
+    compileOnly(easyvillager)
+    compileOnly(iceberg)
+    compileOnly(findme)
+    compileOnly(ars)
+    compileOnly(ftbquests)
+    compileOnly(securitycraft)
+    compileOnly(lootr)
+    compileOnly(dummmmmmy)
+    compileOnly(jei)
+    compileOnly(etf)
+    compileOnly(emf)
+    compileOnly(sereneSeasons)
+    compileOnly(connectivity)
 
     // Testing at runtime
     runtimeOnly(journeymap)
@@ -133,16 +168,38 @@ dependencies {
     runtimeOnly("software.bernie.geckolib:geckolib-neoforge-${geckolib}")
     runtimeOnly(ftblibrary)
     runtimeOnly(jade)
-    runtimeOnly(enderman)
+    runtimeOnly(entityCullingRuntime)
+    runtimeOnly(evilcraft)
+    runtimeOnly(mekanism)
+    runtimeOnly(easyvillager)
+    runtimeOnly(iceberg)
+    runtimeOnly(findme)
+    runtimeOnly(ars)
+    runtimeOnly(ftbquests)
+    runtimeOnly(securitycraft)
+    runtimeOnly(lootr)
+    runtimeOnly(dummmmmmy)
+    runtimeOnly(jei)
+    runtimeOnly(etf)
+    runtimeOnly(emf)
+    runtimeOnly(sereneSeasons)
+    runtimeOnly(connectivity)
 
-    // Dependencies
+    // Dependencies for runtime
     runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar
     runtimeOnly("curse.maven:adorned-1036809:5652826") // curios-neoforge-9.1.2+1.21.0.jar
     runtimeOnly("curse.maven:architectury-api-419699:5553800") // architectury-13.0.6-neoforge.jar
     runtimeOnly("curse.maven:resourceful-lib-570073:5483169") // resourcefullib-neoforge-1.21-3.0.9.jar
     runtimeOnly("curse.maven:resourceful-config-714059:5548748") // resourcefulconfig-neoforge-1.21-3.0.3.jar
+    runtimeOnly("curse.maven:cyclops-core-232758:5666110") // cyclopscore-1.21.1-neoforge-1.20.5-581.jar
+    runtimeOnly("curse.maven:ftb-teams-forge-404468:5631446") // ftb-teams-neoforge-2101.1.0.jar
+    runtimeOnly("curse.maven:playeranimator-658587:5698755") // player-animation-lib-forge-2.0.0-alpha1+1.21.jar
+    runtimeOnly("curse.maven:selene-499980:5764367")
+    runtimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
+    runtimeOnly("curse.maven:cupboard-326652:5570763") // cupboard-1.21-2.8.jar
 
-    runtimeOnly("blank:leakdiagtool:1.0.0")
+    // LeakDiagTool
+    runtimeOnly("blank:leakdiagtool:0.0.1-beta")
 }
 
 tasks {
@@ -160,7 +217,12 @@ tasks {
             "mod_authors" to modAuthors,
             "mod_description" to modDescription,
             "iss_version_range" to issVersionRange,
-            "railcraft_version_range" to railcraftVersionRange
+            "railcraft_version_range" to railcraftVersionRange,
+            "geckolib_version_range" to geckolibVersionRange,
+            "entityculling_version_range" to entityCullingVersionRange,
+            "dummmmmmy_version_range" to dummmmmmyVersionRange,
+            "jei_version_range" to jeiVersionRange,
+            "pneumaticcraft_version_range" to pneumaticcraftVersionRange
         )
 
         inputs.properties(replaceProperties)

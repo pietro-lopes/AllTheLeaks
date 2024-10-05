@@ -6,7 +6,7 @@ import dev.uncandango.alltheleaks.mixin.EventKey;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 
-@Issue(issueId = "#1336", modId = "pneumaticcraft", versionRange = "(,8.0.3]", mixins = "main.DroneEntityMixin")
+@Issue(issueId = "#1336", modId = "pneumaticcraft", versionRange = "(,8.1.0]", mixins = "main.DroneEntityMixin")
 public class Issue1336 {
 
 	public Issue1336() {
