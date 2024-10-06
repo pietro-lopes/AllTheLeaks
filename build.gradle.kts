@@ -132,6 +132,7 @@ dependencies {
     val connectivity = "curse.maven:connectivity-470193:5728632" // connectivity-1.21-5.8.jar
     val emi = "curse.maven:emi-580555:5769216" // emi-1.1.14+1.21.1+neoforge.jar
     val emiLoot = "curse.maven:emi-loot-681783:5760220" // emi_loot-0.7.4+1.21+neoforge.jar
+    val minecolonies = "curse.maven:minecolonies-245506:5734626" // minecolonies-1.1.701-1.21.1-snapshot.jar
 
     // Required
     compileOnly(journeymap)
@@ -161,6 +162,7 @@ dependencies {
     compileOnly(connectivity)
     compileOnly(emi)
     compileOnly(emiLoot)
+    compileOnly(minecolonies)
 
     // Testing at runtime
     runtimeOnly(journeymap)
@@ -190,6 +192,7 @@ dependencies {
     runtimeOnly(connectivity)
 //    runtimeOnly(emi)
 //    runtimeOnly(emiLoot)
+    runtimeOnly(minecolonies)
 
     // Dependencies for runtime
     runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar
@@ -205,7 +208,11 @@ dependencies {
     runtimeOnly("curse.maven:cupboard-326652:5570763") // cupboard-1.21-2.8.jar
     runtimeOnly("curse.maven:fzzy-config-1005914:5778237") // fzzy_config-0.5.1+1.20.6+neoforge.jar
     runtimeOnly("curse.maven:kotlin-for-forge-351264:5611971") // kotlinforforge-5.5.0-all.jar
-
+    runtimeOnly("curse.maven:blockui-522992:5782223") // blockui-1.0.192-1.21.1-snapshot.jar
+    runtimeOnly("curse.maven:domum-ornamentum-527361:5764083") // domum_ornamentum-1.0.204-1.21.1-snapshot.jar
+    runtimeOnly("curse.maven:multi-piston-303278:5783614") // multipiston-1.2.51-1.21.1-snapshot.jar
+    runtimeOnly("curse.maven:structurize-298744:5761666") // structurize-1.0.752-1.21.1-snapshot.jar
+    runtimeOnly("curse.maven:towntalk-900364:5653504") // towntalk-1.2.0.jar
 
     // LeakDiagTool
     runtimeOnly("blank:leakdiagtool:0.0.1-beta")
