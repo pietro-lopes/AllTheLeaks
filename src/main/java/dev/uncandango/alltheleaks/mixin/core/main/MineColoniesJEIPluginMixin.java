@@ -14,6 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MineColoniesJEIPluginMixin {
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void grabInstance(CallbackInfo ci){
-		Issue10302.MineColoniesJEIPlugin = (IModPlugin) this;
+		Issue10302.mineColoniesJEIPlugin = (IModPlugin) this;
 	}
 }

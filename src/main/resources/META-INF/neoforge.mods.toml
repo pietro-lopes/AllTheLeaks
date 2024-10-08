@@ -139,6 +139,24 @@ reason = "Update mod above to include latest memory leak fixes!"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.${ mod_id }]]
+modId = "ambientsounds"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${ambientsounds_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "occultism"
+type = "incompatible"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${occultism_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
+
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.

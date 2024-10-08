@@ -13,7 +13,6 @@ import dev.uncandango.alltheleaks.mixin.core.accessor.MineColoniesJEIPluginAcces
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.runtime.IJeiRuntime;
 import mezz.jei.common.Internal;
-import mezz.jei.library.runtime.JeiRuntime;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.neoforged.fml.ModList;
@@ -24,10 +23,10 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Issue(modId = "minecolonies", issueId = "#10302", versionRange = "[1.1.701,1.1.723]", mixins = {"main.MineColoniesJEIPluginMixin", "accessor.MineColoniesJEIPluginAccessor", "accessor.JobBasedRecipeCategoryAccessor", "accessor.GenericRecipeAccessor", "main.GenericRecipeMixin"})
+@Issue(modId = "minecolonies", issueId = "#10302", versionRange = "[1.1.701-1.21.1,1.1.724-1.21.1]", mixins = {"main.MineColoniesJEIPluginMixin", "accessor.MineColoniesJEIPluginAccessor", "accessor.JobBasedRecipeCategoryAccessor", "accessor.GenericRecipeAccessor", "main.GenericRecipeMixin"})
 public class Issue10302 {
 	public static final List<GenericRecipe> recipesWithEntities = new ArrayList<>();
-	public static IModPlugin MineColoniesJEIPlugin;
+	public static IModPlugin mineColoniesJEIPlugin;
 
 	public Issue10302() {
 		var gameBus = NeoForge.EVENT_BUS;
@@ -49,7 +48,7 @@ public class Issue10302 {
 			} catch (IllegalStateException ignored) {
 				return;
 			}
-			var list = ((MineColoniesJEIPluginAccessor) MineColoniesJEIPlugin).getCategories();
+			var list = ((MineColoniesJEIPluginAccessor) mineColoniesJEIPlugin).getCategories();
 			list.forEach(category -> {
 				if (category instanceof JobBasedRecipeCategoryAccessor accessor) {
 					var citizen = createCitizenWithJob(accessor.getJob(), (Level) event.getLevel());

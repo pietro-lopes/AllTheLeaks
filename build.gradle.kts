@@ -27,6 +27,8 @@ val geckolibVersionRange: String by project
 val entityCullingVersionRange: String by project
 val dummmmmmyVersionRange: String by project
 val pneumaticcraftVersionRange: String by project
+val ambientsoundsVersionRange: String by project
+val occultismVersionRange: String by project
 
 repositories {
     mavenLocal()
@@ -58,15 +60,30 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
+sourceSets {
+    main {
+        resources.srcDir("src/generated/resources")
+    }
+    create("jei") {
+        compileClasspath += sourceSets.main.get().compileClasspath
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    }
+    create("emi") {
+        compileClasspath += sourceSets.main.get().compileClasspath
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    }
+}
+
 neoForge {
     version = neoVersion
     runs {
-        register("client") {
+        register("client-jei") {
             client()
-//            jvmArguments.addAll("-XX:+IgnoreUnrecognizedVMOptions", "-XX:+AllowEnhancedClassRedefinition")
-            systemProperty("mixin.debug.export", "true")
-//            jvmArgument("-Dmixin.debug.export=true")
-            gameDirectory = file("runs/client")
+            sourceSet = sourceSets.getByName("jei")
+        }
+        register("client-emi") {
+            client()
+            sourceSet = sourceSets.getByName("emi")
         }
         register("server") {
             server()
@@ -79,8 +96,10 @@ neoForge {
             jvmArgument("-XX:+AlwaysPreTouch")
             jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
-            if (type.get() == "client") {
+            if (type.get().startsWith("client")) {
                 programArguments.addAll("--width", "1920", "--height", "1080")
+                gameDirectory = file("runs/client")
+                systemProperty("mixin.debug.export", "true")
             }
         }
     }
@@ -95,12 +114,8 @@ neoForge {
     }
 }
 
-sourceSets {
-    main {
-        resources.srcDir("src/generated/resources")
-    }
-}
-
+val jeiRuntimeOnly: Configuration by configurations.getting
+val emiRuntimeOnly: Configuration by configurations.getting
 dependencies {
     // Here we go
     val journeymap = "curse.maven:journeymap-32274:5772123" // "1.21-6.0.0-beta.26"
@@ -124,15 +139,18 @@ dependencies {
     val securitycraft = "curse.maven:security-craft-64760:5655403" // 1.9.10-beta9
     val lootr = "curse.maven:lootr-361276:5709012" // 10.33.82
     val dummmmmmy = "curse.maven:mmmmmmmmmmmm-225738:5779508" // 1.21-2.0.6
-    val jei = "curse.maven:jei-238222:5692315" // jei-1.21.1-neoforge-19.16.4.168.jar
-//    val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
+    val jeiEmi = "curse.maven:jei-238222:5692315" // jei-1.21.1-neoforge-19.16.4.168.jar
+    val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
     val etf = "curse.maven:entity-texture-features-fabric-568563:5734430" // entity_texture_features_neoforge_1.21-6.2.5.jar
     val emf = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
     val sereneSeasons = "curse.maven:serene-seasons-291874:5753503" // SereneSeasons-neoforge-1.21.1-10.1.0.1.jar
     val connectivity = "curse.maven:connectivity-470193:5728632" // connectivity-1.21-5.8.jar
     val emi = "curse.maven:emi-580555:5769216" // emi-1.1.14+1.21.1+neoforge.jar
     val emiLoot = "curse.maven:emi-loot-681783:5760220" // emi_loot-0.7.4+1.21+neoforge.jar
-    val minecolonies = "curse.maven:minecolonies-245506:5734626" // minecolonies-1.1.701-1.21.1-snapshot.jar
+    val minecolonies = "curse.maven:minecolonies-245506:5788114" // minecolonies-1.1.724-1.21.1-snapshot.jar
+    val creativecore = "curse.maven:creativecore-257814:5773866" // CreativeCore_NEOFORGE_v2.12.17_mc1.21.1.jar
+    val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
+    val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
 
     // Required
     compileOnly(journeymap)
@@ -163,6 +181,9 @@ dependencies {
     compileOnly(emi)
     compileOnly(emiLoot)
     compileOnly(minecolonies)
+    compileOnly(creativecore)
+    compileOnly(ambientsounds)
+    compileOnly(occultism)
 
     // Testing at runtime
     runtimeOnly(journeymap)
@@ -185,14 +206,21 @@ dependencies {
     runtimeOnly(securitycraft)
     runtimeOnly(lootr)
     runtimeOnly(dummmmmmy)
-    runtimeOnly(jei)
     runtimeOnly(etf)
     runtimeOnly(emf)
     runtimeOnly(sereneSeasons)
     runtimeOnly(connectivity)
-//    runtimeOnly(emi)
-//    runtimeOnly(emiLoot)
-    runtimeOnly(minecolonies)
+
+    jeiRuntimeOnly(jei)
+    jeiRuntimeOnly(minecolonies) // minecolonies dependency on JEI is too high
+
+    emiRuntimeOnly(jeiEmi)
+    emiRuntimeOnly(emi)
+    emiRuntimeOnly(emiLoot)
+
+    runtimeOnly(creativecore)
+    runtimeOnly(ambientsounds)
+    runtimeOnly(occultism)
 
     // Dependencies for runtime
     runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar
@@ -213,6 +241,8 @@ dependencies {
     runtimeOnly("curse.maven:multi-piston-303278:5783614") // multipiston-1.2.51-1.21.1-snapshot.jar
     runtimeOnly("curse.maven:structurize-298744:5761666") // structurize-1.0.752-1.21.1-snapshot.jar
     runtimeOnly("curse.maven:towntalk-900364:5653504") // towntalk-1.2.0.jar
+    runtimeOnly("curse.maven:modonomicon-538392:5786073") // modonomicon-1.21.1-neoforge-1.108.1.jar
+    runtimeOnly("curse.maven:smartbrainlib-661293:5723837") // SmartBrainLib-neoforge-1.21.1-1.16.1.jar
 
     // LeakDiagTool
     runtimeOnly("blank:leakdiagtool:0.0.1-beta")
@@ -237,7 +267,9 @@ tasks {
             "geckolib_version_range" to geckolibVersionRange,
             "entityculling_version_range" to entityCullingVersionRange,
             "dummmmmmy_version_range" to dummmmmmyVersionRange,
-            "pneumaticcraft_version_range" to pneumaticcraftVersionRange
+            "pneumaticcraft_version_range" to pneumaticcraftVersionRange,
+            "ambientsounds_version_range" to ambientsoundsVersionRange,
+            "occultism_version_range" to occultismVersionRange
         )
 
         inputs.properties(replaceProperties)
