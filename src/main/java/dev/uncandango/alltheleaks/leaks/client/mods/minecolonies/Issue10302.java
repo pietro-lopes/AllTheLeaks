@@ -64,7 +64,7 @@ public class Issue10302 {
 				if (recipe instanceof GenericRecipeAccessor accessor) {
 					var oldEntity = accessor.getRequiredEntity();
 					if (oldEntity != null) {
-						var newEntity = accessor.getRequiredEntity().getType().create((Level) event.getLevel());
+						var newEntity = oldEntity.getType().create((Level) event.getLevel());
 						accessor.setRequiredEntity((LivingEntity) newEntity);
 					}
 				}
