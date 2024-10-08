@@ -6,6 +6,7 @@ import com.minecolonies.api.entity.ModEntities;
 import com.minecolonies.core.colony.CitizenData;
 import com.minecolonies.core.compatibility.jei.ModRecipeTypes;
 import com.minecolonies.core.entity.citizen.EntityCitizen;
+import com.minecolonies.core.compatibility.jei.JobBasedRecipeCategory;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.core.accessor.GenericRecipeAccessor;
 import dev.uncandango.alltheleaks.mixin.core.accessor.JobBasedRecipeCategoryAccessor;
@@ -48,18 +49,14 @@ public class Issue10302 {
 			} catch (IllegalStateException ignored) {
 				return;
 			}
-			var list = ((MineColoniesJEIPluginAccessor) mineColoniesJEIPlugin).getCategories();
+			var list = new ArrayList<>(((MineColoniesJEIPluginAccessor) mineColoniesJEIPlugin).getCategories());
+			list.add((JobBasedRecipeCategory<?>) jeiRuntime.getRecipeManager().getRecipeCategory(ModRecipeTypes.FISHING));
 			list.forEach(category -> {
 				if (category instanceof JobBasedRecipeCategoryAccessor accessor) {
 					var citizen = createCitizenWithJob(accessor.getJob(), (Level) event.getLevel());
 					accessor.setCitizen(citizen);
 				}
 			});
-			var fishing = jeiRuntime.getRecipeManager().getRecipeCategory(ModRecipeTypes.FISHING);
-			if (fishing instanceof JobBasedRecipeCategoryAccessor accessor) {
-				var citizen = createCitizenWithJob(accessor.getJob(), (Level) event.getLevel());
-				accessor.setCitizen(citizen);
-			}
 			recipesWithEntities.forEach(recipe -> {
 				if (recipe instanceof GenericRecipeAccessor accessor) {
 					var oldEntity = accessor.getRequiredEntity();
