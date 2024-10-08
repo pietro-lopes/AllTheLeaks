@@ -23,7 +23,7 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Issue(modId = "minecolonies", issueId = "#10302", versionRange = "[1.1.701-1.21.1,1.1.724-1.21.1]", mixins = {"main.MineColoniesJEIPluginMixin", "accessor.MineColoniesJEIPluginAccessor", "accessor.JobBasedRecipeCategoryAccessor", "accessor.GenericRecipeAccessor", "main.GenericRecipeMixin"})
+@Issue(modId = "minecolonies", issueId = "#10302", versionRange = "[1.1.701-1.21.1-snapshot,1.1.724-1.21.1]", mixins = {"main.MineColoniesJEIPluginMixin", "accessor.MineColoniesJEIPluginAccessor", "accessor.JobBasedRecipeCategoryAccessor", "accessor.GenericRecipeAccessor", "main.GenericRecipeMixin"})
 public class Issue10302 {
 	public static final List<GenericRecipe> recipesWithEntities = new ArrayList<>();
 	public static IModPlugin mineColoniesJEIPlugin;
