@@ -155,7 +155,8 @@ dependencies {
     val connectivity = "curse.maven:connectivity-470193:5728632" // connectivity-1.21-5.8.jar
     val emi = "curse.maven:emi-580555:5769216" // emi-1.1.14+1.21.1+neoforge.jar
     val emiLoot = "curse.maven:emi-loot-681783:5760220" // emi_loot-0.7.4+1.21+neoforge.jar
-    val minecolonies = "curse.maven:minecolonies-245506:5788114" // minecolonies-1.1.724-1.21.1-snapshot.jar
+    val minecoloniesCompile = "curse.maven:minecolonies-245506:5734626" // minecolonies-1.1.701-1.21.1-snapshot.jar
+    val minecoloniesJei = "curse.maven:minecolonies-245506:5788114" // minecolonies-1.1.724-1.21.1-snapshot.jar
     val creativecore = "curse.maven:creativecore-257814:5773866" // CreativeCore_NEOFORGE_v2.12.17_mc1.21.1.jar
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
@@ -189,7 +190,7 @@ dependencies {
     compileOnly(connectivity)
     compileOnly(emi)
     compileOnly(emiLoot)
-    compileOnly(minecolonies)
+    compileOnly(minecoloniesCompile)
     compileOnly(creativecore)
     compileOnly(ambientsounds)
     compileOnly(occultism)
@@ -220,18 +221,18 @@ dependencies {
     runtimeOnly(emf)
     runtimeOnly(sereneSeasons)
     runtimeOnly(connectivity)
-
-    jeiRuntimeOnly(jei)
-    jeiRuntimeOnly(minecolonies) // minecolonies dependency on JEI is too high
-
-    emiRuntimeOnly(jeiEmi)
-    emiRuntimeOnly(emi)
-    emiRuntimeOnly(emiLoot)
-
     runtimeOnly(creativecore)
     runtimeOnly(ambientsounds)
     runtimeOnly(occultism)
     runtimeOnly(mahou)
+
+    jeiRuntimeOnly(jei)
+    jeiRuntimeOnly(minecoloniesJei)
+
+    emiRuntimeOnly(jeiEmi)
+    emiRuntimeOnly(emi)
+    emiRuntimeOnly(emiLoot)
+    emiRuntimeOnly(minecoloniesCompile)
 
     // Dependencies for runtime
     runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar
