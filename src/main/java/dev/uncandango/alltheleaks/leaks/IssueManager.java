@@ -30,6 +30,8 @@ public class IssueManager {
 				String issueId = AnnotationHelper.getValue(annotation, "issueId");
 				String modId = AnnotationHelper.getValue(annotation, "modId");
 				Boolean solved = AnnotationHelper.getValue(annotation, "solved");
+				List<String> extraModDep = AnnotationHelper.getValue(annotation, "extraModDep");
+				List<String> extraModDepVersions = AnnotationHelper.getValue(annotation, "extraModDepVersions");
 				if (currentDist.isDedicatedServer()) {
 					Dist side = annotation.memberName().contains(".client.mods.") ? Dist.CLIENT : Dist.DEDICATED_SERVER;
 					if (side.isClient()) {
@@ -43,7 +45,7 @@ public class IssueManager {
 				}
 				String versionRange = AnnotationHelper.getValue(annotation, "versionRange");
 				List<String> mixins = AnnotationHelper.getValue(annotation, "mixins");
-				var condition = generateCondition(modId, versionRange, annotation.memberName());
+				var condition = generateCondition(modId, versionRange, annotation.memberName(), extraModDep, extraModDepVersions);
 				if (condition.get() && mixins != null && !mixins.isEmpty()) {
 					AllTheLeaks.LOGGER.info("Mixins added to allowed list: {}", mixins);
 					mixinAllowed.addAll(mixins);
@@ -59,7 +61,7 @@ public class IssueManager {
 				var clazz = Class.forName(ctor);
 				var ctorClazz = clazz.getDeclaredConstructors()[0];
 				ctorClazz.newInstance();
-			} catch (Exception e) {
+			} catch (Throwable e) {
 				AllTheLeaks.LOGGER.error("Failed to instantiate constructor.", e);
 			}
 		});
@@ -67,7 +69,7 @@ public class IssueManager {
 
 	}
 
-	public static Supplier<Boolean> generateCondition(String modId, String versionRange, String annotatedClass) {
+	public static Supplier<Boolean> generateCondition(String modId, String versionRange, String annotatedClass, List<String> extraModDep, List<String> extraModDepVersions) {
 		return () -> {
 			var mod = LoadingModList.get().getModFileById(modId);
 			if (mod != null) {
@@ -75,6 +77,25 @@ public class IssueManager {
 					var range = VersionRange.createFromVersionSpec(versionRange);
 					var modVer = new DefaultArtifactVersion(mod.versionString());
 					if (range.containsVersion(modVer)) {
+						if (!extraModDep.isEmpty()) {
+							for (int i = 0; i < extraModDep.size(); i++) {
+								var dep = LoadingModList.get().getModFileById(extraModDep.get(i));
+								if (dep == null) {
+									AllTheLeaks.LOGGER.info("Extra dependency Mod {} is not present in the mod list", extraModDep.get(i));
+									AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as extra mod dependecy is not present.", annotatedClass);
+									return false;
+								}
+								var rangeDepVer = VersionRange.createFromVersionSpec(extraModDepVersions.get(i));
+								var depVer = new DefaultArtifactVersion(dep.versionString());
+								if (rangeDepVer.containsVersion(depVer)) {
+									AllTheLeaks.LOGGER.info("Extra dependecy Mod {} matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));
+								} else {
+									AllTheLeaks.LOGGER.info("Extra dependecy Mod {} does NOT matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));
+									AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as extra mod dependecy does not match.", annotatedClass);
+									return false;
+								}
+							}
+						}
 						constructors.add(annotatedClass);
 						AllTheLeaks.LOGGER.info("Class {} will be loaded as it matches versions: {} in {}", annotatedClass, modVer, range);
 						return true;

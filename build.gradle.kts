@@ -92,14 +92,22 @@ neoForge {
         }
         configureEach {
             logLevel = org.slf4j.event.Level.DEBUG
-            jvmArgument("-Xmx1500m")
-            jvmArgument("-XX:+AlwaysPreTouch")
+            jvmArgument("-Xmx3000m")
             jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
             if (type.get().startsWith("client")) {
                 programArguments.addAll("--width", "1920", "--height", "1080")
                 gameDirectory = file("runs/client")
                 systemProperty("mixin.debug.export", "true")
+                jvmArguments.addAll(
+                    "-XX:+UnlockExperimentalVMOptions",
+                    "-XX:+UseG1GC",
+                    "-XX:G1NewSizePercent=20",
+                    "-XX:G1ReservePercent=20",
+                    "-XX:MaxGCPauseMillis=50",
+                    "-XX:G1HeapRegionSize=32M"
+                )
+                jvmArgument("-Xlog:safepoint:file=safepoint.log::filecount=0")
             }
         }
     }
@@ -151,6 +159,7 @@ dependencies {
     val creativecore = "curse.maven:creativecore-257814:5773866" // CreativeCore_NEOFORGE_v2.12.17_mc1.21.1.jar
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
+    val mahou = "curse.maven:mahou-tsukai-342543:5754205" // mahoutsukai-1.21.0-v1.35.18.jar
 
     // Required
     compileOnly(journeymap)
@@ -184,6 +193,7 @@ dependencies {
     compileOnly(creativecore)
     compileOnly(ambientsounds)
     compileOnly(occultism)
+    compileOnly(mahou)
 
     // Testing at runtime
     runtimeOnly(journeymap)
@@ -221,6 +231,7 @@ dependencies {
     runtimeOnly(creativecore)
     runtimeOnly(ambientsounds)
     runtimeOnly(occultism)
+    runtimeOnly(mahou)
 
     // Dependencies for runtime
     runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar

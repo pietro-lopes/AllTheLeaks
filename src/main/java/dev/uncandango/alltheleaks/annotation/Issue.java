@@ -17,4 +17,8 @@ public @interface Issue {
 	String[] mixins() default {};
 
 	boolean solved() default false;
+
+	String[] extraModDep() default {};
+
+	String[] extraModDepVersions() default {};
 }
