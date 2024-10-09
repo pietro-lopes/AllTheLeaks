@@ -1,6 +1,7 @@
 package dev.uncandango.alltheleaks.mixin;
 
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -20,7 +21,7 @@ public interface UpdateableLevel<T> {
 
 	void onClientLevelUpdated(ClientLevel level);
 
-	@EventBusSubscriber
+	@EventBusSubscriber(Dist.CLIENT)
 	class Manager {
 
 		@SubscribeEvent
