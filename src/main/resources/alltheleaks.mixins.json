@@ -4,8 +4,8 @@
 	"plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
 	"compatibilityLevel": "JAVA_21",
 	"minVersion": "0.8",
-	"client": ["accessor.BaseScreenAccessor", "accessor.CustomItemRendererAccessor", "accessor.EntityComparatorAccessor", "accessor.EntityEmiStackAccessor", "main.ClarentEmiRecipeMixin", "accessor.GenericRecipeAccessor", "accessor.JobBasedRecipeCategoryAccessor", "accessor.MineColoniesJEIPluginAccessor", "accessor.MobLootRecipeAccessor", "accessor.RecipeTransferManagerAccessor", "main.AreaRenderManagerMixin", "main.CullTaskMixin", "main.EntityEmiStackMixin", "main.EntityHelperMixin", "main.GenericRecipeMixin", "main.GeoArmorRendererMixin", "main.GeoModelMixin", "main.MineColoniesJEIPluginMixin", "main.SearchOptionsMixin", "main.SpellSelectionManagerMixin"],
-	"mixins": ["accessor.ChargeProviderImplAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.DroneEntityMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.LootrMixin", "main.PlayerDataMixin", "main.ServerPlayerMixin"],
+	"client": ["accessor.BaseScreenAccessor", "accessor.CustomItemRendererAccessor", "accessor.EntityComparatorAccessor", "accessor.RecipeTransferManagerAccessor", "main.JobBasedRecipeCategoryMixin", "main.AreaRenderManagerMixin", "main.ClarentEmiRecipeMixin", "main.CullTaskMixin", "main.EmiLootEntityEmiStackMixin", "main.EntityEmiStackMixin", "main.EntityHelperMixin", "main.GenericRecipeMixin", "main.GeoArmorRendererMixin", "main.GeoModelMixin",  "main.SearchOptionsMixin", "main.SpellSelectionManagerMixin"],
+	"mixins": ["accessor.ChargeProviderImplAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.DroneEntityMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin",  "main.LootrMixin", "main.PlayerDataMixin", "main.ServerPlayerMixin"],
 	"injectors": {
 		"defaultRequire": 1
 	}
