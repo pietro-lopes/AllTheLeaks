@@ -4,8 +4,27 @@
 	"plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
 	"compatibilityLevel": "JAVA_21",
 	"minVersion": "0.8",
-	"client": ["accessor.BaseScreenAccessor", "accessor.CustomItemRendererAccessor", "accessor.EntityComparatorAccessor", "accessor.RecipeTransferManagerAccessor", "main.JobBasedRecipeCategoryMixin", "main.AreaRenderManagerMixin", "main.ClarentEmiRecipeMixin", "main.CullTaskMixin", "main.EmiLootEntityEmiStackMixin", "main.EntityEmiStackMixin", "main.EntityHelperMixin", "main.GenericRecipeMixin", "main.GeoArmorRendererMixin", "main.GeoModelMixin",  "main.SearchOptionsMixin", "main.SpellSelectionManagerMixin"],
-	"mixins": ["accessor.ChargeProviderImplAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.DroneEntityMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin",  "main.LootrMixin", "main.PlayerDataMixin", "main.ServerPlayerMixin"],
+	"client": [
+		"accessor.BaseScreenAccessor",
+		"accessor.CustomItemRendererAccessor",
+		"accessor.EntityComparatorAccessor",
+		"accessor.RecipeTransferManagerAccessor",
+		"main.AreaRenderManagerMixin",
+		"main.ClarentEmiRecipeMixin",
+		"main.CullTaskMixin",
+		"main.EmiLootEntityEmiStackMixin",
+		"main.EntityEmiStackMixin",
+		"main.EntityHelperMixin",
+		"main.GenericRecipeMixin",
+		"main.GeoArmorRendererMixin",
+		"main.GeoModelMixin",
+		"accessor.TypedIngredientCodecsAccessor",
+		"accessor.BookmarkJsonConfigAccessor",
+		"main.JobBasedRecipeCategoryMixin",
+		"main.SearchOptionsMixin",
+		"main.SpellSelectionManagerMixin"
+	],
+	"mixins": [ "accessor.ChargeProviderImplAccessor", "accessor.ContextFactoryAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor",  "main.CasterTomeRegistryMixin", "main.DroneEntityMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.LootrMixin", "main.PlayerDataMixin", "main.ServerPlayerMixin", "main.ServerScriptManagerMixin"],
 	"injectors": {
 		"defaultRequire": 1
 	}

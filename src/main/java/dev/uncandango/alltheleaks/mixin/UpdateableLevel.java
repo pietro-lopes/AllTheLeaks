@@ -35,6 +35,7 @@ public interface UpdateableLevel<T> {
 							instance.onClientLevelUpdated((ClientLevel) event.getLevel());
 						} else it.remove();
 					}
+					((ArrayList)INSTANCES).trimToSize();
 				}
 			}
 		}

@@ -46,6 +46,20 @@ repositories {
             includeGroup("software.bernie.geckolib")
         }
     }
+    maven {
+        // saps.dev Maven (KubeJS and Rhino)
+        url = uri("https://maven.saps.dev/releases")
+        content {
+            includeGroup("dev.latvian.mods")
+            includeGroup("dev.latvian.apps")
+        }
+    }
+    maven {
+        url = uri("https://jitpack.io")
+        content {
+            includeGroup("com.github.rtyley")
+        }
+    }
 
     flatDir {
         dir("libs")
@@ -161,6 +175,8 @@ dependencies {
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
     val mahou = "curse.maven:mahou-tsukai-342543:5754205" // mahoutsukai-1.21.0-v1.35.18.jar
+    val kubejs = "2101.7.0-build.171"
+    val rhino = "2101.2.5-build.54"
 
     // Required
     compileOnly(journeymap)
@@ -195,6 +211,8 @@ dependencies {
     compileOnly(ambientsounds)
     compileOnly(occultism)
     compileOnly(mahou)
+    implementation(interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs")!!)
+    implementation("dev.latvian.mods:rhino:$rhino")
 
     // Testing at runtime
     runtimeOnly(journeymap)
