@@ -86,6 +86,14 @@ sourceSets {
         compileClasspath += sourceSets.main.get().compileClasspath
         runtimeClasspath += sourceSets.main.get().runtimeClasspath
     }
+    create("jeiServer") {
+        compileClasspath += sourceSets.main.get().compileClasspath
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    }
+    create("emiServer") {
+        compileClasspath += sourceSets.main.get().compileClasspath
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    }
 }
 
 neoForge {
@@ -99,10 +107,17 @@ neoForge {
             client()
             sourceSet = sourceSets.getByName("emi")
         }
-        register("server") {
+        register("server-jei") {
             server()
-            programArgument("--nogui")
+//            programArgument("--nogui")
             gameDirectory = file("runs/server")
+            sourceSet = sourceSets.getByName("jeiServer")
+        }
+        register("server-emi") {
+            server()
+//            programArgument("--nogui")
+            gameDirectory = file("runs/server")
+            sourceSet = sourceSets.getByName("emiServer")
         }
         configureEach {
             logLevel = org.slf4j.event.Level.DEBUG
@@ -138,6 +153,8 @@ neoForge {
 
 val jeiRuntimeOnly: Configuration by configurations.getting
 val emiRuntimeOnly: Configuration by configurations.getting
+val jeiServerRuntimeOnly: Configuration by configurations.getting
+val emiServerRuntimeOnly: Configuration by configurations.getting
 dependencies {
     // Here we go
     val journeymap = "curse.maven:journeymap-32274:5772123" // "1.21-6.0.0-beta.26"
@@ -175,8 +192,9 @@ dependencies {
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
     val mahou = "curse.maven:mahou-tsukai-342543:5754205" // mahoutsukai-1.21.0-v1.35.18.jar
-    val kubejs = "2101.7.0-build.171"
+    val kubejs = "2101.7.1-build.181"
     val rhino = "2101.2.5-build.54"
+    val sophCore = "curse.maven:sophisticated-core-618298:5810072" // sophisticatedcore-1.21-0.6.45.722.jar
 
     // Required
     compileOnly(journeymap)
@@ -213,6 +231,7 @@ dependencies {
     compileOnly(mahou)
     implementation(interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs")!!)
     implementation("dev.latvian.mods:rhino:$rhino")
+    compileOnly(sophCore)
 
     // Testing at runtime
     runtimeOnly(journeymap)
@@ -235,22 +254,35 @@ dependencies {
     runtimeOnly(securitycraft)
     runtimeOnly(lootr)
     runtimeOnly(dummmmmmy)
-    runtimeOnly(etf)
-    runtimeOnly(emf)
-    runtimeOnly(sereneSeasons)
+
     runtimeOnly(connectivity)
     runtimeOnly(creativecore)
     runtimeOnly(ambientsounds)
     runtimeOnly(occultism)
     runtimeOnly(mahou)
+    runtimeOnly(sophCore)
+
+
+    jeiRuntimeOnly(etf)
+    jeiRuntimeOnly(emf)
+//    jeiRuntimeOnly(sereneSeasons)
+    emiRuntimeOnly(etf)
+    emiRuntimeOnly(emf)
+//    emiRuntimeOnly(sereneSeasons)
 
     jeiRuntimeOnly(jei)
+    jeiServerRuntimeOnly(jei)
     jeiRuntimeOnly(minecoloniesJei)
+    jeiServerRuntimeOnly(minecoloniesJei)
 
     emiRuntimeOnly(jeiEmi)
+    emiServerRuntimeOnly(jeiEmi)
     emiRuntimeOnly(emi)
+    emiServerRuntimeOnly(emi)
     emiRuntimeOnly(emiLoot)
+    emiServerRuntimeOnly(emiLoot)
     emiRuntimeOnly(minecoloniesCompile)
+    emiServerRuntimeOnly(minecoloniesCompile)
 
     // Dependencies for runtime
     runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar
@@ -262,7 +294,8 @@ dependencies {
     runtimeOnly("curse.maven:ftb-teams-forge-404468:5631446") // ftb-teams-neoforge-2101.1.0.jar
     runtimeOnly("curse.maven:playeranimator-658587:5698755") // player-animation-lib-forge-2.0.0-alpha1+1.21.jar
     runtimeOnly("curse.maven:selene-499980:5764367")
-    runtimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
+//    jeiRuntimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
+//    emiRuntimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
     runtimeOnly("curse.maven:cupboard-326652:5570763") // cupboard-1.21-2.8.jar
     runtimeOnly("curse.maven:fzzy-config-1005914:5778237") // fzzy_config-0.5.1+1.20.6+neoforge.jar
     runtimeOnly("curse.maven:kotlin-for-forge-351264:5611971") // kotlinforforge-5.5.0-all.jar
@@ -273,6 +306,7 @@ dependencies {
     runtimeOnly("curse.maven:towntalk-900364:5653504") // towntalk-1.2.0.jar
     runtimeOnly("curse.maven:modonomicon-538392:5786073") // modonomicon-1.21.1-neoforge-1.108.1.jar
     runtimeOnly("curse.maven:smartbrainlib-661293:5723837") // SmartBrainLib-neoforge-1.21.1-1.16.1.jar
+    runtimeOnly("curse.maven:sophisticated-backpacks-422301:5787622") // sophisticatedbackpacks-1.21-3.20.17.1113.jar
 
     // LeakDiagTool
     runtimeOnly("blank:leakdiagtool:0.0.1-beta")
