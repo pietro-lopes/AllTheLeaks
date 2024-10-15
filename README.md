@@ -16,7 +16,7 @@ When the original mod implement their fixes, we disable ours.
 
 ## 📦 Installation
 
-Mod is available on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/altheleaks).
+Mod is available on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/alltheleaks).
 
 ## 🔧 Usage
 
