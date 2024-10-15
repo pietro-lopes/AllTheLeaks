@@ -103,6 +103,11 @@ neoForge {
             client()
             sourceSet = sourceSets.getByName("jei")
         }
+        register("client2-jei") {
+            client()
+            sourceSet = sourceSets.getByName("jei")
+            programArguments.addAll("--username", "Dev2")
+        }
         register("client-emi") {
             client()
             sourceSet = sourceSets.getByName("emi")
