@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.p3pp3rf1y.sophisticatedcore.inventory.ItemStackKey;
@@ -22,8 +23,8 @@ public class UntrackedIssue001 {
 		gameBus.addListener(this::clearItemStackCache);
 	}
 
-	private void clearItemStackCache(PlayerTickEvent.Post event) {
-		if (event.getEntity().level().isClientSide() && Minecraft.getInstance().screen == null) {
+	private void clearItemStackCache(ScreenEvent.Closing event) {
+		if (Minecraft.getInstance().player != null) {
 			var cacheMap = (Map<ItemStack, ItemStackKey>) CACHE.get();
 			cacheMap.clear();
 		}
