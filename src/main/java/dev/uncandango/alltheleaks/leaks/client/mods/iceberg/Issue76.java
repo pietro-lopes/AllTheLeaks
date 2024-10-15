@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import java.lang.invoke.VarHandle;
 import java.util.Map;
 
-@Issue(modId = "iceberg", versionRange = "(,1.2.8]")
+@Issue(modId = "iceberg", versionRange = "[1.2.8,)")
 public class Issue76 {
 	private static final VarHandle WRAPPED_LEVELS_MAP;
 	private static final VarHandle ENTITY_CACHE;

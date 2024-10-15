@@ -12,10 +12,13 @@ import java.lang.invoke.VarHandle;
 
 @Issue(modId = "ars_nouveau", versionRange = "[5.0.12,)")
 public class UntrackedIssue001 {
-	private static final VarHandle CAMERA_STORAGE;
+	public static final VarHandle CAMERA_STORAGE;
+	public static final VarHandle LAST_HOVERED;
+
 	static {
 		Class<?> storageClass = ReflectionHelper.getPrivateClass(ClientChunkCache.class, "net.minecraft.client.multiplayer.ClientChunkCache$Storage");
 		CAMERA_STORAGE = ReflectionHelper.getFieldFromClass(CameraController.class, "cameraStorage", storageClass, true);
+		LAST_HOVERED = ReflectionHelper.getFieldFromClass(GuiEntityInfoHUD.class, "lastHovered", Object.class, true);
 	}
 
 	public UntrackedIssue001() {
@@ -23,10 +26,11 @@ public class UntrackedIssue001 {
 		gameBus.addListener(this::clearCameraStorage);
 	}
 
-	private void clearCameraStorage(LevelEvent.Unload event){
+	private void clearCameraStorage(LevelEvent.Unload event) {
 		if (event.getLevel().isClientSide()) {
 //			CAMERA_STORAGE.set((Object) null);
-			GuiEntityInfoHUD.lastHovered = null;
+			LAST_HOVERED.set((Object) null);
+//			GuiEntityInfoHUD.lastHovered = null;
 		}
 	}
 }
