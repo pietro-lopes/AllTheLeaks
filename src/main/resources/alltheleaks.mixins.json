@@ -1,12 +1,48 @@
 {
-	"required": true,
-	"package": "dev.uncandango.alltheleaks.mixin.core",
-	"plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
-	"compatibilityLevel": "JAVA_21",
-	"minVersion": "0.8",
-	"client": ["accessor.BaseScreenAccessor", "accessor.BookmarkJsonConfigAccessor", "accessor.CustomItemRendererAccessor", "accessor.EntityComparatorAccessor", "accessor.RecipeTransferManagerAccessor", "accessor.TypedIngredientCodecsAccessor", "main.AreaRenderManagerMixin", "main.ClarentEmiRecipeMixin", "main.CullTaskMixin", "main.EmiLootEntityEmiStackMixin", "main.EntityEmiStackMixin", "main.EntityHelperMixin", "main.GenericRecipeMixin", "main.GeoArmorRendererMixin", "main.GeoModelMixin", "main.JobBasedRecipeCategoryMixin", "main.SearchOptionsMixin", "main.SpellSelectionManagerMixin"],
-	"mixins": ["accessor.ChargeProviderImplAccessor",  "accessor.ContextFactoryAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.DroneEntityMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.LootrMixin", "main.PlayerDataMixin", "main.ServerPlayerMixin", "main.ServerScriptManagerMixin"],
-	"injectors": {
-		"defaultRequire": 0
+  "required": true,
+  "package": "dev.uncandango.alltheleaks.mixin.core",
+  "plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "accessor.BaseScreenAccessor",
+    "accessor.BookmarkJsonConfigAccessor",
+    "accessor.CustomItemRendererAccessor",
+    "accessor.EntityComparatorAccessor",
+    "accessor.RecipeTransferManagerAccessor",
+    "accessor.TypedIngredientCodecsAccessor",
+    "main.AreaRenderManagerMixin",
+    "main.ClarentEmiRecipeMixin",
+    "main.CullTaskMixin",
+    "main.EmiLootEntityEmiStackMixin",
+    "main.EntityEmiStackMixin",
+    "main.EntityHelperMixin",
+    "main.GenericRecipeMixin",
+    "main.GeoArmorRendererMixin",
+    "main.GeoModelMixin",
+    "main.JobBasedRecipeCategoryMixin",
+    "main.SearchOptionsMixin",
+		"main.AthenaResourceLoaderMixin",
+    "main.SpellSelectionManagerMixin"
+  ],
+  "mixins": [
+    "accessor.ChargeProviderImplAccessor",
+    "accessor.ContextFactoryAccessor",
+    "accessor.JourneymapAccessor",
+    "accessor.PlayerListAccessor",
+
+    "main.CasterTomeRegistryMixin",
+    "main.DroneEntityMixin",
+    "main.EntityTickListMixin",
+    "main.FakePlayerFactoryMixin",
+    "main.FakePlayerMixin",
+    "main.FTBQuestsEventHandlerMixin",
+    "main.LootrMixin",
+    "main.PlayerDataMixin",
+    "main.ServerPlayerMixin",
+    "main.ServerScriptManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
 	}
 }
