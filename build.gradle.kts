@@ -57,6 +57,47 @@ repositories {
         }
     }
 
+    maven {
+        name = "GTCEu Maven"
+        url = uri("https://maven.gtceu.com")
+        content {
+            includeGroup("com.gregtechceu.gtceu")
+        }
+    }
+
+    maven { url = uri("https://maven.firstdarkdev.xyz/snapshots") } // LDLib
+
+    maven { // Flywheel
+        url = uri("https://maven.tterrag.com/")
+        content {
+            // need to be specific here due to version overlaps
+            includeGroup("com.jozufozu.flywheel")
+            includeGroup("com.tterrag.registrate")
+            includeGroup("com.simibubi.create")
+        }
+    }
+
+    maven { url = uri("https://maven.terraformersmc.com/releases/") } // Mod Menu, EMI
+
+    maven { url = uri("https://api.modrinth.com/maven") } // LazyDFU, Jade
+
+    maven {
+        url = uri("https://maven.blamejared.com/")
+    }
+
+    maven {
+        url = uri("https://maven.shedaniel.me/")
+        content {
+            includeGroup("me.shedaniel")
+            includeGroup("me.shedaniel.cloth")
+            includeGroup("dev.architectury")
+        }
+    }
+
+    maven {
+        url = uri("https://modmaven.dev/")
+    }
+
     flatDir {
         dir("libs")
     }
@@ -126,17 +167,6 @@ mixin {
     config("alltheleaks.mixins.json")
 }
 
-//val slimJar = tasks.register<Jar>("slimJar") {
-//    archiveClassifier = "dev-slim"
-//    from(sourceSets.main.get().output)
-//}
-//
-//obfuscation {
-//    reobfuscate(slimJar, sourceSets.main.get()) {
-//        archiveClassifier = "slim"
-//    }
-//}
-
 afterEvaluate {
     tasks.withType(Jar::class).configureEach {
         manifest.attributes(
@@ -149,42 +179,22 @@ afterEvaluate {
             "Implementation-Version" to project.version,
             "Implementation-Vendor" to modAuthors,
             "Implementation-Timestamp" to DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-                //        'Specification-Title': project.name,
-//        'Specification-Version': mod_version,
-//        'Specification-Vendor': 'GregTechCEu Team',
-//        'Implementation-Title': base.archivesName,
-//        'Implementation-Version': version,
-//        'Implementation-Vendor': 'GregTechCEu Team',
         ))
     }
-}
-
-val sharedManifest = java.manifest {
-    attributes(
-        mapOf(
-            "Specification-Title" to project.name,
-            "Specification-Vendor" to "pietro-lopes",
-            "Specification-Version" to "1",
-            "Implementation-Title" to project.name,
-            "Implementation-Version" to project.version,
-            "Implementation-Vendor" to "pietro-lopes",
-            "Implementation-Timestamp" to DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-        )
-    )
-}
-
-tasks.register<Jar>("sourcesJar") {
-    archiveClassifier = "sources"
 }
 
 dependencies {
     // the f?
     compileOnly("org.jetbrains:annotations:24.1.0")
+    // Lombok for Greg
+    compileOnly("org.projectlombok:lombok:1.18.32")
+    annotationProcessor("org.projectlombok:lombok:1.18.32")
+
 
     //Mixins
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")!!)
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")!!)
-    annotationProcessor("org.spongepowered:mixin:0.8.7:processor")
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
     // Minimum version
     modCompileOnly("curse.maven:create-328085:4625535") // create-1.20.1-0.5.1.c.jar
@@ -207,6 +217,11 @@ dependencies {
     modCompileOnly("curse.maven:forbidden-arcanus-309858:4692792") // forbidden_arcanus-1.20.1-2.2.0-beta1.jar
     modCompileOnly("curse.maven:tool-belt-260262:4581167") // ToolBelt-1.20-1.20.0.jar
     modCompileOnly("curse.maven:just-enough-archaeology-890755:4659878") // jearchaeology-1.20.1-1.0.0.jar
+    modCompileOnly("curse.maven:betterf3-401648:4641169") // BetterF3-7.0.1-Forge-1.20.1.jar
+    modCompileOnly("com.lowdragmc.ldlib:ldlib-forge-1.20.1:1.0.26.b") { isTransitive = false }
+//    modCompileOnly("curse.maven:ldlib-626676:5618585") // ldlib-forge-1.20.1-1.0.26.b.jar
+    modCompileOnly("com.jozufozu.flywheel:flywheel-forge-1.20:0.6.9-4") // flywheel-forge-1.20.1-0.6.9-4.jar
+    modCompileOnly("curse.maven:gregtechceu-modern-890405:5253480") //
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -214,38 +229,47 @@ dependencies {
 
     // Latest versions
     modRuntimeOnly("curse.maven:create-328085:5797605") // create-1.20.1-0.5.1.i.jar
-    modRuntimeOnly("curse.maven:createaddition-439890:5658602") // createaddition-1.20.1-1.2.4e.jar
-    modRuntimeOnly("curse.maven:citadel-331936:5633260")// citadel-2.6.0-1.20.1.jar
-    modRuntimeOnly("curse.maven:applied-energistics-2-223794:5641282") // appliedenergistics2-forge-15.2.13.jar
-    modRuntimeOnly("curse.maven:applied-energistics-2-wireless-terminals-459929:5217955") // ae2wtlib-15.2.3-forge.jar
+//    modRuntimeOnly("curse.maven:createaddition-439890:5658602") // createaddition-1.20.1-1.2.4e.jar
+//    modRuntimeOnly("curse.maven:citadel-331936:5633260")// citadel-2.6.0-1.20.1.jar
+//    modRuntimeOnly("curse.maven:applied-energistics-2-223794:5641282") // appliedenergistics2-forge-15.2.13.jar
+//    modRuntimeOnly("curse.maven:applied-energistics-2-wireless-terminals-459929:5217955") // ae2wtlib-15.2.3-forge.jar
     modRuntimeOnly("curse.maven:jei-238222:5793297") // jei-1.20.1-forge-15.20.0.104.jar
-    modRuntimeOnly("curse.maven:railcraft-reborn-901491:5650737") // railcraft-reborn-1.20.1-1.1.7.jar
-    modRuntimeOnly("curse.maven:curios-309927:5680164") // curios-forge-5.10.0+1.20.1.jar
-    modRuntimeOnly("curse.maven:tfc-volcanoes-962578:5647602") // TFCVolcanoes-1.20.1-1.3.14.jar
-    modRuntimeOnly("curse.maven:architectury-api-419699:5137938") // architectury-9.2.14-forge.jar
-    modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:5765121") // irons_spellbooks-1.20.1-3.4.0.2.jar
-    modRuntimeOnly("curse.maven:aether-255308:5786709") // aether-1.20.1-1.5.0-neoforge.jar
-    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9") // 1.20.1:4.4.9
-    modRuntimeOnly("curse.maven:occultism-361026:5793620") // occultism-1.20.1-1.139.1.jar
-    modRuntimeOnly("curse.maven:travelers-backpack-321117:5764972") // travelersbackpack-forge-1.20.1-9.1.16.jar
-    modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
-    modRuntimeOnly("curse.maven:tool-belt-260262:5393183") // ToolBelt-1.20.1-1.20.01.jar
-    modRuntimeOnly("curse.maven:just-enough-archaeology-890755:5324518") // jearchaeology-1.20.1-1.0.4.jar
-    modRuntimeOnly("curse.maven:supplementaries-412082:5676069") // supplementaries-1.20-2.8.17.jar
+//    modRuntimeOnly("curse.maven:railcraft-reborn-901491:5650737") // railcraft-reborn-1.20.1-1.1.7.jar
+//    modRuntimeOnly("curse.maven:curios-309927:5680164") // curios-forge-5.10.0+1.20.1.jar
+//    modRuntimeOnly("curse.maven:tfc-volcanoes-962578:5647602") // TFCVolcanoes-1.20.1-1.3.14.jar
+//    modRuntimeOnly("curse.maven:architectury-api-419699:5137938") // architectury-9.2.14-forge.jar
+//    modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:5765121") // irons_spellbooks-1.20.1-3.4.0.2.jar
+//    modRuntimeOnly("curse.maven:aether-255308:5786709") // aether-1.20.1-1.5.0-neoforge.jar
+//    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9") // 1.20.1:4.4.9
+//    modRuntimeOnly("curse.maven:occultism-361026:5793620") // occultism-1.20.1-1.139.1.jar
+//    modRuntimeOnly("curse.maven:travelers-backpack-321117:5764972") // travelersbackpack-forge-1.20.1-9.1.16.jar
+//    modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
+//    modRuntimeOnly("curse.maven:tool-belt-260262:5393183") // ToolBelt-1.20.1-1.20.01.jar
+//    modRuntimeOnly("curse.maven:just-enough-archaeology-890755:5324518") // jearchaeology-1.20.1-1.0.4.jar
+//    modRuntimeOnly("curse.maven:supplementaries-412082:5676069") // supplementaries-1.20-2.8.17.jar
+//    modRuntimeOnly("curse.maven:betterf3-401648:4863626") // BetterF3-7.0.2-Forge-1.20.1.jar
+//    modRuntimeOnly("curse.maven:spark-361579:4738952") // spark-1.10.53-forge.jar
 
+    /* Greg headache
+    1. Download jar
+    2. Remove jarjar and jars folder
+     */
+    modRuntimeOnly("blank:gtceu-1.20.1:1.4.0-jarjarless")
+    modRuntimeOnly("curse.maven:ldlib-626676:5618585") // ldlib-forge-1.20.1-1.0.26.b.jar
+    modRuntimeOnly("curse.maven:configuration-444699:4608425") // configuration-forge-1.20.1-2.2.0.jar
 
     // Required dependencies runtimes
-    modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
-    modRuntimeOnly("curse.maven:terrafirmacraft-302973:5571484") // TerraFirmaCraft-Forge-1.20.1-3.2.7.jar
-    modRuntimeOnly("curse.maven:patchouli-306770:4966125") // Patchouli-1.20.1-84-FORGE.jar
-    modRuntimeOnly("curse.maven:ferritecore-429235:4810975") // ferritecore-6.0.1-forge.jar
-    modRuntimeOnly("curse.maven:caelus-308989:5281700") // caelus-forge-3.2.0+1.20.1.jar
-    modRuntimeOnly("curse.maven:playeranimator-658587:4587214") // player-animation-lib-forge-1.0.2-rc1+1.20.jar
-    modRuntimeOnly("curse.maven:modonomicon-538392:5786081") // modonomicon-1.20.1-forge-1.77.3.jar
-    modRuntimeOnly("curse.maven:smartbrainlib-661293:5654964") // SmartBrainLib-forge-1.20.1-1.15.jar
-    modRuntimeOnly("curse.maven:forbidden-arcanus-309858:5198323") // forbidden_arcanus-1.20.1-2.2.6.jar
-    modRuntimeOnly("curse.maven:valhelsia-core-416935:5189548") // valhelsia_core-forge-1.20.1-1.1.2.jar
-    modRuntimeOnly("curse.maven:selene-499980:5822487") // moonlight-1.20-2.13.12-forge.jar
+//    modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
+//    modRuntimeOnly("curse.maven:terrafirmacraft-302973:5571484") // TerraFirmaCraft-Forge-1.20.1-3.2.7.jar
+//    modRuntimeOnly("curse.maven:patchouli-306770:4966125") // Patchouli-1.20.1-84-FORGE.jar
+//    modRuntimeOnly("curse.maven:ferritecore-429235:4810975") // ferritecore-6.0.1-forge.jar
+//    modRuntimeOnly("curse.maven:caelus-308989:5281700") // caelus-forge-3.2.0+1.20.1.jar
+//    modRuntimeOnly("curse.maven:playeranimator-658587:4587214") // player-animation-lib-forge-1.0.2-rc1+1.20.jar
+//    modRuntimeOnly("curse.maven:modonomicon-538392:5786081") // modonomicon-1.20.1-forge-1.77.3.jar
+//    modRuntimeOnly("curse.maven:smartbrainlib-661293:5654964") // SmartBrainLib-forge-1.20.1-1.15.jar
+//    modRuntimeOnly("curse.maven:forbidden-arcanus-309858:5198323") // forbidden_arcanus-1.20.1-2.2.6.jar
+//    modRuntimeOnly("curse.maven:valhelsia-core-416935:5189548") // valhelsia_core-forge-1.20.1-1.1.2.jar
+//    modRuntimeOnly("curse.maven:selene-499980:5822487") // moonlight-1.20-2.13.12-forge.jar
 
 
 
@@ -263,7 +287,7 @@ dependencies {
     modCompileOnly("curse.maven:tfc-thermal-deposits-962578:5317918")
     modCompileOnly("curse.maven:ftb-xmod-compat-889915:5257897")
 //    modCompileOnly("curse.maven:jei-238222:5101366")
-    modCompileOnly("curse.maven:gregtechceu-modern-890405:5253480")
+
     modCompileOnly("curse.maven:patchouli-306770:4966125")
 //    modCompileOnly("curse.maven:applied-energistics-2-223794:5330978")
     modCompileOnly("curse.maven:kubejs-enderio-910379:4872849") { isTransitive = false }
@@ -271,7 +295,7 @@ dependencies {
     modCompileOnly("curse.maven:blue-skies-312918:5010316")
 
     // modCompileOnly("blank:flywheel-forge:1.20.1-0.6.10-7")
-    modCompileOnly("com.jozufozu.flywheel:flywheel-forge-1.20.1:0.6.10-7")
+//    modCompileOnly("com.jozufozu.flywheel:flywheel-forge-1.20.1:0.6.10-7")
 
     modCompileOnly("curse.maven:oculus-581495:5299671")
 
@@ -316,7 +340,7 @@ dependencies {
     modCompileOnly("curse.maven:mekanism-268560:5125665")
 
 //    modCompileOnly("curse.maven:ldlib-626676:5252086")
-    modCompileOnly("curse.maven:ldlib-626676:5343863")
+//    modCompileOnly("curse.maven:ldlib-626676:5343863")
 
     modCompileOnly("curse.maven:jade-324717:5339264")
 
@@ -357,12 +381,6 @@ dependencies {
 
     modRuntimeOnly("blank:leakdiagtool:1.0.0")
 }
-
-//artifacts {
-//    archives(tasks.reobfJar)
-//    archives(tasks.reobfSlimJar)
-//    archives(tasks.sourcesJar)
-//}
 
 tasks {
     processResources {

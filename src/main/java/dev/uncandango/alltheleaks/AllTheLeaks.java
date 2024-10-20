@@ -2,46 +2,11 @@ package dev.uncandango.alltheleaks;
 
 import com.mojang.logging.LogUtils;
 import dev.uncandango.alltheleaks.leaks.IssueManager;
-import dev.uncandango.alltheleaks.mixin.core.accessor.CitadelServerDataAccessor;
-import dev.uncandango.alltheleaks.mixin.core.accessor.ConductorPossessionControllerAccessor;
-import dev.uncandango.alltheleaks.mixin.core.accessor.CraftingTerminalHandlerAccessor;
-import dev.uncandango.alltheleaks.mixin.core.accessor.ExtendoGripItemAccessor;
-import dev.uncandango.alltheleaks.mixin.core.accessor.ThreadedParametersAccessor;
-import dev.uncandango.alltheleaks.mods.Ae2;
-import dev.uncandango.alltheleaks.mods.AmbientSounds;
-import dev.uncandango.alltheleaks.mods.ArsNouveau;
-import dev.uncandango.alltheleaks.mods.Blueskies;
-import dev.uncandango.alltheleaks.mods.Create;
-import dev.uncandango.alltheleaks.mods.Createaddition;
-import dev.uncandango.alltheleaks.mods.DistantHorizons;
-import dev.uncandango.alltheleaks.mods.FtbChunks;
-import dev.uncandango.alltheleaks.mods.Gtceu;
-import dev.uncandango.alltheleaks.mods.IceAndFire;
-import dev.uncandango.alltheleaks.mods.ImmersiveEng;
-import dev.uncandango.alltheleaks.mods.IronsSpells;
-import dev.uncandango.alltheleaks.mods.Jade;
-import dev.uncandango.alltheleaks.mods.Journeymap;
-import dev.uncandango.alltheleaks.mods.Kubejs;
-import dev.uncandango.alltheleaks.mods.Lootjs;
-import dev.uncandango.alltheleaks.mods.Mekanism;
-import dev.uncandango.alltheleaks.mods.Minecolonies;
-import dev.uncandango.alltheleaks.mods.MinecraftClient;
-import dev.uncandango.alltheleaks.mods.Pneumaticcraft;
-import dev.uncandango.alltheleaks.mods.Quark;
-import dev.uncandango.alltheleaks.mods.Railcraft;
-import dev.uncandango.alltheleaks.mods.Tfcthermaldeposits;
-import net.minecraft.Util;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forgespi.language.IModInfo;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 @Mod(AllTheLeaks.MOD_ID)
@@ -52,29 +17,27 @@ public final class AllTheLeaks {
 	public AllTheLeaks() {
 		final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 		final IEventBus gameBus = MinecraftForge.EVENT_BUS;
-//        gameBus.addListener(this::clearMaps);
+
 		modBus.addListener(this::instantiateIssues);
-//		gameBus.addListener(EventPriority.HIGHEST, this::printEntityCloneHighest);
-//		gameBus.addListener(EventPriority.LOWEST, this::printEntityCloneLowest);
-//		gameBus.addListener(this::printEntityCloneNormal);
 	}
 
 	private void instantiateIssues(FMLCommonSetupEvent event) {
 		event.enqueueWork(IssueManager::initiateIssues);
 	}
 
-	private void printEntityCloneHighest(PlayerEvent.Clone event) {
-		AllTheLeaks.LOGGER.info("(Highest) Entity is: {}", event.getOriginal());
-	}
+//	private void printEntityCloneHighest(PlayerEvent.Clone event) {
+//		AllTheLeaks.LOGGER.info("(Highest) Entity is: {}", event.getOriginal());
+//	}
+//
+//	private void printEntityCloneNormal(PlayerEvent.Clone event) {
+//		AllTheLeaks.LOGGER.info("(Normal) Entity is: {}", event.getOriginal());
+//	}
+//
+//	private void printEntityCloneLowest(PlayerEvent.Clone event) {
+//		AllTheLeaks.LOGGER.info("(Lowest) Entity is: {}", event.getOriginal());
+//	}
 
-	private void printEntityCloneNormal(PlayerEvent.Clone event) {
-		AllTheLeaks.LOGGER.info("(Normal) Entity is: {}", event.getOriginal());
-	}
-
-	private void printEntityCloneLowest(PlayerEvent.Clone event) {
-		AllTheLeaks.LOGGER.info("(Lowest) Entity is: {}", event.getOriginal());
-	}
-
+	/*
 	public void clearMaps(ServerStoppedEvent event) {
 
 		var startTimer = Util.getNanos();
@@ -144,4 +107,5 @@ public final class AllTheLeaks {
 	private static void safeCallCleaning(Runnable task, IModInfo mod) {
 		safeCall(task, "Cleaning " + mod.getDisplayName() + "...", "Error while cleaning " + mod.getDisplayName());
 	}
+	 */
 }

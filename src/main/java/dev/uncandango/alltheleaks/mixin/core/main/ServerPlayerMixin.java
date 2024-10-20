@@ -1,7 +1,6 @@
 package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.mojang.authlib.GameProfile;
-import dev.uncandango.alltheleaks.utils.Storage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

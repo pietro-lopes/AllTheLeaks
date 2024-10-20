@@ -4,7 +4,9 @@ import com.google.common.collect.Maps;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -138,6 +140,39 @@ public class ReflectionHelper {
 			handler = isStatic ? lookup.findStaticVarHandle(clazz, fieldName, fieldClass) : lookup.findVarHandle(clazz, fieldName, fieldClass);
 		} catch (Exception e) {
 			AllTheLeaks.LOGGER.warn("Failed to get VarHandle for class {} with field {} and type {}", clazz, fieldName, fieldClass);
+		}
+		return handler;
+	}
+
+	public static Class<?> getPrivateClass(Class<?> parent, String subclass) {
+		for (var clazz : parent.getNestMembers()) {
+			if (clazz.getName().equals(subclass)) {
+				return clazz;
+			}
+		}
+		throw new RuntimeException("Sub class not found!");
+	}
+
+	@Nullable
+	private static MethodHandle safeMethodHandler(MethodHandles.Lookup lookup, Class<?> clazz, String methodName, MethodType methodType, boolean isStatic) {
+		MethodHandle handler = null;
+		if (lookup == null) {
+			return null;
+		}
+		try {
+			handler = isStatic ? lookup.findStatic(clazz, methodName, methodType) : lookup.findVirtual(clazz, methodName, methodType);
+		} catch (Exception e) {
+			AllTheLeaks.LOGGER.warn("Failed to get MethodHandle for class {} with method {} and type {}", clazz, methodName, methodType);
+		}
+		return handler;
+	}
+
+	public static MethodHandle getMethodFromClass(Class<?> clazz, String methodName, MethodType methodType, boolean isStatic) {
+		MethodHandle handler;
+		var lookup = safeLookup(clazz);
+		handler = safeMethodHandler(lookup, clazz, methodName, methodType, isStatic);
+		if (handler == null) {
+			throw new RuntimeException("MethodHandler is null");
 		}
 		return handler;
 	}

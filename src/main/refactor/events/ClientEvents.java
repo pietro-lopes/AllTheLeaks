@@ -10,12 +10,10 @@ import dev.uncandango.alltheleaks.mods.Gtceu;
 import dev.uncandango.alltheleaks.utils.StorageClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
 
 @SuppressWarnings("unused")
 //@Mod.EventBusSubscriber(value = Dist.CLIENT)
