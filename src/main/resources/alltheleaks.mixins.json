@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "package": "dev.uncandango.alltheleaks.mixin.core",
   "plugin": "dev.uncandango.alltheleaks.mixin.core.plugin.ATLMixinPlugin",
   "compatibilityLevel": "JAVA_21",

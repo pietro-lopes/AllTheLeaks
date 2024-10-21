@@ -201,6 +201,7 @@ dependencies {
     val rhino = "2101.2.5-build.54"
     val sophCore = "curse.maven:sophisticated-core-618298:5810072" // sophisticatedcore-1.21-0.6.45.722.jar
     val athena = "curse.maven:athena-841890:5629395" // athena-neoforge-1.21-4.0.1.jar
+    val jep = "curse.maven:just-enough-professions-jep-417645:5805652" // JustEnoughProfessions-neoforge-1.21.1-4.0.3.jar
 
     // Required
     compileOnly(journeymap)
@@ -239,6 +240,7 @@ dependencies {
     implementation("dev.latvian.mods:rhino:$rhino")
     compileOnly(sophCore)
     compileOnly(athena)
+    compileOnly(jep)
 
     // Testing at runtime
     runtimeOnly(journeymap)
@@ -273,6 +275,7 @@ dependencies {
 
     jeiRuntimeOnly(etf)
     jeiRuntimeOnly(emf)
+    jeiRuntimeOnly(jep)
 //    jeiRuntimeOnly(sereneSeasons)
     emiRuntimeOnly(etf)
     emiRuntimeOnly(emf)
@@ -282,6 +285,7 @@ dependencies {
     jeiServerRuntimeOnly(jei)
     jeiRuntimeOnly(minecoloniesJei)
     jeiServerRuntimeOnly(minecoloniesJei)
+    jeiRuntimeOnly(jep)
 
     emiRuntimeOnly(jeiEmi)
     emiServerRuntimeOnly(jeiEmi)
