@@ -133,6 +133,7 @@ neoForge {
                 programArguments.addAll("--width", "1920", "--height", "1080")
                 gameDirectory = file("runs/client")
                 systemProperty("mixin.debug.export", "true")
+                systemProperty("alltheleaks.dedupe.ingredients", "true")
                 jvmArguments.addAll(
                     "-XX:+UnlockExperimentalVMOptions",
                     "-XX:+UseG1GC",

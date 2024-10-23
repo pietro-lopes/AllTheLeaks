@@ -13,6 +13,7 @@ import org.apache.maven.artifact.versioning.VersionRange;
 import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -29,9 +30,16 @@ public class IssueManager {
 			scanData.getAnnotatedBy(Issue.class, ElementType.TYPE).forEach(annotation -> {
 				String issueId = AnnotationHelper.getValue(annotation, "issueId");
 				String modId = AnnotationHelper.getValue(annotation, "modId");
+				String flag = AnnotationHelper.getValue(annotation, "propertyFlag");
+				boolean flagActivated;
+				if (Objects.equals(flag, "")) {
+					flagActivated = true;
+				} else flagActivated = Boolean.getBoolean(flag);
+				if (!flagActivated) return;
 				Boolean solved = AnnotationHelper.getValue(annotation, "solved");
 				List<String> extraModDep = AnnotationHelper.getValue(annotation, "extraModDep");
 				List<String> extraModDepVersions = AnnotationHelper.getValue(annotation, "extraModDepVersions");
+
 				if (currentDist.isDedicatedServer()) {
 					Dist side = annotation.memberName().contains(".client.mods.") ? Dist.CLIENT : Dist.DEDICATED_SERVER;
 					if (side.isClient()) {

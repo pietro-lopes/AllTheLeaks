@@ -21,4 +21,6 @@ public @interface Issue {
 	String[] extraModDep() default {};
 
 	String[] extraModDepVersions() default {};
+
+	String propertyFlag() default "";
 }
