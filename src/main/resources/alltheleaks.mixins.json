@@ -43,7 +43,8 @@
 		"main.RecipesGuiMixin",
 		"main.RecipeTransferButtonMixin",
 		"main.SGConfigClientMixin",
-		"main.WorldAttachedMixin", "main.SGConfigClientMixin$SGConfigAccessor"
+		"main.SGConfigClientMixin$SGConfigAccessor",
+		"main.WorldAttachedMixin"
 	],
 	"mixins": [
 		"accessor.CitadelServerDataAccessor",
@@ -76,6 +77,7 @@
 		"main.MinerSpiritItemMixin",
 		"main.OccultismCapabilitiesMixin",
 		"main.PlayerEventsMixin",
+		"main.PlayerListMixin",
 		"main.ResourceLocationMixin",
 		"main.ServerPlayerEventsMixin",
 		"main.ServerPlayerMixin"

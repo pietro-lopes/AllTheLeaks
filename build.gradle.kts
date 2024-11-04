@@ -130,9 +130,15 @@ neoForge {
             client()
             jvmArgument("-Dproduction")
         }
+        register("client2-production") {
+            client()
+            jvmArgument("-Dproduction")
+            programArguments.addAll("--username", "Dev2")
+        }
         register("server") {
             server()
             gameDirectory = file("runs/server")
+            jvmArgument("-Dproduction")
         }
 
         configureEach {
