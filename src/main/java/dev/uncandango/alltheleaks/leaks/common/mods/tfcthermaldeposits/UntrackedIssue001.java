@@ -9,7 +9,8 @@ import tfcthermaldeposits.TDForgeEventHandler;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "tfcthermaldeposits", versionRange = "[1.3.2,)")
+@Issue(modId = "tfcthermaldeposits", versionRange = "[1.3.2,)",
+	description = "Clears `TDForgeEventHandler#worldLevel` on server stop")
 public class UntrackedIssue001 {
 	public static final VarHandle WORLD_LEVEL;
 

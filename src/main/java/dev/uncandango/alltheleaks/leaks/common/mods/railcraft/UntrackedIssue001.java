@@ -9,7 +9,7 @@ import net.minecraftforge.event.level.LevelEvent;
 import java.lang.invoke.VarHandle;
 import java.util.Map;
 
-@Issue(modId = "railcraft", versionRange = "[1.1.2,1.1.6]")
+@Issue(modId = "railcraft", versionRange = "[1.1.2,1.1.6]", description = "Clears level from `ChargeProviderImpl.DISTRIBUTION#networks` on level unload")
 public class UntrackedIssue001 {
 	public static final VarHandle NETWORKS;
 
@@ -22,6 +22,7 @@ public class UntrackedIssue001 {
 		gameBus.addListener(this::clearNetwork);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void clearNetwork(LevelEvent.Unload event) {
 		if (!event.getLevel().isClientSide()) {
 			((Map) NETWORKS.get(ChargeProviderImpl.DISTRIBUTION)).remove(event.getLevel());

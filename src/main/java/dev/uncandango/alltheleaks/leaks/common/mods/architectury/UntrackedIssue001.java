@@ -11,7 +11,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "architectury", versionRange = "[9.0.8,)")
+@Issue(modId = "architectury", versionRange = "[9.0.8,)",
+description = "Update `NetworkManagerImpl#clientReceivables` on player clone")
 public class UntrackedIssue001 {
 	public static final VarHandle CLIENT_RECEIVABLES;
 
@@ -25,11 +26,13 @@ public class UntrackedIssue001 {
 	}
 
 	private void updateOnPlayerClone(PlayerEvent.Clone event) {
-		var multiMap = (Multimap<Player, ResourceLocation>) CLIENT_RECEIVABLES.get();
+		@SuppressWarnings("unchecked") var multiMap = (Multimap<Player, ResourceLocation>) CLIENT_RECEIVABLES.get();
 		var originalId = event.getOriginal().getId();
 		var newId = event.getEntity().getId();
+		// We set the id as the original so the map can hash/equals properly
 		event.getEntity().setId(originalId);
 		multiMap.putAll(event.getEntity(), multiMap.removeAll(event.getOriginal()));
+		// We set the id back to its original state
 		event.getEntity().setId(newId);
 	}
 }

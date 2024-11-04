@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/pietro-lopes/AllTheLeaks/issues"
 license = "${mod_license}"
 
 [[mods]]
@@ -9,7 +9,7 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "${mod_authors}"
 description = "${mod_description}"
-#logoFile = ""
+logoFile = "icon.png"
 
 [[dependencies.alltheleaks]]
 modId = "forge"

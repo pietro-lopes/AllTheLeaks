@@ -11,7 +11,7 @@ public interface FakePlayerAccessor {
 
     @Accessor("DUMMY_CONNECTION")
     static @Nullable Connection getDUMMY_CONNECTION() {
-        return null;
-    }
+		throw new AssertionError();
+	}
 
 }

@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(value = OpenGuideHotkey.class, remap = false)
 public interface OpenGuideHotkeyAccessor {
     @Accessor("lastStack")
-    static void atl$setLastStack(ItemStack stack){};
+    static void atl$setLastStack(ItemStack stack){}
 }

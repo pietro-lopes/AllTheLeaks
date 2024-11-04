@@ -1,22 +1,17 @@
 package dev.uncandango.alltheleaks.leaks.client.mods.irons_spellbooks;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
-import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
-import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.gui.overlays.SpellBarOverlay;
 import io.redspace.ironsspellbooks.player.ClientMagicData;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Event;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "irons_spellbooks", versionRange = "[1.20.1-3.4.0,)")
+@Issue(modId = "irons_spellbooks", versionRange = "[1.20.1-3.4.0,)",
+	description = "Clears `SpellBarOverlay#lastSelection` and `ClientMagicData#spellSelectionManager` on client clone")
 public class UntrackedIssue001 {
 	public static final VarHandle LAST_SELECTION;
 	public static final VarHandle SPELL_SELECTION_MANAGER;

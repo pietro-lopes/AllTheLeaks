@@ -1,9 +1,7 @@
 package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.jozufozu.flywheel.util.WorldAttached;
-import com.lowdragmc.lowdraglib.utils.TrackedDummyWorld;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

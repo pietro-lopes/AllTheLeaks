@@ -5,11 +5,12 @@ import mezz.jei.api.JeiPlugin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
+import org.jetbrains.annotations.NotNull;
 
 @JeiPlugin
 public class ATLJeiPlugin implements IModPlugin {
 	@Override
-	public ResourceLocation getPluginUid() {
+	public @NotNull ResourceLocation getPluginUid() {
 		return new ResourceLocation("jei:alltheleaks");
 	}
 

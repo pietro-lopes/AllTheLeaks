@@ -16,6 +16,10 @@ import static dev.uncandango.alltheleaks.leaks.common.mods.irons_spellbooks.Untr
 public class ServerPlayerEventsMixin {
 	@WrapOperation(method = "onPlayerCloned", at = @At(value = "INVOKE", target = "Lio/redspace/ironsspellbooks/api/magic/MagicData;getSyncedData()Lio/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData;", ordinal = 1))
 	private static SyncedSpellData onPlayerCloned(MagicData instance, Operation<SyncedSpellData> original, @Local(argsOnly = true)PlayerEvent.Clone event) {
-		return updateLivingEntityOnSyncedSpellData(instance, original, event);
+		try {
+			return updateLivingEntityOnSyncedSpellData(instance, original, event);
+		} catch (ExceptionInInitializerError e){
+			return original.call(instance);
+		}
 	}
 }

@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "irons_spellbooks", versionRange = "[1.20.1-3.4.0,)", mixins = "main.ServerPlayerEventsMixin")
+@Issue(modId = "irons_spellbooks", versionRange = "[1.20.1-3.4.0,)", mixins = "main.ServerPlayerEventsMixin", description = "Update `SyncedSpellData#livingEntity` on player clone")
 public class UntrackedIssue001 {
 	public static final VarHandle LIVING_ENTITY;
 	static {

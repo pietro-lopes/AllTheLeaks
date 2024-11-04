@@ -5,12 +5,12 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Event;
 
 import java.lang.invoke.VarHandle;
 import java.util.WeakHashMap;
 
-@Issue(modId = "ae2wtlib", versionRange = "[15.2.3,)")
+@Issue(modId = "ae2wtlib", versionRange = "[15.2.3,)",
+	description = "Clears server cloned players from `CraftingTerminalHandler#players`")
 public class UntrackedIssue001 {
 	public static final VarHandle PLAYERS;
 
@@ -24,10 +24,12 @@ public class UntrackedIssue001 {
 		gameBus.addListener(this::clearPlayersLogout);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void clearPlayers(PlayerEvent.Clone event) {
 		((WeakHashMap)PLAYERS.get()).remove(event.getOriginal());
 	}
 
+	@SuppressWarnings("rawtypes")
 	private void clearPlayersLogout(PlayerEvent.PlayerLoggedOutEvent event) {
 		((WeakHashMap)PLAYERS.get()).remove(event.getEntity());
 	}

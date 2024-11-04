@@ -10,5 +10,5 @@ public interface FakePlayerNetHandlerAccessor {
 	@Accessor(value = "DUMMY_CONNECTION", remap = false)
 	static Connection getDUMMY_CONNECTION(){
 		throw new AssertionError();
-	};
+	}
 }

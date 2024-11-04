@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@SuppressWarnings("UnusedReturnValue")
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Issue {
@@ -16,9 +17,19 @@ public @interface Issue {
 
 	String[] mixins() default {};
 
-	boolean solved() default false;
-
 	String[] extraModDep() default {};
 
 	String[] extraModDepVersions() default {};
+
+	String config() default "";
+
+	boolean devOnly() default false;
+
+	String[] mixinsToCancel() default {};
+
+	boolean configActivated() default false;
+
+	String onlyIfModAbsent() default "";
+
+	String description() default "";
 }

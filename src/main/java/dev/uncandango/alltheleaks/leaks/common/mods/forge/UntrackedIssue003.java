@@ -16,12 +16,13 @@ import java.lang.invoke.VarHandle;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Issue(modId = "forge", versionRange = "[47.2,)")
+@Issue(modId = "forge", versionRange = "[47.2,)",
+	description = "Regenerate listeners cache on server stopped")
 public class UntrackedIssue003 {
 	public static final MethodHandle GET_LISTENERS;
 	public static final VarHandle ALL_LISTS;
 	public static final VarHandle LISTS;
-	public static final Class LISTENER_LIST_INST_CLASS;
+	public static final Class<?> LISTENER_LIST_INST_CLASS;
 
 	static {
 		ALL_LISTS = ReflectionHelper.getFieldFromClass(ListenerList.class, "allLists", List.class, true);
@@ -38,7 +39,7 @@ public class UntrackedIssue003 {
 	private void rebuildListenersCache(ServerStoppedEvent event) {
 		try {
 			var watch = Stopwatch.createStarted();
-			var listeners = (List<ListenerList>) ALL_LISTS.get();
+			@SuppressWarnings("unchecked") var listeners = (List<ListenerList>) ALL_LISTS.get();
 			for (var listener : listeners) {
 				var list = (Object[]) LISTS.get(listener);
 				for (var ev : list) {
