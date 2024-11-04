@@ -15,7 +15,9 @@ public class ServerPlayerMixin {
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
 	private void atl$clearTriggers(MinecraftServer server, ServerLevel level, GameProfile gameProfile, CallbackInfo ci) {
 		if ((Object) this instanceof FakePlayer fakePlayer) {
-			fakePlayer.getAdvancements().stopListening();
+			if (server.getPlayerList().getPlayer(fakePlayer.getUUID()) == null){
+				fakePlayer.getAdvancements().stopListening();
+			}
 		}
 	}
 }
