@@ -61,6 +61,7 @@
 		"main.CasterTomeRegistryMixin",
 		"main.ChunkMapMixin",
 		"main.CuriosEventHandlerMixin",
+		"main.DroneEntityMixin",
 		"main.DroppedItemCapabilityMixin",
 		"main.EntityTickListMixin",
 		"main.EventHandlerMixin",
