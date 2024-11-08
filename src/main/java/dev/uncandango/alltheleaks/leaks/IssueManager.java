@@ -4,13 +4,17 @@ import com.google.common.collect.Sets;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.AnnotationHelper;
 import dev.uncandango.alltheleaks.annotation.Issue;
+import dev.uncandango.alltheleaks.config.ATLProperties;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.LoadingModList;
+import net.neoforged.neoforgespi.language.ModFileScanData;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.artifact.versioning.VersionRange;
 
 import java.lang.annotation.ElementType;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,26 +24,64 @@ import java.util.function.Supplier;
 public class IssueManager {
 	private static final List<String> constructors = new ArrayList<>();
 	private static Set<String> mixinAllowed;
+	private static final List<ModFileScanData.AnnotationData> annotations = new ArrayList<>();
+	private static Set<String> mixinToCancel;
+
+	public static Set<String> getMixinToCancel() {
+		if (mixinToCancel == null) {
+			getAllowedMixins();
+		}
+		return mixinToCancel;
+	}
 
 	public static Set<String> getAllowedMixins() {
 		if (mixinAllowed == null) {
 			mixinAllowed = Sets.newHashSet();
+			mixinToCancel = Sets.newHashSet();
 			@SuppressWarnings("UnstableApiUsage")
 			var scanData = LoadingModList.get().getModFileById(AllTheLeaks.MOD_ID).getFile().getScanResult();
 			var currentDist = FMLEnvironment.dist;
 			scanData.getAnnotatedBy(Issue.class, ElementType.TYPE).forEach(annotation -> {
+				if (AllTheLeaks.INDEV) {
+					annotations.add(annotation);
+				}
 				String issueId = AnnotationHelper.getValue(annotation, "issueId");
 				String modId = AnnotationHelper.getValue(annotation, "modId");
-				String flag = AnnotationHelper.getValue(annotation, "propertyFlag");
+				String flag = AnnotationHelper.getValue(annotation, "config");
+				String modAbsent = AnnotationHelper.getValue(annotation, "onlyIfModAbsent");
 				boolean flagActivated;
 				if (Objects.equals(flag, "")) {
 					flagActivated = true;
-				} else flagActivated = Boolean.getBoolean(flag);
-				if (!flagActivated) return;
+				} else {
+					try {
+						Field configValue = ATLProperties.class.getField(flag);
+						flagActivated = (boolean) configValue.get(ATLProperties.get());
+					} catch (NoSuchFieldException | IllegalAccessException e) {
+						AllTheLeaks.LOGGER.warn("Config property {} does not exist!", flag);
+						return;
+					}
+				}
+				if (!flagActivated) {
+					AllTheLeaks.LOGGER.info("Skipping feature {} from mod {} as it's feature flag is not activated!", issueId, modId);
+					return;
+				}
+				if (modAbsent != null && LoadingModList.get().getModFileById(modAbsent) != null) {
+					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as mod {} is present!", issueId, modId, modAbsent);
+					return;
+				}
+				Boolean devOnly = AnnotationHelper.getValue(annotation, "devOnly");
+				if (devOnly && !AllTheLeaks.INDEV) {
+					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it's dev only!", issueId, modId);
+					return;
+				}
 				Boolean solved = AnnotationHelper.getValue(annotation, "solved");
 				List<String> extraModDep = AnnotationHelper.getValue(annotation, "extraModDep");
 				List<String> extraModDepVersions = AnnotationHelper.getValue(annotation, "extraModDepVersions");
 
+				if (!currentDist.isDedicatedServer() && annotation.memberName().contains(".server.mods.")) {
+					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it is server side only!", issueId, modId);
+					return;
+				}
 				if (currentDist.isDedicatedServer()) {
 					Dist side = annotation.memberName().contains(".client.mods.") ? Dist.CLIENT : Dist.DEDICATED_SERVER;
 					if (side.isClient()) {
@@ -53,10 +95,17 @@ public class IssueManager {
 				}
 				String versionRange = AnnotationHelper.getValue(annotation, "versionRange");
 				List<String> mixins = AnnotationHelper.getValue(annotation, "mixins");
+				List<String> mixinsToCancel = AnnotationHelper.getValue(annotation, "mixinsToCancel");
 				var condition = generateCondition(modId, versionRange, annotation.memberName(), extraModDep, extraModDepVersions);
-				if (condition.get() && mixins != null && !mixins.isEmpty()) {
-					AllTheLeaks.LOGGER.info("Mixins added to allowed list: {}", mixins);
-					mixinAllowed.addAll(mixins);
+				if (condition.get()) {
+					if (mixins != null && !mixins.isEmpty()) {
+						AllTheLeaks.LOGGER.info("Mixins added to allowed list: {}", mixins);
+						mixinAllowed.addAll(mixins);
+					}
+					if (mixinsToCancel != null && !mixinsToCancel.isEmpty()) {
+						AllTheLeaks.LOGGER.info("Mixins added to cancel list: {}", mixinsToCancel);
+						mixinToCancel.addAll(mixinsToCancel);
+					}
 				}
 			});
 		}
@@ -67,14 +116,21 @@ public class IssueManager {
 		constructors.forEach(ctor -> {
 			try {
 				var clazz = Class.forName(ctor);
-				var ctorClazz = clazz.getDeclaredConstructors()[0];
-				ctorClazz.newInstance();
+				Method instanceMethod = null;
+				try {
+					instanceMethod = clazz.getDeclaredMethod("getInstance");
+				} catch (NoSuchMethodException ignore) {
+				}
+				if (instanceMethod != null) {
+					instanceMethod.invoke(null);
+				} else {
+					var ctorClazz = clazz.getDeclaredConstructors()[0];
+					ctorClazz.newInstance();
+				}
 			} catch (Throwable e) {
 				AllTheLeaks.LOGGER.error("Failed to instantiate constructor.", e);
 			}
 		});
-
-
 	}
 
 	public static Supplier<Boolean> generateCondition(String modId, String versionRange, String annotatedClass, List<String> extraModDep, List<String> extraModDepVersions) {
@@ -83,8 +139,9 @@ public class IssueManager {
 			if (mod != null) {
 				try {
 					var range = VersionRange.createFromVersionSpec(versionRange);
-					var modVer = new DefaultArtifactVersion(mod.versionString());
-					if (range.containsVersion(modVer)) {
+					var modVerString = mod.versionString();
+					var modVer = new DefaultArtifactVersion(modVerString);
+					if (range.containsVersion(modVer) || modVerString.equals("0.0NONE")) {
 						if (!extraModDep.isEmpty()) {
 							for (int i = 0; i < extraModDep.size(); i++) {
 								var dep = LoadingModList.get().getModFileById(extraModDep.get(i));
@@ -94,8 +151,9 @@ public class IssueManager {
 									return false;
 								}
 								var rangeDepVer = VersionRange.createFromVersionSpec(extraModDepVersions.get(i));
-								var depVer = new DefaultArtifactVersion(dep.versionString());
-								if (rangeDepVer.containsVersion(depVer)) {
+								var depVerString = dep.versionString();
+								var depVer = new DefaultArtifactVersion(depVerString);
+								if (rangeDepVer.containsVersion(depVer) || depVerString.equals("0.0NONE")) {
 									AllTheLeaks.LOGGER.info("Extra dependecy Mod {} matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));
 								} else {
 									AllTheLeaks.LOGGER.info("Extra dependecy Mod {} does NOT matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));

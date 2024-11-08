@@ -1,11 +1,13 @@
 package dev.uncandango.alltheleaks;
 
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.IngredientDedupe;
 import dev.uncandango.alltheleaks.leaks.IssueManager;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +16,21 @@ import org.slf4j.LoggerFactory;
 public class AllTheLeaks {
 	public static final String MOD_ID = "alltheleaks";
 	public static final Logger LOGGER = LoggerFactory.getLogger("AllTheLeaks");
+	public static final boolean INDEV = Boolean.getBoolean("alltheleaks.indev");
 
 	public AllTheLeaks(IEventBus eventModBus, ModContainer modContainer) {
 		var gameBus = NeoForge.EVENT_BUS;
 		eventModBus.addListener(this::commonSetup);
+		gameBus.addListener(this::registerReloadListener);
 	}
 
 	private void commonSetup(InterModProcessEvent event) {
 		event.enqueueWork(IssueManager::initiateIssues);
+	}
+
+	private void registerReloadListener(AddReloadListenerEvent event) {
+		if (IngredientDedupe.INSTANCE != null) {
+			event.addListener(IngredientDedupe.INSTANCE);
+		}
 	}
 }

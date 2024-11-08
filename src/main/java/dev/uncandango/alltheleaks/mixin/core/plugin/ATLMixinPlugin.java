@@ -1,14 +1,27 @@
 package dev.uncandango.alltheleaks.mixin.core.plugin;
 
 import dev.uncandango.alltheleaks.leaks.IssueManager;
+import org.apache.commons.lang3.stream.Streams;
+import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import org.spongepowered.asm.service.MixinService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ATLMixinPlugin implements IMixinConfigPlugin {
+	private static boolean containsReviveInst(AbstractInsnNode instruction) {
+		if (instruction instanceof MethodInsnNode mInst) {
+			return mInst.name.equals("revive");
+		}
+		return false;
+	}
+
 	@Override
 	public void onLoad(String mixinPackage) {
 
@@ -21,8 +34,21 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-//		if (mixinClassName.contains("NeoForgeServerSparkPluginMixin")) return true;
-		return IssueManager.getAllowedMixins().contains(mixinClassName.replace("dev.uncandango.alltheleaks.mixin.core.", ""));
+		AtomicBoolean result = new AtomicBoolean(IssueManager.getAllowedMixins().contains(mixinClassName.replace("dev.uncandango.alltheleaks.mixin.core.", "")));
+		if (result.get()) {
+			if (targetClassName.equals("top.theillusivec4.curios.common.event.CuriosEventHandler")) {
+				try {
+					var classNode = MixinService.getService().getBytecodeProvider().getClassNode("top.theillusivec4.curios.common.event.CuriosEventHandler");
+					classNode.methods.stream().filter(m -> m.name.equals("playerClone")).findFirst()
+						.ifPresent(methodNode -> {
+							result.set(Streams.of(methodNode.instructions.toArray()).anyMatch(ATLMixinPlugin::containsReviveInst));
+						});
+				} catch (ClassNotFoundException | IOException e) {
+					result.set(false);
+				}
+			}
+		}
+		return result.get();
 	}
 
 	@Override

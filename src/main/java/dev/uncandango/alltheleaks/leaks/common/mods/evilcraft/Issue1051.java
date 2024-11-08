@@ -10,7 +10,7 @@ import org.cyclops.evilcraft.enchantment.entityeffect.EnchantmentEntityEffectHea
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "evilcraft", issueId = "#1051", versionRange = "(,1.2.58]")
+@Issue(modId = "evilcraft", issueId = "#1051", versionRange = "[1.2.50,)")
 public class Issue1051 {
 	private static final VarHandle LAST_DAMAGE_EVENT;
 

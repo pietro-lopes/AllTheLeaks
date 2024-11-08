@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.invoke.VarHandle;
 
@@ -25,7 +26,8 @@ public class UntrackedIssue001 implements UpdateableLevel<UntrackedIssue001> {
 	}
 
 	@Override
-	public void onClientLevelUpdated(ClientLevel level) {
+	public void atl$onClientLevelUpdated(@Nullable ClientLevel level) {
+		if (level == null) return;
 		renderSnowAndRain_level.set(Minecraft.getInstance().levelRenderer, level);
 	}
 }

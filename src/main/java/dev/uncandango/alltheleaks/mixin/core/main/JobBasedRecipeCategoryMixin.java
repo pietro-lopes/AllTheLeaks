@@ -12,6 +12,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -39,7 +40,8 @@ public class JobBasedRecipeCategoryMixin implements UpdateableLevel<JobBasedReci
 	}
 
 	@Override
-	public void onClientLevelUpdated(ClientLevel level) {
+	public void atl$onClientLevelUpdated(@Nullable ClientLevel level) {
+		if (level == null) return;
 		this.citizen = createCitizenWithJob(this.job, level);
 	}
 

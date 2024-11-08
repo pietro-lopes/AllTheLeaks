@@ -28,7 +28,11 @@ public class EmiLootEntityEmiStackMixin implements UpdateableLevel<EntityEmiStac
 	}
 
 	@Override
-	public void onClientLevelUpdated(ClientLevel level) {
+	public void atl$onClientLevelUpdated(ClientLevel level) {
+		if (level == null) {
+			this.entity = null;
+			return;
+		}
 		if (this.entity == null) return;
 		var newEntity = this.entity.getType().create(level);
 		if (this.entity instanceof Sheep sheep) {

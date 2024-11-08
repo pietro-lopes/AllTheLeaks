@@ -2,9 +2,10 @@ package dev.uncandango.alltheleaks.mixin;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.level.LevelEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -19,24 +20,37 @@ public interface UpdateableLevel<T> {
 		}
 	}
 
-	void onClientLevelUpdated(ClientLevel level);
+	void atl$onClientLevelUpdated(@Nullable ClientLevel level);
+
+	class RenderEnginesUpdated extends Event {
+		@Nullable ClientLevel level;
+
+		public RenderEnginesUpdated(@Nullable ClientLevel level) {
+			this.level = level;
+		}
+
+
+		public @Nullable ClientLevel getLevel() {
+			return level;
+		}
+	}
 
 	@EventBusSubscriber(Dist.CLIENT)
 	class Manager {
 
 		@SubscribeEvent
-		static public void onLevelLoad(LevelEvent.Load event) {
-			if (event.getLevel().isClientSide()) {
-				synchronized (INSTANCES) {
-					var it = INSTANCES.iterator();
-					while (it.hasNext()) {
-						var instance = it.next().get();
-						if (instance != null) {
-							instance.onClientLevelUpdated((ClientLevel) event.getLevel());
-						} else it.remove();
+		static public void onLevelLoad(RenderEnginesUpdated event) {
+			synchronized (INSTANCES) {
+				var it = INSTANCES.iterator();
+				while (it.hasNext()) {
+					var instance = it.next().get();
+					if (instance != null) {
+						instance.atl$onClientLevelUpdated(event.getLevel());
+					} else {
+						it.remove();
 					}
-					((ArrayList)INSTANCES).trimToSize();
 				}
+				((ArrayList) INSTANCES).trimToSize();
 			}
 		}
 	}

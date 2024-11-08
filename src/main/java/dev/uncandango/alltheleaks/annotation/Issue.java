@@ -22,5 +22,15 @@ public @interface Issue {
 
 	String[] extraModDepVersions() default {};
 
-	String propertyFlag() default "";
+	String config() default "";
+
+	boolean devOnly() default false;
+
+	String[] mixinsToCancel() default {};
+
+	boolean configActivated() default false;
+
+	String onlyIfModAbsent() default "";
+
+	String description() default "";
 }

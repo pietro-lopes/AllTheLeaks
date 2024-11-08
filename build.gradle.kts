@@ -1,4 +1,8 @@
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
+import com.google.gson.stream.JsonReader
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
+import java.nio.file.Files
 
 plugins {
     java
@@ -61,6 +65,11 @@ repositories {
         }
     }
 
+    maven {
+        name = "Iron's Maven - Release"
+        url = uri("https://code.redspace.io/releases")
+    }
+
     flatDir {
         dir("libs")
     }
@@ -114,13 +123,11 @@ neoForge {
         }
         register("server-jei") {
             server()
-//            programArgument("--nogui")
             gameDirectory = file("runs/server")
             sourceSet = sourceSets.getByName("jeiServer")
         }
         register("server-emi") {
             server()
-//            programArgument("--nogui")
             gameDirectory = file("runs/server")
             sourceSet = sourceSets.getByName("emiServer")
         }
@@ -133,7 +140,6 @@ neoForge {
                 programArguments.addAll("--width", "1920", "--height", "1080")
                 gameDirectory = file("runs/client")
                 systemProperty("mixin.debug.export", "true")
-                systemProperty("alltheleaks.dedupe.ingredients", "true")
                 jvmArguments.addAll(
                     "-XX:+UnlockExperimentalVMOptions",
                     "-XX:+UseG1GC",
@@ -167,14 +173,12 @@ dependencies {
     val railcraft = "curse.maven:railcraft-reborn-901491:5650759" // "1.2.2"
     val spark = "curse.maven:spark-361579:5759671" // "1.10.109-neoforge"
     val pnmc = "curse.maven:pneumaticcraft-repressurized-281849:5776294" // "8.1.4"
-    val iss = "curse.maven:irons-spells-n-spellbooks-855414:5769235" // "1.21-3.7.1"
+    val iss = "1.21-3.7.1" //  "curse.maven:irons-spells-n-spellbooks-855414:5769235" // "1.21-3.7.1"
     val geckolib = "1.21.1:4.6.6"
     val mousetweaks = "curse.maven:mouse-tweaks-60089:5637846" // 2.26.1
     val ftblibrary = "curse.maven:ftb-library-forge-404465:5754910" // 2101.1.3
     val jade = "curse.maven:jade-324717:5639932" // 15.1.8+neoforge
-    val entityCullingCompile = "blank:entityculling:neoforge-1.6.7-mc1.21" // 1.6.7
-    val entityCullingRuntime = "blank:entityculling:neoforge-1.7.0-mc1.21" // 1.7.0
-    val evilcraft = "curse.maven:evilcraft-74610:5776798" // 1.2.58
+    val evilcraft = "curse.maven:evilcraft-74610:5602422" // 1.2.50
     val mekanism = "curse.maven:mekanism-268560:5680395" // 10.7.7.64
     val easyvillager = "curse.maven:easy-villagers-400514:5724571" // 1.1.23
     val iceberg = "curse.maven:iceberg-520110:5750025" // 1.2.8
@@ -184,16 +188,20 @@ dependencies {
     val securitycraft = "curse.maven:security-craft-64760:5655403" // 1.9.10-beta9
     val lootr = "curse.maven:lootr-361276:5709012" // 10.33.82
     val dummmmmmy = "curse.maven:mmmmmmmmmmmm-225738:5779508" // 1.21-2.0.6
-    val jeiEmi = "curse.maven:jei-238222:5692315" // jei-1.21.1-neoforge-19.16.4.168.jar
+    val jeiEmi = "curse.maven:jei-238222:5781415" // jei-1.21.1-neoforge-19.19.6.235.jar
     val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
+    val jeiRuntime = "curse.maven:jei-238222:5846880" // jei-1.21.1-neoforge-19.21.0.247.jar
     val etf = "curse.maven:entity-texture-features-fabric-568563:5734430" // entity_texture_features_neoforge_1.21-6.2.5.jar
+    val etfRuntime = "curse.maven:entity-texture-features-fabric-568563:5874160" // entity_texture_features_neoforge_1.21.1-6.2.7.jar
     val emf = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
+    val emfRuntime = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
     val sereneSeasons = "curse.maven:serene-seasons-291874:5753503" // SereneSeasons-neoforge-1.21.1-10.1.0.1.jar
     val connectivity = "curse.maven:connectivity-470193:5728632" // connectivity-1.21-5.8.jar
     val emi = "curse.maven:emi-580555:5769216" // emi-1.1.14+1.21.1+neoforge.jar
+    val emiRuntime = "curse.maven:emi-580555:5872513" // emi-1.1.18+1.21.1+neoforge.jar
     val emiLoot = "curse.maven:emi-loot-681783:5760220" // emi_loot-0.7.4+1.21+neoforge.jar
     val minecoloniesCompile = "curse.maven:minecolonies-245506:5734626" // minecolonies-1.1.701-1.21.1-snapshot.jar
-    val minecoloniesJei = "curse.maven:minecolonies-245506:5809182" // minecolonies-1.1.726-1.21.1-snapshot.jar
+    val minecoloniesRuntime = "curse.maven:minecolonies-245506:5879446" // minecolonies-1.1.774-1.21.1-snapshot.jar
     val creativecore = "curse.maven:creativecore-257814:5773866" // CreativeCore_NEOFORGE_v2.12.17_mc1.21.1.jar
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
@@ -203,13 +211,28 @@ dependencies {
     val sophCore = "curse.maven:sophisticated-core-618298:5810072" // sophisticatedcore-1.21-0.6.45.722.jar
     val athena = "curse.maven:athena-841890:5629395" // athena-neoforge-1.21-4.0.1.jar
     val jep = "curse.maven:just-enough-professions-jep-417645:5805652" // JustEnoughProfessions-neoforge-1.21.1-4.0.3.jar
+    val jepRuntime = "curse.maven:just-enough-professions-jep-417645:5805652" // JustEnoughProfessions-neoforge-1.21.1-4.0.3.jar
+    val jdt = "curse.maven:just-dire-things-1002348:5615453" // justdirethings-1.0.0.jar
+    val curios = "curse.maven:curios-continuation-1037991:5638950" // curios-neoforge-9.0.6+1.21.jar
+    val reliquary = "curse.maven:reliquary-reincarnations-241319:5860336" // reliquary-1.21.1-2.0.44.1245.jar
+    val stp = "curse.maven:smithing-template-viewer-1133580:5871981" // smithingtemplateviewer-1.0.0.jar
+    val travelersBackpack = "curse.maven:travelers-backpack-321117:5602831" // travelersbackpack-neoforge-1.21-10.0.5.jar
+    val accessories = "curse.maven:accessories-938917:5848473" // accessories
+    val accessoriesCclayer = "curse.maven:accessories-cc-layer-1005683:5610040" // accessories_cclayer-9.0.5-beta.6+1.21.jar
+    val genetics = "curse.maven:genetics-resequenced-1040563:5613298" // geneticsresequenced-1.21-1.1.10.jar
+    val buildingGadgets = "curse.maven:building-gadgets-298187:5615703" // buildinggadgets2-1.3.7.jar
+
+    // You need to download yourself and put on "libs" folder
+    // https://www.curseforge.com/minecraft/mc-mods/entityculling/files/all?page=1&pageSize=20&version=1.21.1&gameVersionTypeId=6
+    val entityCullingCompile = "blank:entityculling:neoforge-1.6.7-mc1.21" // 1.6.7
+    val entityCullingRuntime = "blank:entityculling:neoforge-1.7.0-mc1.21" // 1.7.0
 
     // Required
     compileOnly(journeymap)
     compileOnly(railcraft)
     compileOnly(spark)
     compileOnly(pnmc)
-    compileOnly(iss)
+    compileOnly("io.redspace:irons_spellbooks:${iss}")
     compileOnly(mousetweaks)
     compileOnly("software.bernie.geckolib:geckolib-neoforge-${geckolib}")
     compileOnly(ftblibrary)
@@ -237,89 +260,68 @@ dependencies {
     compileOnly(ambientsounds)
     compileOnly(occultism)
     compileOnly(mahou)
-    implementation(interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs")!!)
+    implementation("dev.latvian.mods:kubejs-neoforge:$kubejs")?.let {
+        interfaceInjectionData(it)
+    }
     implementation("dev.latvian.mods:rhino:$rhino")
     compileOnly(sophCore)
     compileOnly(athena)
     compileOnly(jep)
+    compileOnly(jdt)
+    compileOnly(curios)
+    compileOnly(reliquary)
+    compileOnly(stp)
+    compileOnly(travelersBackpack)
+    compileOnly(accessories)
+    compileOnly(accessoriesCclayer)
+    compileOnly(genetics)
+    compileOnly(buildingGadgets)
 
-    // Testing at runtime
-    runtimeOnly(journeymap)
-    runtimeOnly(railcraft)
-    runtimeOnly(spark)
-    runtimeOnly(pnmc)
-    runtimeOnly(iss)
-    runtimeOnly(mousetweaks)
-    runtimeOnly("software.bernie.geckolib:geckolib-neoforge-${geckolib}")
-    runtimeOnly(ftblibrary)
-    runtimeOnly(jade)
+    // Testing at runtime from latest version reading a CF file
+    val gson = GsonBuilder().create()
+    val minecraftInstanceJson = Files.newInputStream(File("minecraftinstance.json").toPath()).use { inputStream ->
+        val jsonReader = JsonReader(inputStream.reader())
+        gson.fromJson<JsonObject>(jsonReader, JsonObject::class.java)
+    }
+    minecraftInstanceJson.get("installedAddons").asJsonArray.forEach {
+        val addonJson = it.asJsonObject
+        val cfId = addonJson.get("addonID").asNumber
+        val nameId = addonJson.get("webSiteURL").asString.split("/").last()
+        val fileId = addonJson.getAsJsonObject("installedFile").asJsonObject.get("id").asNumber
+//        println("runtimeOnly(\"curse.maven:$nameId-$cfId:$fileId\")")
+        if (nameId.contains("curios")) return@forEach
+        runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
+    }
+
     runtimeOnly(entityCullingRuntime)
-    runtimeOnly(evilcraft)
-    runtimeOnly(mekanism)
-    runtimeOnly(easyvillager)
-    runtimeOnly(iceberg)
-    runtimeOnly(findme)
-    runtimeOnly(ars)
-    runtimeOnly(ftbquests)
-    runtimeOnly(securitycraft)
-    runtimeOnly(lootr)
-    runtimeOnly(dummmmmmy)
 
-    runtimeOnly(connectivity)
-    runtimeOnly(creativecore)
-    runtimeOnly(ambientsounds)
-    runtimeOnly(occultism)
-    runtimeOnly(mahou)
-    runtimeOnly(sophCore)
-    runtimeOnly(athena)
-
-
-    jeiRuntimeOnly(etf)
-    jeiRuntimeOnly(emf)
-    jeiRuntimeOnly(jep)
+    jeiRuntimeOnly(etfRuntime)
+    jeiRuntimeOnly(emfRuntime)
+    jeiRuntimeOnly(jepRuntime)
 //    jeiRuntimeOnly(sereneSeasons)
-    emiRuntimeOnly(etf)
-    emiRuntimeOnly(emf)
+    emiRuntimeOnly(etfRuntime)
+    emiRuntimeOnly(emfRuntime)
 //    emiRuntimeOnly(sereneSeasons)
 
-    jeiRuntimeOnly(jei)
-    jeiServerRuntimeOnly(jei)
-    jeiRuntimeOnly(minecoloniesJei)
-    jeiServerRuntimeOnly(minecoloniesJei)
-    jeiRuntimeOnly(jep)
+    jeiRuntimeOnly(jeiRuntime)
+    jeiServerRuntimeOnly(jeiRuntime)
+    jeiRuntimeOnly(minecoloniesRuntime)
+    jeiServerRuntimeOnly(minecoloniesRuntime)
+    jeiRuntimeOnly(jepRuntime)
 
     emiRuntimeOnly(jeiEmi)
     emiServerRuntimeOnly(jeiEmi)
-    emiRuntimeOnly(emi)
-    emiServerRuntimeOnly(emi)
+    emiRuntimeOnly(emiRuntime)
+    emiServerRuntimeOnly(emiRuntime)
     emiRuntimeOnly(emiLoot)
     emiServerRuntimeOnly(emiLoot)
-    emiRuntimeOnly(minecoloniesCompile)
-    emiServerRuntimeOnly(minecoloniesCompile)
+    emiRuntimeOnly(minecoloniesRuntime)
+    emiServerRuntimeOnly(minecoloniesRuntime)
 
     // Dependencies for runtime
-    runtimeOnly("curse.maven:caelus-308989:5442975") // caelus-neoforge-7.0.0+1.21.jar
-    runtimeOnly("curse.maven:adorned-1036809:5652826") // curios-neoforge-9.1.2+1.21.0.jar
-    runtimeOnly("curse.maven:architectury-api-419699:5553800") // architectury-13.0.6-neoforge.jar
-    runtimeOnly("curse.maven:resourceful-lib-570073:5483169") // resourcefullib-neoforge-1.21-3.0.9.jar
-    runtimeOnly("curse.maven:resourceful-config-714059:5548748") // resourcefulconfig-neoforge-1.21-3.0.3.jar
-    runtimeOnly("curse.maven:cyclops-core-232758:5666110") // cyclopscore-1.21.1-neoforge-1.20.5-581.jar
-    runtimeOnly("curse.maven:ftb-teams-forge-404468:5631446") // ftb-teams-neoforge-2101.1.0.jar
-    runtimeOnly("curse.maven:playeranimator-658587:5698755") // player-animation-lib-forge-2.0.0-alpha1+1.21.jar
-    runtimeOnly("curse.maven:selene-499980:5764367")
 //    jeiRuntimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
 //    emiRuntimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
-    runtimeOnly("curse.maven:cupboard-326652:5570763") // cupboard-1.21-2.8.jar
-    runtimeOnly("curse.maven:fzzy-config-1005914:5778237") // fzzy_config-0.5.1+1.20.6+neoforge.jar
-    runtimeOnly("curse.maven:kotlin-for-forge-351264:5611971") // kotlinforforge-5.5.0-all.jar
-    runtimeOnly("curse.maven:blockui-522992:5782223") // blockui-1.0.192-1.21.1-snapshot.jar
-    runtimeOnly("curse.maven:domum-ornamentum-527361:5764083") // domum_ornamentum-1.0.204-1.21.1-snapshot.jar
-    runtimeOnly("curse.maven:multi-piston-303278:5783614") // multipiston-1.2.51-1.21.1-snapshot.jar
-    runtimeOnly("curse.maven:structurize-298744:5761666") // structurize-1.0.752-1.21.1-snapshot.jar
-    runtimeOnly("curse.maven:towntalk-900364:5653504") // towntalk-1.2.0.jar
-    runtimeOnly("curse.maven:modonomicon-538392:5786073") // modonomicon-1.21.1-neoforge-1.108.1.jar
-    runtimeOnly("curse.maven:smartbrainlib-661293:5723837") // SmartBrainLib-neoforge-1.21.1-1.16.1.jar
-    runtimeOnly("curse.maven:sophisticated-backpacks-422301:5787622") // sophisticatedbackpacks-1.21-3.20.17.1113.jar
+    runtimeOnly("curse.maven:playeranimator-658587:5698755") // player-animation-lib-forge-2.0.0-alpha1+1.21.jar
 
     // LeakDiagTool
     runtimeOnly("blank:leakdiagtool:0.0.1-beta")

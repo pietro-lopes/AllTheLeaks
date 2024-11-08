@@ -5,7 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-@Issue(modId = "minecraft", versionRange = "[1.21,1.21.1]")
+@Issue(modId = "minecraft", versionRange = "1.21.1")
 public class UntrackedIssue002 {
 	public UntrackedIssue002() {
 		var gameBus = NeoForge.EVENT_BUS;
