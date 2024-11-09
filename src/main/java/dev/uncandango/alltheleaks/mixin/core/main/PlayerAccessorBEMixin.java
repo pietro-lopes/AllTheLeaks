@@ -34,7 +34,7 @@ public abstract class PlayerAccessorBEMixin extends BaseMachineBE implements Upd
 	@WrapOperation(method = "updateServerPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;getPlayer(Ljava/util/UUID;)Lnet/minecraft/server/level/ServerPlayer;"))
 	private ServerPlayer validatePlayer(PlayerList instance, UUID playerUUID, Operation<ServerPlayer> original) {
 		var result = original.call(instance, playerUUID);
-		if (result.isRemoved()) {
+		if (result != null && result.isRemoved()) {
 			return null;
 		} else {
 			return result;
