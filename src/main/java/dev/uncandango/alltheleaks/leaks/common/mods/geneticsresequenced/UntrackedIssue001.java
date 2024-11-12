@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@Issue(modId = "geneticsresequenced", versionRange = "[1.1.10,)")
+@Issue(modId = "geneticsresequenced", versionRange = "[1.1.10,1.5.1]")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

@@ -16,7 +16,7 @@ import java.util.concurrent.Executor;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@Issue(modId = "minecraft", versionRange = "1.21.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor"}, config = "ingredientDedupe", configActivated = true)
+@Issue(modId = "minecraft", issueId = "Ingredient Deduplication",versionRange = "1.21.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor"}, config = "ingredientDedupe", configActivated = false)
 public class IngredientDedupe implements PreparableReloadListener {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;
 	public static IngredientDedupe INSTANCE;

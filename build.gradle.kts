@@ -139,6 +139,7 @@ neoForge {
             if (type.get().startsWith("client")) {
                 programArguments.addAll("--width", "1920", "--height", "1080")
                 gameDirectory = file("runs/client")
+                systemProperty("alltheleaks.indev", "true")
                 systemProperty("mixin.debug.export", "true")
                 jvmArguments.addAll(
                     "-XX:+UnlockExperimentalVMOptions",
@@ -276,6 +277,8 @@ dependencies {
     compileOnly(accessoriesCclayer)
     compileOnly(genetics)
     compileOnly(buildingGadgets)
+    compileOnly("curse.maven:ftb-jei-extras-1103259:5725276") // ftbjeiextras-21.1.0.jar
+    compileOnly("curse.maven:productivebees-377897:5611632") // productivebees-1.21.0-13.4.0.jar
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
@@ -325,6 +328,17 @@ dependencies {
 
     // LeakDiagTool
     runtimeOnly("blank:leakdiagtool:0.0.1-beta")
+
+    // for Ingredient Dedupe runtime test
+
+    runtimeOnly("curse.maven:ftb-jei-extras-1103259:5883774") // ftbjeiextras-21.1.2.jar
+    runtimeOnly("curse.maven:glodium-957920:5821676") // Glodium-1.21-2.2-neoforge.jar
+    runtimeOnly("curse.maven:advancedae-1084104:5881249") // AdvancedAE-1.1.1-1.21.1.jar
+    runtimeOnly("curse.maven:ex-pattern-provider-892005:5887634") // ExtendedAE-1.21-2.1.4-neoforge.jar
+    runtimeOnly("curse.maven:productivebees-377897:5878141") // productivebees-1.21.1-13.6.4.jar
+    runtimeOnly("curse.maven:applied-energistics-2-223794:5729094") // appliedenergistics2-19.0.23-beta.jar
+    runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
+    runtimeOnly("curse.maven:titanium-287342:5881103")
 }
 
 tasks {
