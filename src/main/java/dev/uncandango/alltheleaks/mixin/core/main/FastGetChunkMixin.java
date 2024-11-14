@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Mixin(StructureManager.class)
-public abstract class FastGetChunk {
+public abstract class FastGetChunkMixin {
 	@Inject(
 		method = "Lnet/minecraft/world/level/StructureManager;startsForStructure(Lnet/minecraft/core/SectionPos;Lnet/minecraft/world/level/levelgen/structure/Structure;)Ljava/util/List;",
 		at = @At(value = "HEAD"),

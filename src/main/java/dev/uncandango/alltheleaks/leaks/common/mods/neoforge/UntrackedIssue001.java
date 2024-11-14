@@ -2,6 +2,6 @@ package dev.uncandango.alltheleaks.leaks.common.mods.neoforge;
 
 import dev.uncandango.alltheleaks.annotation.Issue;
 
-@Issue(modId = "neoforge", versionRange = "[21.,)", mixins = "main.FastGetChunk", config = "experimentalStructureGeneration") //, configActivated = true
+@Issue(modId = "neoforge", versionRange = "[21.,)", mixins = {"main.FastGetChunkMixin"}, config = "experimentalStructureGeneration")
 public class UntrackedIssue001 {
 }
