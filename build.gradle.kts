@@ -279,6 +279,7 @@ dependencies {
     compileOnly(buildingGadgets)
     compileOnly("curse.maven:ftb-jei-extras-1103259:5725276") // ftbjeiextras-21.1.0.jar
     compileOnly("curse.maven:productivebees-377897:5611632") // productivebees-1.21.0-13.4.0.jar
+    compileOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
@@ -339,6 +340,7 @@ dependencies {
     runtimeOnly("curse.maven:applied-energistics-2-223794:5729094") // appliedenergistics2-19.0.23-beta.jar
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
+    runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
 }
 
 tasks {
