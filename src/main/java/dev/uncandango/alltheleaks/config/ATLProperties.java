@@ -20,6 +20,7 @@ public class ATLProperties {
 	public boolean ingredientDedupe;
 	public boolean entitySectionCME;
 	public boolean debugItemStackModifications;
+	public boolean experimentalStructureGeneration;
 	private JsonObject properties;
 
 	private ATLProperties() {
@@ -39,6 +40,7 @@ public class ATLProperties {
 			}
 			this.entitySectionCME = GsonHelper.getAsBoolean(properties, "entitySectionCME", false);
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
+			this.experimentalStructureGeneration = GsonHelper.getAsBoolean(properties, "experimentalStructureGeneration", false);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error
@@ -65,6 +67,7 @@ public class ATLProperties {
 		properties.addProperty("ingredientDedupe", false);
 		properties.addProperty("entitySectionCME", false);
 		properties.addProperty("debugItemStackModifications", false);
+		properties.addProperty("experimentalStructureGeneration", false);
 		return properties;
 	}
 
