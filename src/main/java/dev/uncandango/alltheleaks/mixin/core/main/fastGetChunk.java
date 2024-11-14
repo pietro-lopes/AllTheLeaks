@@ -1,7 +1,6 @@
 package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.google.common.collect.ImmutableList;
-import dev.uncandango.alltheleaks.AllTheLeaks;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.SectionPos;
 import net.minecraft.world.level.*;
@@ -28,7 +27,7 @@ public abstract class fastGetChunk {
 		cancellable = true
 	)
 	private void ATL_fastGetChunk(SectionPos sectionPos, Structure structure, CallbackInfoReturnable<List<StructureStart>> ci) {
-		if (sectionPos.x() == 0 && sectionPos.z() == 0) {
+		if (sectionPos.x() == 0 && sectionPos.z() == 0) { //for some reason getting the chunk at 0, 0 returns null for me, so cancel and let the normal generator handle this once in a world problem
 			ci.cancel();
 		}
 		lr = ATL_cachedReferenceChunk(sectionPos.x(), sectionPos.z(), ChunkStatus.STRUCTURE_REFERENCES).getReferencesForStructure(structure);
@@ -54,7 +53,6 @@ public abstract class fastGetChunk {
 		if (lastIndex >= cacheSize) {
 			lastIndex = 0;
 		}
-		//AllTheLeaks.LOGGER.info("ref chunk " + x + ", " + z);
 		ChunkAccess cr = level.getChunk(x, z, s);
 		posArr[lastIndex] = pos;
 		cache[lastIndex] = cr;
@@ -66,10 +64,9 @@ public abstract class fastGetChunk {
 	@Shadow
 	LevelAccessor level;
 	LongSet lr;
-	private static final int size = 16;
-	private static final int buffer = 4;
-	private static final int cacheSize = size - buffer;
-	private static final long[] posArr = new long[size];
-	private static final ChunkAccess[] cache = new ChunkAccess[size];
+	private static final int cacheSize = 12; //number of chunks to keep in the cache, 12 should accommodate multiple structure generation tasks caused by multiple players in several areas
+	private static final int buffer = 15; //additional size to accommodate multiple threads increasing the index before one can loop around and reset, most of the time this space will be filled with null objects
+	private static final long[] posArr = new long[cacheSize + buffer];
+	private static final ChunkAccess[] cache = new ChunkAccess[cacheSize + buffer];
 	private static int lastIndex = 0;
 }
