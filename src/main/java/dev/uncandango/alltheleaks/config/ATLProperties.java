@@ -19,6 +19,7 @@ public class ATLProperties {
 	private static ATLProperties INSTANCE;
 	public boolean ingredientDedupe;
 	public boolean entitySectionCME;
+	public boolean scoreboardDebug;
 	public boolean debugItemStackModifications;
 	public boolean experimentalStructureGeneration;
 	private JsonObject properties;
@@ -38,6 +39,7 @@ public class ATLProperties {
 			} else {
 				this.ingredientDedupe = false;
 			}
+			this.scoreboardDebug = GsonHelper.getAsBoolean(properties, "scoreboardDebug", false);
 			this.entitySectionCME = GsonHelper.getAsBoolean(properties, "entitySectionCME", false);
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.experimentalStructureGeneration = GsonHelper.getAsBoolean(properties, "experimentalStructureGeneration", false);
@@ -66,6 +68,7 @@ public class ATLProperties {
 		var properties = new JsonObject();
 		properties.addProperty("ingredientDedupe", false);
 		properties.addProperty("entitySectionCME", false);
+		properties.addProperty("scoreboardDebug", false);
 		properties.addProperty("debugItemStackModifications", false);
 		properties.addProperty("experimentalStructureGeneration", false);
 		return properties;
