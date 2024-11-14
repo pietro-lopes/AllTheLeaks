@@ -26,11 +26,11 @@
 		"main.MinecraftMixin",
 		"main.SearchOptionsMixin",
 		"main.SmithingTrimWrapperMixin",
-		"main.fastGetChunk",
+		"main.FastGetChunk",
 		"main.SpellSelectionManagerMixin"
 	],
 	"mixins": [
-      "main.fastGetChunk", "accessor.ChargeProviderImplAccessor", "accessor.ContextFactoryAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.CuriosEventHandlerMixin", "main.DeathWrapperEventsImplMixin", "main.DroneEntityMixin", "main.EntitySectionMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.IngredientDebugMixin", "main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.ItemStackDebugMixin", "main.LootrMixin", "main.NeoForgeEventHandlerMixin", "main.PersistentEntitySectionManagerMixin", "main.PlayerAccessorBEMixin", "main.PlayerDataMixin", "main.PlayerListMixin", "main.ServerPlayerMixin", "main.ServerScriptManagerMixin"],
+		"main.FastGetChunk", "accessor.ChargeProviderImplAccessor", "accessor.ContextFactoryAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CasterTomeRegistryMixin", "main.CuriosEventHandlerMixin", "main.DeathWrapperEventsImplMixin", "main.DroneEntityMixin", "main.EntitySectionMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.IngredientDebugMixin", "main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.ItemStackDebugMixin", "main.LootrMixin", "main.NeoForgeEventHandlerMixin", "main.PersistentEntitySectionManagerMixin", "main.PlayerAccessorBEMixin", "main.PlayerDataMixin", "main.PlayerListMixin", "main.ServerPlayerMixin", "main.ServerScriptManagerMixin"],
 	"injectors": {
 		"defaultRequire": 0
 	}

@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Mixin(StructureManager.class)
-public abstract class fastGetChunk {
+public abstract class FastGetChunk {
 	@Inject(
 		method = "Lnet/minecraft/world/level/StructureManager;startsForStructure(Lnet/minecraft/core/SectionPos;Lnet/minecraft/world/level/levelgen/structure/Structure;)Ljava/util/List;",
 		at = @At(value = "HEAD"),
 		cancellable = true
 	)
-	private void ATL_fastGetChunk(SectionPos sectionPos, Structure structure, CallbackInfoReturnable<List<StructureStart>> ci) {
+	private void ATL_FastGetChunk(SectionPos sectionPos, Structure structure, CallbackInfoReturnable<List<StructureStart>> ci) {
 		if (sectionPos.x() == 0 && sectionPos.z() == 0) { //for some reason getting the chunk at 0, 0 returns null for me, so cancel and let the normal generator handle this once in a world problem
 			ci.cancel();
 		}
