@@ -1,6 +1,7 @@
 package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.google.common.collect.ImmutableList;
+import dev.uncandango.alltheleaks.config.ATLProperties;
 import net.minecraft.core.SectionPos;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -26,15 +27,15 @@ public abstract class FastGetChunkMixin {
 		at = @At(value = "HEAD"),
 		cancellable = true
 	)
-	private void ATL_FastGetChunk(SectionPos sectionPos, Structure structure, CallbackInfoReturnable<List<StructureStart>> ci) {
+	private void ATL_FastGetChunk(SectionPos sectionPos, Structure structure, CallbackInfoReturnable<List<StructureStart>> ci) { //should probably be refactored to fast get structure start or something like that
 		if (sectionPos.x() == 0 && sectionPos.z() == 0) { //for some reason getting the chunk at 0, 0 returns null for me, so cancel and let the normal generator handle this once in a world problem
 			return;
 		}
 		ImmutableList.Builder<StructureStart> builder = ImmutableList.builder();
 		Objects.requireNonNull(builder);
-		for (long i : ATL_cachedReferenceChunk(sectionPos.x(), sectionPos.z(), ChunkStatus.STRUCTURE_REFERENCES).getReferencesForStructure(structure)) {
+		for (long i : ATL_cachedChunk(sectionPos.x(), sectionPos.z(), ChunkStatus.STRUCTURE_REFERENCES).getReferencesForStructure(structure)) {
 			SectionPos sectionpos = SectionPos.of(new ChunkPos(i), level.getMinSection());
-			ChunkAccess ca = ATL_cachedReferenceChunk(sectionpos.x(), sectionpos.z(), ChunkStatus.STRUCTURE_STARTS);
+			ChunkAccess ca = ATL_cachedChunk(sectionpos.x(), sectionpos.z(), ChunkStatus.STRUCTURE_STARTS);
 			StructureStart structurestart = this.getStartForStructure(sectionpos, structure, ca);
 			if (structurestart != null && structurestart.isValid()) {
 				builder.add(structurestart);
@@ -43,7 +44,7 @@ public abstract class FastGetChunkMixin {
 		ci.setReturnValue(builder.build());
 	}
 	@NotNull
-	private ChunkAccess ATL_cachedReferenceChunk(int x, int z, ChunkStatus s) {
+	private ChunkAccess ATL_cachedChunk(int x, int z, ChunkStatus s) {
 		long pos = ChunkPos.asLong(x, z);
 		for (int i = 0; i < cacheSize; i++) {
 			if (posArr[i] == pos) {
@@ -63,8 +64,8 @@ public abstract class FastGetChunkMixin {
 	abstract StructureStart getStartForStructure(SectionPos sectionPos, Structure structure, StructureAccess structureAccess);
 	@Shadow
 	LevelAccessor level;
-	private static final int cacheSize = 20; //number of chunks to keep in the cache, performance seems to scale well testing values between 6 and 45
-	private static final int buffer = 15; //additional size to accommodate multiple threads increasing the index before one can loop around and reset, most of the time this space will be filled with null objects
+	private static final int cacheSize = ATLProperties.get().ChunkCacheSize; //number of chunks to keep in the cache
+	private static final int buffer = 3; //most of the time this space will be filled with null objects, but there was a crash so thusly it came into existence. i dont like it
 	private static final long[] posArr = new long[cacheSize + buffer];
 	private static final ChunkAccess[] cache = new ChunkAccess[cacheSize + buffer];
 	private static int lastIndex = 0;

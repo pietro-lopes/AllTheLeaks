@@ -22,6 +22,7 @@ public class ATLProperties {
 	public boolean scoreboardDebug;
 	public boolean debugItemStackModifications;
 	public boolean experimentalStructureGeneration;
+	public int ChunkCacheSize;
 	private JsonObject properties;
 
 	private ATLProperties() {
@@ -43,6 +44,7 @@ public class ATLProperties {
 			this.entitySectionCME = GsonHelper.getAsBoolean(properties, "entitySectionCME", false);
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.experimentalStructureGeneration = GsonHelper.getAsBoolean(properties, "experimentalStructureGeneration", false);
+			this.ChunkCacheSize = GsonHelper.getAsInt(properties, "ChunkCacheSize", 2);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error
@@ -71,6 +73,7 @@ public class ATLProperties {
 		properties.addProperty("scoreboardDebug", false);
 		properties.addProperty("debugItemStackModifications", false);
 		properties.addProperty("experimentalStructureGeneration", false);
+		properties.addProperty("ChunkCacheSize", 2);
 		return properties;
 	}
 
