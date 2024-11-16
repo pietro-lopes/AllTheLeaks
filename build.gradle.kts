@@ -341,6 +341,14 @@ dependencies {
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
+
+    // Test for worldgen
+    runtimeOnly("curse.maven:yungs-better-dungeons-neoforge-1015112:5812214")
+    runtimeOnly("curse.maven:yungs-better-ocean-monuments-neoforge-1015115:5812234")
+    runtimeOnly("curse.maven:yungs-better-jungle-temples-neoforge-1015123:5812494")
+    runtimeOnly("curse.maven:villages-and-pillages-915531:5615165")
+    runtimeOnly("curse.maven:yungs-api-neoforge-1015100:5812102")
+    runtimeOnly("curse.maven:chunky-pregenerator-forge-485681:5437053")
 }
 
 tasks {
