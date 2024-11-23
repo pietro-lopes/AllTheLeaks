@@ -42,7 +42,6 @@
     "main.EntityTickListMixin",
     "main.FakePlayerFactoryMixin",
     "main.FakePlayerMixin",
-    "main.StructureManagerMixin",
     "main.FTBQuestsEventHandlerMixin",
     "main.IngredientDebugMixin",
     "main.IngredientMixin",
