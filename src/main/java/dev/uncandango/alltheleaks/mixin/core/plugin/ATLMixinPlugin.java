@@ -63,25 +63,6 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-//		if (mixinClassName.contains("DroneEntityMixin")){
-//			targetClass.methods.stream()
-//				.filter(m -> m.name.contains("onSemiblockEvent"))
-//				.forEach(m -> {
-//					var gameBusNode = new AnnotationNode("Lnet/neoforged/bus/api/SubscribeEvent;");
-//					if (m.visibleAnnotations == null) {
-//						m.visibleAnnotations = List.of(gameBusNode);
-//					} else {
-//						m.visibleAnnotations.add(gameBusNode);
-//					}
-//				});
-////			targetClass.methods.forEach(method -> {
-////				var annotations = method.visibleAnnotations;
-////				if (annotations != null) {
-////					annotations.removeIf(a -> a.desc.contains("SubscribeEvent"));
-////					if (annotations.isEmpty()) method.visibleAnnotations = null;
-////				}
-////			});
-//		}
 	}
 
 	@Override

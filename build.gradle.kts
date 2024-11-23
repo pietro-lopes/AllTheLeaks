@@ -332,23 +332,16 @@ dependencies {
 
     // for Ingredient Dedupe runtime test
 
-    runtimeOnly("curse.maven:ftb-jei-extras-1103259:5883774") // ftbjeiextras-21.1.2.jar
+    runtimeOnly("curse.maven:ftb-jei-extras-1103259:5907752") // ftbjeiextras-21.1.3.jar
     runtimeOnly("curse.maven:glodium-957920:5821676") // Glodium-1.21-2.2-neoforge.jar
     runtimeOnly("curse.maven:advancedae-1084104:5881249") // AdvancedAE-1.1.1-1.21.1.jar
     runtimeOnly("curse.maven:ex-pattern-provider-892005:5887634") // ExtendedAE-1.21-2.1.4-neoforge.jar
-    runtimeOnly("curse.maven:productivebees-377897:5878141") // productivebees-1.21.1-13.6.4.jar
+    runtimeOnly("curse.maven:productivebees-377897:5903573") // productivebees-1.21.1-13.6.5.jar
     runtimeOnly("curse.maven:applied-energistics-2-223794:5729094") // appliedenergistics2-19.0.23-beta.jar
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
 
-    // Test for worldgen
-    runtimeOnly("curse.maven:yungs-better-dungeons-neoforge-1015112:5812214")
-    runtimeOnly("curse.maven:yungs-better-ocean-monuments-neoforge-1015115:5812234")
-    runtimeOnly("curse.maven:yungs-better-jungle-temples-neoforge-1015123:5812494")
-    runtimeOnly("curse.maven:villages-and-pillages-915531:5615165")
-    runtimeOnly("curse.maven:yungs-api-neoforge-1015100:5812102")
-    runtimeOnly("curse.maven:chunky-pregenerator-forge-485681:5437053")
 }
 
 tasks {
