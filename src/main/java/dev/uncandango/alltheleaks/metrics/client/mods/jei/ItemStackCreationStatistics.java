@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.HashMap;
 import java.util.Map;
 
-@Issue(modId = "jei", issueId = "ItemStackCreationStatistics", versionRange = "[15.4.0.9,)", devOnly = true, mixins = {"main.ItemStackMixin$Statistics", "main.PluginCallerMixin"}, description = "Adds metrics to see which JEI Plugins are creating more ItemStacks")
+@Issue(modId = "jei", issueId = "ItemStackCreationStatistics", versionRange = "[15.4.0.9,)", devOnly = true, mixins = {"main.ATLItemStackMixin$Statistics", "main.PluginCallerMixin"}, description = "Adds metrics to see which JEI Plugins are creating more ItemStacks")
 public class ItemStackCreationStatistics {
 	public static final Map<ResourceLocation, Map<String, Long>> ITEMSTACK_COUNTER = Maps.newHashMap();
 	public static Pair<ResourceLocation, String> currentPlugin = null;

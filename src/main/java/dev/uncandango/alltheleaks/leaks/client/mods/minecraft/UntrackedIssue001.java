@@ -8,8 +8,8 @@ import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
 
-@Issue(modId = "minecraft", versionRange = "1.20.1", mixins = {"main.ItemStackMixin", "main.MinecraftMixin"},
-description = "Prevents putting entity on `ItemStack.EMPTY`, clear entities on crosshair/hitresult level update")
+@Issue(modId = "minecraft", versionRange = "1.20.1", mixins = {"main.ATLItemStackMixin", "main.MinecraftMixin", "main.SynchedEntityDataMixin"},
+description = "Prevents putting entity on constant `ItemStack.EMPTY`, clear entities on crosshair/hitresult level update, clears old `ItemStack#entityRepresentation` from tracked itemstacks at `SynchedEntityData`")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = MinecraftForge.EVENT_BUS;

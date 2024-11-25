@@ -12,9 +12,16 @@ public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = MinecraftForge.EVENT_BUS;
 		gameBus.addListener(this::clearOptionsPage);
+		gameBus.addListener(this::clearOptionsPageOnLogout);
 	}
 
 	private void clearOptionsPage(ClientPlayerNetworkEvent.Clone event) {
+		if (ArmorMainScreen.getInstance() instanceof ArmorMainScreenAccessor accessor) {
+			accessor.getUpgradeOptions().clear();
+		}
+	}
+
+	private void clearOptionsPageOnLogout(ClientPlayerNetworkEvent.LoggingOut event) {
 		if (ArmorMainScreen.getInstance() instanceof ArmorMainScreenAccessor accessor) {
 			accessor.getUpgradeOptions().clear();
 		}

@@ -96,9 +96,9 @@ repositories {
         }
     }
 
-    maven {
-        url = uri("https://modmaven.dev/")
-    }
+//    maven {
+//        url = uri("https://modmaven.dev/")
+//    }
 
     flatDir {
         dir("libs")
@@ -240,7 +240,8 @@ dependencies {
     modCompileOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.8") { isTransitive = true }
     modCompileOnly("com.eliotlash.mclib:mclib:20")
     modCompileOnly("curse.maven:occultism-361026:4586250") // occultism-1.20.1-1.80.7.jar
-    modCompileOnly("curse.maven:travelers-backpack-321117:4592150") // TravelersBackpack-1.20.1-9.1.0.jar
+//    modCompileOnly("curse.maven:travelers-backpack-321117:4592150") // TravelersBackpack-1.20.1-9.1.0.jar
+    modCompileOnly("curse.maven:travelers-backpack-321117:5764972") // travelersbackpack-forge-1.20.1-9.1.16.jar
 //    modCompileOnly("curse.maven:ars-nouveau-401955:5190105") // 4.10.0
     modCompileOnly("curse.maven:ars-nouveau-401955:4631012") // ars_nouveau-1.20.1-4.0.0.jar
     modCompileOnly("curse.maven:forbidden-arcanus-309858:4692792") // forbidden_arcanus-1.20.1-2.2.0-beta1.jar
@@ -268,7 +269,14 @@ dependencies {
     modCompileOnly("curse.maven:mythicbotany-400058:5101899") // MythicBotany-1.20.1-4.0.3.jar
     modCompileOnly("curse.maven:cyclops-core-232758:5262063") // CyclopsCore-1.20.1-1.19.1.jar
     modCompileOnly("curse.maven:structure-gel-api-378802:5278429") // structure_gel-1.20.1-2.16.2.jar
-
+    modCompileOnly("curse.maven:iceberg-520110:4627133") // Iceberg-1.20.1-forge-1.1.25.jar
+    modCompileOnly("curse.maven:emi-580555:4776467") // emi-1.0.21+1.20.1+forge.jar
+    modCompileOnly("curse.maven:nuclearcraft-neoteric-840010:4947601") // NuclearCraft-1.20.1-1.0.0-beta.1.jar
+    modCompileOnly("curse.maven:difficulty-lock-390886:5146560") // difficultylock-1.20.1-4.1.jar
+    modCompileOnly("curse.maven:corpse-316582:4584202") // corpse-1.20.1-1.0.3.jar
+    modCompileOnly("curse.maven:emi-loot-681783:4971064") // emi_loot-0.6.5+1.20.1+forge.jar
+    modCompileOnly("curse.maven:findme-291936:4614446") // findme-3.1.0-forge.jar
+    modCompileOnly("curse.maven:badpackets-615134:4438956") // badpackets-forge-0.4.1.jar
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -304,7 +312,7 @@ dependencies {
     modRuntimeOnly("curse.maven:ftb-library-forge-404465:5567591") // ftb-library-forge-2001.2.4.jar
     modRuntimeOnly("curse.maven:easy-villagers-400514:5724570") // easy-villagers-forge-1.20.1-1.1.23.jar
     modRuntimeOnly("curse.maven:journeymap-32274:5789363") // journeymap-1.20.1-5.10.3-forge.jar
-    modRuntimeOnly("curse.maven:corail-tombstone-243707:5847668") // tombstone-1.20.1-8.8.3.jar
+//    modRuntimeOnly("curse.maven:corail-tombstone-243707:5925362") // tombstone-1.20.1-8.8.6.jar
     modRuntimeOnly("curse.maven:blue-skies-312918:5010316") // blue_skies-1.20.1-1.3.31.jar
     modRuntimeOnly("curse.maven:just-enough-resources-jer-240630:5057220") // JustEnoughResources-1.20.1-1.4.0.247.jar
     modRuntimeOnly("curse.maven:minecolonies-245506:5874253") // minecolonies-1.20.1-1.1.716-snapshot.jar
@@ -317,6 +325,14 @@ dependencies {
     modRuntimeOnly("curse.maven:refined-storage-243076:4844585") // refinedstorage-1.12.4.jar
     modRuntimeOnly("curse.maven:small-ships-450659:5566900") // smallships-forge-1.20.1-2.0.0-b1.4.jar
     modRuntimeOnly("curse.maven:modernfix-790626:5676014")
+    modRuntimeOnly("curse.maven:iceberg-520110:5838149") // Iceberg-1.20.1-forge-1.1.25.jar
+    modRuntimeOnly("curse.maven:emi-580555:5872526") // emi-1.1.18+1.20.1+forge.jar
+    modRuntimeOnly("curse.maven:nuclearcraft-neoteric-840010:5916571") // NuclearCraft-1.20.1-1.1.0-rc.3.jar
+    modRuntimeOnly("curse.maven:difficulty-lock-390886:5572725") // difficultylock-1.20.1-4.6.jar
+    modRuntimeOnly("curse.maven:corpse-316582:5816907") // corpse-forge-1.20.1-1.0.17.jar
+    modRuntimeOnly("curse.maven:emi-loot-681783:5760210") // emi_loot-0.7.4+1.20.1+forge.jar
+    modRuntimeOnly("curse.maven:findme-291936:5074609") // findme-3.2.1-forge.jar
+    modRuntimeOnly("curse.maven:badpackets-615134:4784395") // badpackets-forge-0.4.3.jar
 
     /* Greg headache before MDG legacy
     1. Download jar
@@ -350,6 +366,9 @@ dependencies {
     modRuntimeOnly("curse.maven:cyclops-core-232758:5583765") // CyclopsCore-1.20.1-1.19.5.jar
     modRuntimeOnly("curse.maven:libx-412525:5207625") // LibX-1.20.1-5.0.14.jar
     modRuntimeOnly("curse.maven:botania-225643:5594997") // Botania-1.20.1-446-FORGE.jar
+    modRuntimeOnly("curse.maven:collective-342584:5840216") // collective-1.20.1-7.87.jar
+    modRuntimeOnly("curse.maven:fzzy-config-1005914:5908784") // fzzy_config-0.5.7+1.20.1+forge.jar
+    modRuntimeOnly("curse.maven:kotlin-for-forge-351264:5402061") // kotlinforforge-4.11.0-all.jar
 
     // LeakDiagTool
     modRuntimeOnly("blank:leakdiagtool:1.0.0")

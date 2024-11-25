@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "tombstone", versionRange = "[8.6.5,)", mixins = "main.LivingEntityRendererMixin",
+@Issue(modId = "tombstone", versionRange = "[8.5.0,8.8.6]", mixins = "main.LivingEntityRendererMixin",
 description = "Clears `LivingEntityRenderer#entity` added via mixin on client level update")
 public class UntrackedIssue001 {
 	public static final VarHandle LIVING_ENTITY;

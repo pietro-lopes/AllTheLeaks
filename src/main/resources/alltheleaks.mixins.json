@@ -21,16 +21,20 @@
 		"accessor.SpellBarOverlayAccessor",
 		"accessor.VillagerItemAccessor",
 		"main.AbstractVillagerEntryMixin",
+		"main.ATLItemStackMixin$Statistics",
+		"main.ClientPacketListenerMixin",
 		"main.ConverterRendererMixin",
+		"main.CorpseRendererMixin",
 		"main.DelegatingDynamicItemAndBlockModelMixin",
 		"main.DummyWorldMixin",
 		"main.ElementSearchMixin",
+		"main.EmiLootEntityEmiStackMixin",
 		"main.EnderDragonRendererMixin",
 		"main.EntityHelperMixin",
 		"main.GenericRecipeMixin",
 		"main.GeoModelMixin",
+		"main.AE2wtlibForgeMixin",
 		"main.IronFarmRendererMixin",
-		"main.ItemStackMixin$Statistics",
 		"main.JobBasedRecipeCategoryMixin",
 		"main.JobBasedRecipeCategoryMixin$JobBasedRecipeCategoryAccessor",
 		"main.LazySortedRecipeLayoutListMixin",
@@ -58,6 +62,7 @@
 		"accessor.NetworkManagerImplAccessor",
 		"accessor.ServerGamePacketListenerImplAccessor",
 		"accessor.ServerLevelAccessor",
+		"main.ATLItemStackMixin",
 		"main.CasterTomeRegistryMixin",
 		"main.ChunkMapMixin",
 		"main.CuriosEventHandlerMixin",
@@ -73,7 +78,6 @@
 		"main.IngredientMixin$ItemValueMixin",
 		"main.IngredientMixin$TagValueAccessor",
 		"main.IngredientMixin$TagValueMixin",
-		"main.ItemStackMixin",
 		"main.LocationModuleMixin",
 		"main.MinerSpiritItemMixin",
 		"main.OccultismCapabilitiesMixin",
@@ -81,9 +85,10 @@
 		"main.PlayerListMixin",
 		"main.ResourceLocationMixin",
 		"main.ServerPlayerEventsMixin",
-		"main.ServerPlayerMixin"
+		"main.ServerPlayerMixin",
+		"main.SynchedEntityDataMixin"
 	],
 	"injectors": {
-		"defaultRequire": 1
+		"defaultRequire": 0
 	}
 }

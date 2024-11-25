@@ -21,7 +21,7 @@ import java.util.concurrent.Executor;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@Issue(modId = "minecraft", issueId = "Ingredient Deduplication" ,versionRange = "1.20.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.IngredientMixin$TagValueMixin", "main.IngredientMixin$TagValueAccessor", "main.IngredientMixin$ItemValueMixin", "main.IngredientMixin$ItemValueAccessor",}, config = "ingredientDedupe", configActivated = true,
+@Issue(modId = "minecraft", issueId = "Ingredient Deduplication" ,versionRange = "1.20.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.IngredientMixin$TagValueMixin", "main.IngredientMixin$TagValueAccessor", "main.IngredientMixin$ItemValueMixin", "main.IngredientMixin$ItemValueAccessor",}, config = "ingredientDedupe", configActivated = false,
 description = "Deduplicates VANILLA ingredients to reduce memory usage")
 public class IngredientDedupe implements PreparableReloadListener {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;

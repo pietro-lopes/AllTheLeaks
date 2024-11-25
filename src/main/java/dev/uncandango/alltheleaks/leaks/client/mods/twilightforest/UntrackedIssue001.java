@@ -5,15 +5,21 @@ import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import mezz.jei.api.runtime.IJeiRuntime;
 import mezz.jei.common.Internal;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
+import twilightforest.TwilightForestMod;
+import twilightforest.client.renderer.entity.HydraRenderer;
 import twilightforest.compat.jei.categories.TransformationPowderCategory;
 import twilightforest.compat.jei.renderers.EntityRenderer;
+import twilightforest.init.TFEntities;
 
 import java.lang.invoke.VarHandle;
 import java.util.Map;
 
+import static com.lowdragmc.lowdraglib.jei.JEIPlugin.jeiRuntime;
+
 @Issue(modId = "twilightforest", versionRange = "[4.3.2508,)", extraModDep = "jei", extraModDepVersions = "[15.8.2.24,)",
-description = "Clears `EntityRenderer#ENTITY_MAP` on level update")
+description = "Clears `EntityRenderer#ENTITY_MAP` and Hydra entity from `HydraModel#hydra` on level update")
 public class UntrackedIssue001 {
 	public static final VarHandle ENTITY_RENDERER;
 	public static final VarHandle ENTITY_MAP;
@@ -31,6 +37,10 @@ public class UntrackedIssue001 {
 	@SuppressWarnings("rawtypes")
 	private void clearEntityMap(UpdateableLevel.RenderEnginesUpdated event) {
 		if (event.getLevel() != null) {
+			var renderer = Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(TFEntities.HYDRA.get());
+			if (renderer instanceof HydraRenderer hydraRenderer) {
+				hydraRenderer.getModel().setupAnim(null, 0,0,0,0,0);
+			}
 			IJeiRuntime jeiRuntime;
 			try {
 				jeiRuntime = Internal.getJeiRuntime();

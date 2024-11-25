@@ -39,7 +39,7 @@ public class ATLProperties {
 	private static JsonElement getDefaultProperties() {
 		var properties = new JsonObject();
 		properties.addProperty("preventSearchIgnoredItems", false);
-		properties.addProperty("ingredientDedupe", true);
+		properties.addProperty("ingredientDedupe", false);
 		properties.addProperty("resourceLocationDedupe", false);
 		return properties;
 	}
@@ -51,7 +51,11 @@ public class ATLProperties {
 		try (var reader = Files.newBufferedReader(path)) {
 			properties = GSON.fromJson(reader, JsonObject.class);
 			this.preventSearchIgnoredItems = GsonHelper.getAsBoolean(properties, "preventSearchIgnoredItems", false);
-			this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", true);
+			if (AllTheLeaks.INDEV) {
+				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
+			} else {
+				this.ingredientDedupe = false;
+			}
 			this.resourceLocationDedupe = GsonHelper.getAsBoolean(properties, "resourceLocationDedupe", false);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
