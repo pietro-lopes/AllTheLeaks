@@ -202,7 +202,7 @@ dependencies {
     val emiRuntime = "curse.maven:emi-580555:5872513" // emi-1.1.18+1.21.1+neoforge.jar
     val emiLoot = "curse.maven:emi-loot-681783:5760220" // emi_loot-0.7.4+1.21+neoforge.jar
     val minecoloniesCompile = "curse.maven:minecolonies-245506:5734626" // minecolonies-1.1.701-1.21.1-snapshot.jar
-    val minecoloniesRuntime = "curse.maven:minecolonies-245506:5879446" // minecolonies-1.1.774-1.21.1-snapshot.jar
+    val minecoloniesRuntime = "curse.maven:minecolonies-245506:5998050" // minecolonies-1.1.821-1.21.1-snapshot.jar
     val creativecore = "curse.maven:creativecore-257814:5773866" // CreativeCore_NEOFORGE_v2.12.17_mc1.21.1.jar
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
@@ -341,7 +341,6 @@ dependencies {
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
-
 }
 
 tasks {

@@ -21,6 +21,7 @@ public class ATLProperties {
 	public boolean entitySectionCME;
 	public boolean scoreboardDebug;
 	public boolean debugItemStackModifications;
+	public int version;
 	private JsonObject properties;
 
 	private ATLProperties() {
@@ -33,10 +34,12 @@ public class ATLProperties {
 		}
 		try (var reader = Files.newBufferedReader(path)) {
 			properties = GSON.fromJson(reader, JsonObject.class);
-			if (AllTheLeaks.INDEV) {
-				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
-			} else {
+			version = GsonHelper.getAsInt(properties, "version", 0);
+			if (version == 0) {
+				// Force it to false because at some point we shipped it as true
 				this.ingredientDedupe = false;
+			} else {
+				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
 			}
 			this.scoreboardDebug = GsonHelper.getAsBoolean(properties, "scoreboardDebug", false);
 			this.entitySectionCME = GsonHelper.getAsBoolean(properties, "entitySectionCME", false);
@@ -68,6 +71,7 @@ public class ATLProperties {
 		properties.addProperty("entitySectionCME", false);
 		properties.addProperty("scoreboardDebug", false);
 		properties.addProperty("debugItemStackModifications", false);
+		properties.addProperty("version", 1);
 		return properties;
 	}
 

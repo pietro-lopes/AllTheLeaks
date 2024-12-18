@@ -25,6 +25,7 @@
     "main.JobBasedRecipeCategoryMixin",
     "main.MinecraftMixin",
     "main.SearchOptionsMixin",
+		"main.InventoryHolderBERMixin",
     "main.SmithingTrimWrapperMixin",
     "main.SpellSelectionManagerMixin"
   ],
