@@ -44,4 +44,11 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.tx
 
 You can reach me on [All The Mods Discord](https://discord.gg/allthemods) with `@Uncandango`, you can also open your issue here or comment on the mod comment's section on CurseForge.
 
----
+## 👍 Sponsors
+<img src="https://www.yourkit.com/images/yklogo.png" width=100>
+YourKit supports open source projects with innovative and intelligent tools
+for monitoring and profiling Java and .NET applications.
+YourKit is the creator of <a href="https://www.yourkit.com/java/profiler/">YourKit Java Profiler</a>,
+<a href="https://www.yourkit.com/dotnet-profiler/">YourKit .NET Profiler</a>,
+and <a href="https://www.yourkit.com/youmonitor/">YourKit YouMonitor</a>.
+
