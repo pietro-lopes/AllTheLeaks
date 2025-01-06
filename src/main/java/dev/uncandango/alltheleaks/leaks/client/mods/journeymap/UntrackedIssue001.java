@@ -7,7 +7,7 @@ import journeymap.client.model.EntityHelper;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "journeymap", versionRange = "[1.21-6.0.0-beta.,)", mixins = {"accessor.EntityComparatorAccessor", "main.EntityHelperMixin"})
+@Issue(modId = "journeymap", versionRange = "[1.21.1-6.0.0-beta.28,1.21.1-6.0.0-beta.32]", mixins = {"accessor.EntityComparatorAccessor", "main.EntityHelperMixin"})
 public class UntrackedIssue001 {
 	private static final VarHandle entityDistanceComparator;
 	private static final VarHandle entityDTODistanceComparator;
@@ -19,11 +19,6 @@ public class UntrackedIssue001 {
 		edtoClass = ReflectionHelper.getPrivateClass(EntityHelper.class, "journeymap.client.model.EntityHelper$EntityDTODistanceComparator");
 		entityDistanceComparator = ReflectionHelper.getFieldFromClass(EntityHelper.class, "entityDistanceComparator", edcClass, true);
 		entityDTODistanceComparator = ReflectionHelper.getFieldFromClass(EntityHelper.class, "entityDTODistanceComparator", edtoClass, true);
-	}
-
-	public UntrackedIssue001() {
-//		var gameBus = NeoForge.EVENT_BUS;
-//		gameBus.addListener(this::clearPlayerFromComparators);
 	}
 
 	public static void clearPlayerFromComparator() {

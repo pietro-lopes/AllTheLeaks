@@ -170,7 +170,7 @@ val jeiServerRuntimeOnly: Configuration by configurations.getting
 val emiServerRuntimeOnly: Configuration by configurations.getting
 dependencies {
     // Here we go
-    val journeymap = "curse.maven:journeymap-32274:5777475" // "1.21-6.0.0-beta.27"
+    val journeymap = "curse.maven:journeymap-32274:5820528" // "1.21.1-6.0.0-beta.28"
     val railcraft = "curse.maven:railcraft-reborn-901491:5650759" // "1.2.2"
     val spark = "curse.maven:spark-361579:5759671" // "1.10.109-neoforge"
     val pnmc = "curse.maven:pneumaticcraft-repressurized-281849:5776294" // "8.1.4"
@@ -283,7 +283,7 @@ dependencies {
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
-    val minecraftInstanceJson = Files.newInputStream(File("minecraftinstance.json").toPath()).use { inputStream ->
+    val minecraftInstanceJson = Files.newInputStream(File(System.getProperty("user.dir") + "/minecraftinstance.json").toPath()).use { inputStream ->
         val jsonReader = JsonReader(inputStream.reader())
         gson.fromJson<JsonObject>(jsonReader, JsonObject::class.java)
     }
@@ -293,6 +293,7 @@ dependencies {
         val nameId = addonJson.get("webSiteURL").asString.split("/").last()
         val fileId = addonJson.getAsJsonObject("installedFile").asJsonObject.get("id").asNumber
 //        println("runtimeOnly(\"curse.maven:$nameId-$cfId:$fileId\")")
+        if (nameId.contains("journeymap")) return@forEach
         if (nameId.contains("curios")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
@@ -341,6 +342,10 @@ dependencies {
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
+
+    // Testing
+    runtimeOnly("blank:journeymap-neoforge:1.21.1-6.0.0-beta.32")
+    api("blank:journeymap-api-neoforge-2.0.0-1.21.4-SNAPSHOT")
 }
 
 tasks {
