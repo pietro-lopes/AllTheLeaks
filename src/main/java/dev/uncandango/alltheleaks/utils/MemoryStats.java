@@ -6,7 +6,6 @@ import dev.uncandango.alltheleaks.api.windows.PsApi;
 import net.minecraft.Util;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.Platform;
-import org.lwjgl.system.SharedLibrary;
 import org.lwjgl.system.windows.Kernel32;
 
 import java.util.Locale;

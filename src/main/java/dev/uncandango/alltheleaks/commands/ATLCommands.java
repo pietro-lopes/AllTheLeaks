@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.sun.management.HotSpotDiagnosticMXBean;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.api.windows.PsApi;
+import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.diag.common.mods.minecraft.DebugNativeImage;
 import dev.uncandango.alltheleaks.utils.MemoryStats;
 import net.minecraft.commands.CommandBuildContext;
@@ -16,6 +17,7 @@ import org.lwjgl.system.MemoryUtil;
 import java.lang.management.ManagementFactory;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ATLCommands {
 
@@ -34,6 +36,11 @@ public final class ATLCommands {
 	}
 
 	private static int clearNativeImages(CommandSourceStack source) {
+		if (!ATLProperties.get().debugNativeImage) {
+			source.sendFailure(Component.literal("DebugNativeImage is disabled, activate it at config/alltheleaks.json"));
+			return 0;
+		}
+		AtomicInteger counter = new AtomicInteger();
 		DebugNativeImage.NATIVE_IMAGES_TRACKER.forEach((k, v) -> {
 			var setWithEmptyRef = Collections.synchronizedSet(new HashSet<DebugNativeImage.Value>());
 			v.forEach(wr -> {
@@ -50,6 +57,7 @@ public final class ATLCommands {
 					MemoryUtil.nmemFree(k.pixels());
 				}
 				setWithEmptyRef.forEach(wr -> {
+					counter.getAndIncrement();
 					AllTheLeaks.LOGGER.info("Printing stack trace for: {}", wr.description());
 					var reachedInit = false;
 					for (StackTraceElement trace : wr.stackTraceElements()) {
@@ -66,6 +74,7 @@ public final class ATLCommands {
 				v.clear();
 			}
 		});
+		source.sendSuccess(() -> Component.literal("Cleared " + counter.get() + " NativeImages"), true);
 		return 1;
 	}
 
