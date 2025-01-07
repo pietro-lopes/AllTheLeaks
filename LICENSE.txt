@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 NeoForged project
+Copyright (c) 2023 AllTheLeaks
 
 This license applies to the template files as supplied by github.com/NeoForged/MDK
 
