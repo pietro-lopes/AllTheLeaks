@@ -297,8 +297,8 @@ dependencies {
         val nameId = addonJson.get("webSiteURL").asString.split("/").last()
         val fileId = addonJson.getAsJsonObject("installedFile").asJsonObject.get("id").asNumber
 //        println("runtimeOnly(\"curse.maven:$nameId-$cfId:$fileId\")")
-        if (nameId.contains("journeymap")) return@forEach
-        if (nameId.contains("curios")) return@forEach
+//        if (nameId.contains("journeymap")) return@forEach
+//        if (nameId.contains("curios")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
 
@@ -348,8 +348,8 @@ dependencies {
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
 
     // Testing
-    runtimeOnly("blank:journeymap-neoforge:1.21.1-6.0.0-beta.32")
-    api("blank:journeymap-api-neoforge-2.0.0-1.21.4-SNAPSHOT")
+//    runtimeOnly("blank:journeymap-neoforge:1.21.1-6.0.0-beta.32")
+//    api("blank:journeymap-api-neoforge-2.0.0-1.21.4-SNAPSHOT")
 }
 
 tasks {
