@@ -202,7 +202,7 @@ dependencies {
     val emiRuntime = "curse.maven:emi-580555:5872513" // emi-1.1.18+1.21.1+neoforge.jar
     val emiLoot = "curse.maven:emi-loot-681783:5760220" // emi_loot-0.7.4+1.21+neoforge.jar
     val minecoloniesCompile = "curse.maven:minecolonies-245506:5734626" // minecolonies-1.1.701-1.21.1-snapshot.jar
-    val minecoloniesRuntime = "curse.maven:minecolonies-245506:5998050" // minecolonies-1.1.821-1.21.1-snapshot.jar
+    val minecoloniesRuntime = "curse.maven:minecolonies-245506:6035996" // minecolonies-1.1.846-1.21.1-snapshot.jar
     val creativecore = "curse.maven:creativecore-257814:5773866" // CreativeCore_NEOFORGE_v2.12.17_mc1.21.1.jar
     val ambientsounds = "curse.maven:ambientsounds-254284:5744185" // AmbientSounds_NEOFORGE_v6.1.2_mc1.21.1.jar
     val occultism = "curse.maven:occultism-361026:5793616" // occultism-1.21.1-neoforge-1.161.3.jar
@@ -222,6 +222,8 @@ dependencies {
     val accessoriesCclayer = "curse.maven:accessories-cc-layer-1005683:5610040" // accessories_cclayer-9.0.5-beta.6+1.21.jar
     val genetics = "curse.maven:genetics-resequenced-1040563:5613298" // geneticsresequenced-1.21-1.1.10.jar
     val buildingGadgets = "curse.maven:building-gadgets-298187:5615703" // buildinggadgets2-1.3.7.jar
+    val badpackets = "curse.maven:badpackets-615134:5430629" // badpackets-neo-0.8.1.jar
+    val doggyTalents = "curse.maven:doggy-talents-next-694492:5611845" // DoggyTalentsNext-1.21-1.18.28.jar
 
     // You need to download yourself and put on "libs" folder
     // https://www.curseforge.com/minecraft/mc-mods/entityculling/files/all?page=1&pageSize=20&version=1.21.1&gameVersionTypeId=6
@@ -280,6 +282,8 @@ dependencies {
     compileOnly("curse.maven:ftb-jei-extras-1103259:5725276") // ftbjeiextras-21.1.0.jar
     compileOnly("curse.maven:productivebees-377897:5611632") // productivebees-1.21.0-13.4.0.jar
     compileOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
+    compileOnly(badpackets)
+    compileOnly(doggyTalents)
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
