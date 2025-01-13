@@ -5,7 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import lol.bai.badpackets.impl.handler.ClientPlayPacketHandler;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 
-@Issue(modId = "badpackets", versionRange = "0.8.1", description = "Clears `ChannelRegistry#handlers` map on packet close", mixins = "main.ClientPacketListenerMixin")
+@Issue(modId = "badpackets", versionRange = "[0.8.1]", description = "Clears `ChannelRegistry#handlers` map on packet close", mixins = "main.ClientPacketListenerMixin")
 public class UntrackedIssue001 {
 
 	public static void clearPacketsFromHandler(ClientPacketListener listener) {
