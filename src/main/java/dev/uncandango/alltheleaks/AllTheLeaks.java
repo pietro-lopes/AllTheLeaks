@@ -13,8 +13,11 @@ import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Set;
 
 
 @Mod(AllTheLeaks.MOD_ID)
@@ -30,6 +33,9 @@ public class AllTheLeaks {
 		if (FMLEnvironment.dist.isClient()) {
 			gameBus.addListener(this::addDebugOSMemoryUsed);
 			gameBus.addListener(this::clientCommands);
+		}
+		if (FMLEnvironment.dist.isDedicatedServer()) {
+			gameBus.addListener(this::printNonDaemonThreads);
 		}
 	}
 
@@ -51,5 +57,32 @@ public class AllTheLeaks {
 		if (MemoryStats.ENABLED) {
 			event.getRight().add(4, MemoryStats.getMemoryWorkingSetSize());
 		}
+	}
+
+	private void printNonDaemonThreads(ServerStoppedEvent event) {
+		Thread thread = new Thread(() -> {
+			while (true) {
+				try {
+					//noinspection BusyWait
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					break;
+				}
+				Set<Thread> threads = Thread.getAllStackTraces().keySet();
+				if (!threads.isEmpty()) {
+					System.out.println("AllTheLeaks: Listing stuck threads...");
+					threads.stream()
+						.filter(t -> !t.isDaemon())
+						.filter(t -> !t.getName().equals("DestroyJavaVM"))
+						.forEach(AllTheLeaks::listThreads);
+				}
+			}
+		});
+		thread.setDaemon(true);
+		thread.start();
+	}
+
+	private static void listThreads(Thread thread) {
+		System.out.println("Stuck thread: " + thread.getName());
 	}
 }
