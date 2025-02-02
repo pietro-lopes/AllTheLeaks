@@ -31,7 +31,7 @@ public class IngredientMixin {
 					}
 				}
 				// KubeJS bug is populating itemstacks with Air, this is a workaround to force a re-calculation
-				accessor.setItemStacks(null);
+				// accessor.setItemStacks(null);
 				return dedupedIngredient;
 			}
 		}
