@@ -33,7 +33,37 @@
 		"main.SmithingTrimWrapperMixin",
 		"main.SpellSelectionManagerMixin"
 	],
-	"mixins": ["accessor.ChargeProviderImplAccessor", "accessor.ContextFactoryAccessor", "accessor.JourneymapAccessor", "accessor.PlayerListAccessor", "main.CachedTagLookupMixin", "main.CasterTomeRegistryMixin", "main.ClientboundSetPlayerTeamPacketMixin", "main.CuriosEventHandlerMixin", "main.DeathWrapperEventsImplMixin", "main.DroneEntityMixin", "main.EntitySectionMixin", "main.EntityTickListMixin", "main.FakePlayerFactoryMixin", "main.FakePlayerMixin", "main.FTBQuestsEventHandlerMixin", "main.IngredientDebugMixin", "main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.ItemStackDebugMixin", "main.LootrMixin", "main.NeoForgeEventHandlerMixin", "main.PersistentEntitySectionManagerMixin", "main.PlayerAccessorBEMixin", "main.PlayerListMixin", "main.ServerPlayerMixin", "main.ServerScriptManagerMixin"],
+	"mixins": [
+		"accessor.ChargeProviderImplAccessor",
+		"accessor.ContextFactoryAccessor",
+		"accessor.JourneymapAccessor",
+		"accessor.PlayerListAccessor",
+		"main.CachedTagLookupMixin",
+		"main.CasterTomeRegistryMixin",
+		"main.ClientboundSetPlayerTeamPacketMixin",
+		"main.CuriosEventHandlerMixin",
+		"main.DeathWrapperEventsImplMixin",
+		"main.DroneEntityMixin",
+		"main.EntitySectionMixin",
+		"main.EntityTickListMixin",
+		"main.FakePlayerFactoryMixin",
+		"main.FakePlayerMixin",
+		"main.FTBQuestsEventHandlerMixin",
+		"main.IngredientDebugMixin",
+		"main.IngredientMixin",
+		"main.IngredientMixin$IngredientAccessor",
+		"main.ItemStackDebugMixin",
+		"main.LootrMixin",
+		"main.NeoForgeEventHandlerMixin",
+		"main.PersistentEntitySectionManagerMixin",
+		"main.PlayerAccessorBEMixin",
+		"main.PlayerListMixin",
+		"main.RecipeComponentBuilderMixin",
+		"main.RecipeComponentBuilderMixin$MapCodecMixin",
+		"main.RecipeComponentBuilderMixin$ValueMixin",
+		"main.ServerPlayerMixin",
+		"main.ServerScriptManagerMixin"
+	],
 	"injectors": {
 		"defaultRequire": 0
 	}
