@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.RegistryManager;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(issueId = "#1932", modId = "neoforge", versionRange = "[21.,)")
+@Issue(issueId = "#1932", modId = "neoforge", versionRange = "[21.,21.1.115]")
 public class FixSnapshot {
 	private static final VarHandle DISCONNECTION_HANDLED;
 
