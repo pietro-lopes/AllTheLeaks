@@ -29,12 +29,14 @@ public class Issue1486 {
 
 	public Issue1486() {
 		var gameBus = NeoForge.EVENT_BUS;
-		gameBus.addListener(EventPriority.LOWEST, this::rebuildListenersCache);
+		if (gameBus instanceof EventBus) {
+			gameBus.addListener(EventPriority.LOWEST, this::rebuildListenersCache);
+		}
 	}
 
 	private void rebuildListenersCache(ServerStoppedEvent event) {
-		var locker = LISTENER_LIST.get(NeoForge.EVENT_BUS);
 		try {
+			var locker = LISTENER_LIST.get(NeoForge.EVENT_BUS);
 			Map<Class<?>, ListenerList> map = (Map<Class<?>, ListenerList>) GET_READ_MAP.invoke(locker);
 			for (var listener : map.values()) {
 				boolean rebuild = (boolean) REBUILD.get(listener);
