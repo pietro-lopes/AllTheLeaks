@@ -7,24 +7,25 @@ plugins {
     java
     idea
     `maven-publish`
-    id("net.neoforged.moddev.legacy") version "2.0.61-beta-pr-118-legacy"
+    id("net.neoforged.moddev.legacyforge") version "2.0.78"
 }
 
-val minecraftVersion: String by project
-val minecraftVersionRange: String by project
-val forgeVersion: String by project
-val forgeVersionRange: String by project
-val loaderVersionRange: String by project
-val parchmentMcVersion: String by project
-val parchmentVersion: String by project
-val modId: String by project
-val modName: String by project
-val modLicense: String by project
-val modVersion: String by project
-val modGroupId: String by project
-val modAuthors: String by project
-val modDescription: String by project
-val geckolibVersionRange: String by project
+val minecraftVersion: String by extra
+val minecraftVersionRange: String by extra
+val forgeVersion: String by extra
+val forgeVersionRange: String by extra
+val loaderVersionRange: String by extra
+val parchmentMcVersion: String by extra
+val parchmentVersion: String by extra
+val modId: String by extra
+val modName: String by extra
+val modLicense: String by extra
+val modVersion: String by extra
+val modGroupId: String by extra
+val modAuthors: String by extra
+val modDescription: String by extra
+val geckolibVersionRange: String by extra
+val moonlightVersionRange: String by extra
 
 repositories {
     mavenCentral()
@@ -96,10 +97,6 @@ repositories {
         }
     }
 
-//    maven {
-//        url = uri("https://modmaven.dev/")
-//    }
-
     flatDir {
         dir("libs")
     }
@@ -119,8 +116,10 @@ sourceSets {
     }
 }
 
-neoForge {
-    version = "$minecraftVersion-$forgeVersion"
+val mc = minecraftVersion
+val fg = forgeVersion
+legacyForge {
+    version = "$mc-$fg"
     runs {
         register("client") {
             client()
@@ -277,6 +276,16 @@ dependencies {
     modCompileOnly("curse.maven:emi-loot-681783:4971064") // emi_loot-0.6.5+1.20.1+forge.jar
     modCompileOnly("curse.maven:findme-291936:4614446") // findme-3.1.0-forge.jar
     modCompileOnly("curse.maven:badpackets-615134:4438956") // badpackets-forge-0.4.1.jar
+    modCompileOnly("curse.maven:alexs-mobs-426558:4618074") // alexsmobs-1.22.5.jar
+    modCompileOnly("curse.maven:mowzies-mobs-250498:5399941")
+    modCompileOnly("curse.maven:serene-seasons-291874:5790653") // SereneSeasons-forge-1.20.1-9.1.0.0.jar
+    modCompileOnly("curse.maven:entity-texture-features-fabric-568563:5697083") // entity_texture_features_forge_1.20.1-6.2.3.jar
+    modCompileOnly("curse.maven:entity-model-features-844662:5674620") // entity_model_features_forge_1.20.1-2.2.2.jar
+    modCompileOnly("curse.maven:beans-backpacks-946775:5368249") // BeansBackpacks-forge-1.20.1-2.0.jar
+    modCompileOnly("curse.maven:phosphophyllite-412551:4633720") // phosphophyllite-1.20.1-0.7.0-alpha.jar
+    modCompileOnly("curse.maven:domestication-innovation-591149:4578807") // domesticationinnovation-1.7.0-1.20.jar
+    modCompileOnly("curse.maven:selene-499980:5938277") // moonlight-1.20-2.13.32-forge.jar
+    modCompileOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -300,13 +309,14 @@ dependencies {
     modRuntimeOnly("curse.maven:architectury-api-419699:5137938") // architectury-9.2.14-forge.jar
     modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:5838009") // irons_spellbooks-1.20.1-3.4.0.4.jar
     modRuntimeOnly("curse.maven:aether-255308:5786709") // aether-1.20.1-1.5.0-neoforge.jar
+//    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.8") // 1.20.1:4.4.9
     modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9") // 1.20.1:4.4.9
     modRuntimeOnly("curse.maven:occultism-361026:5844288") // occultism-1.20.1-1.140.1.jar
-    modRuntimeOnly("curse.maven:travelers-backpack-321117:5764972") // travelersbackpack-forge-1.20.1-9.1.16.jar
+    modRuntimeOnly("curse.maven:travelers-backpack-321117:6288745") // travelersbackpack-forge-1.20.1-9.1.33.jar
     modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
     modRuntimeOnly("curse.maven:tool-belt-260262:5393183") // ToolBelt-1.20.1-1.20.01.jar
     modRuntimeOnly("curse.maven:just-enough-archaeology-890755:5324518") // jearchaeology-1.20.1-1.0.4.jar
-    modRuntimeOnly("curse.maven:supplementaries-412082:5873901") // supplementaries-1.20-3.0.6.jar
+    modRuntimeOnly("curse.maven:supplementaries-412082:5948497") // supplementaries-1.20-3.1.11.jar
     modRuntimeOnly("curse.maven:betterf3-401648:4863626") // BetterF3-7.0.2-Forge-1.20.1.jar
     modRuntimeOnly("curse.maven:spark-361579:4738952") // spark-1.10.53-forge.jar
     modRuntimeOnly("curse.maven:ftb-library-forge-404465:5567591") // ftb-library-forge-2001.2.4.jar
@@ -333,6 +343,14 @@ dependencies {
     modRuntimeOnly("curse.maven:emi-loot-681783:5760210") // emi_loot-0.7.4+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:findme-291936:5074609") // findme-3.2.1-forge.jar
     modRuntimeOnly("curse.maven:badpackets-615134:4784395") // badpackets-forge-0.4.3.jar
+    modRuntimeOnly("curse.maven:alexs-mobs-426558:5698791") // alexsmobs-1.22.9.jar
+    modRuntimeOnly("curse.maven:mowzies-mobs-250498:6224182") // mowziesmobs-1.7.1.jar
+    modRuntimeOnly("curse.maven:serene-seasons-291874:5790653") // SereneSeasons-1.20.1-9.1.0.0.jar
+    modRuntimeOnly("curse.maven:entity-texture-features-fabric-568563:5921292") // entity_texture_features_forge_1.20.1-6.2.8.jar
+    modRuntimeOnly("curse.maven:entity-model-features-844662:5722712") // entity_model_features_forge_1.20.1-2.2.6.jar
+    modRuntimeOnly("curse.maven:beans-backpacks-946775:5368249") // BeansBackpacks-forge-1.20.1-2.0.jar
+    modRuntimeOnly("curse.maven:phosphophyllite-412551:6085275") // phosphophyllite-1.20.1-0.7.0-alpha.0.2.jar
+    modRuntimeOnly("curse.maven:domestication-innovation-591149:4911955") // domesticationinnovation-1.7.1-1.20.1.jar
 
     /* Greg headache before MDG legacy
     1. Download jar
@@ -347,7 +365,7 @@ dependencies {
 
     // Required dependencies runtimes
     modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
-    modRuntimeOnly("curse.maven:terrafirmacraft-302973:5872631") // TerraFirmaCraft-Forge-1.20.1-3.2.10.jar
+//    modRuntimeOnly("curse.maven:terrafirmacraft-302973:5872631") // TerraFirmaCraft-Forge-1.20.1-3.2.10.jar
     modRuntimeOnly("curse.maven:patchouli-306770:4966125") // Patchouli-1.20.1-84-FORGE.jar
     modRuntimeOnly("curse.maven:ferritecore-429235:4810975") // ferritecore-6.0.1-forge.jar
     modRuntimeOnly("curse.maven:caelus-308989:5281700") // caelus-forge-3.2.0+1.20.1.jar
@@ -356,7 +374,7 @@ dependencies {
     modRuntimeOnly("curse.maven:smartbrainlib-661293:5654964") // SmartBrainLib-forge-1.20.1-1.15.jar
     modRuntimeOnly("curse.maven:forbidden-arcanus-309858:5198323") // forbidden_arcanus-1.20.1-2.2.6.jar
     modRuntimeOnly("curse.maven:valhelsia-core-416935:5189548") // valhelsia_core-forge-1.20.1-1.1.2.jar
-    modRuntimeOnly("curse.maven:selene-499980:5871623") // moonlight-1.20-2.13.21-forge.jar
+    modRuntimeOnly("curse.maven:selene-499980:5938277") // moonlight-1.20-2.13.32-forge.jar
     modRuntimeOnly("curse.maven:structure-gel-api-378802:5278429") // structure_gel-1.20.1-2.16.2.jar
     modRuntimeOnly("curse.maven:structurize-298744:5782214") // structurize-1.20.1-1.0.760-snapshot.jar
     modRuntimeOnly("curse.maven:towntalk-900364:5355511") // towntalk-1.20.1-1.1.0.jar
@@ -369,6 +387,8 @@ dependencies {
     modRuntimeOnly("curse.maven:collective-342584:5840216") // collective-1.20.1-7.87.jar
     modRuntimeOnly("curse.maven:fzzy-config-1005914:5908784") // fzzy_config-0.5.7+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:kotlin-for-forge-351264:5402061") // kotlinforforge-4.11.0-all.jar
+    modRuntimeOnly("curse.maven:glitchcore-955399:5787839") // GlitchCore-forge-1.20.1-0.0.1.1.jar
+    modRuntimeOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
 
     // LeakDiagTool
     modRuntimeOnly("blank:leakdiagtool:1.0.0")
@@ -388,7 +408,8 @@ tasks {
             "mod_version" to modVersion,
             "mod_authors" to modAuthors,
             "mod_description" to modDescription,
-            "geckolib_version_range" to geckolibVersionRange
+            "geckolib_version_range" to geckolibVersionRange,
+            "moonlight_version_range" to moonlightVersionRange
         )
 
         inputs.properties(replaceProperties)
