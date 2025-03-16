@@ -15,20 +15,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntityRenderer.class)
-public class LivingEntityRendererMixin implements UpdateablePlayer<LivingEntityRenderer<?,?>>, UpdateableLevel<LivingEntityRenderer<?,?>> {
+public class ATLLivingEntityRendererMixin implements UpdateablePlayer<LivingEntityRenderer<?,?>>, UpdateableLevel<LivingEntityRenderer<?,?>> {
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void registerInstance(EntityRendererProvider.Context context, EntityModel<?> model, float shadowRadius, CallbackInfo ci) {
 		UpdateablePlayer.register(this);
 		UpdateableLevel.register(this);
 	}
 
+	private static boolean atl$tombstoneEnabled = false;
+	private static boolean atl$emfEnabled = false;
+	private static boolean atl$etfEnabled = false;
+
 	@Override
 	public void atl$onClientLevelUpdated(@Nullable ClientLevel level) {
-		UntrackedIssue001.clearLivingEntityFromRenderer((LivingEntityRenderer<?,?>) (Object)this);
+		if (atl$tombstoneEnabled) UntrackedIssue001.clearLivingEntityFromRenderer((LivingEntityRenderer<?,?>) (Object)this);
+		if (atl$emfEnabled) dev.uncandango.alltheleaks.leaks.client.mods.entity_model_features.UntrackedIssue001.clearCachedEntityFromRenderer((LivingEntityRenderer<?,?>) (Object)this, level);
+		if (atl$etfEnabled) dev.uncandango.alltheleaks.leaks.client.mods.entity_texture_features.UntrackedIssue001.clearCachedEntityFromRenderer((LivingEntityRenderer<?,?>) (Object)this, level);
 	}
 
 	@Override
 	public void atl$onClientPlayerUpdated(LocalPlayer player) {
-		UntrackedIssue001.clearLivingEntityFromRenderer((LivingEntityRenderer<?,?>) (Object)this);
+		if (atl$tombstoneEnabled) UntrackedIssue001.clearLivingEntityFromRenderer((LivingEntityRenderer<?,?>) (Object)this);
 	}
 }
