@@ -33,3 +33,12 @@ versionRange = "${geckolib_version_range}"
 reason = "Update mod above to include latest memory leak fixes!"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.alltheleaks]]
+modId = "moonlight"
+mandatory = false
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${moonlight_version_range}"
+reason = "Update mod above to include latest memory leak fixes!"
+ordering = "NONE"
+side = "BOTH"
