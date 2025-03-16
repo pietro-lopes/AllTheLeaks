@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 public class IssueManager {
@@ -216,9 +217,9 @@ public class IssueManager {
 				categoryName = "Feature (`config/alltheleaks.json`)";
 			}
 			sb.append("## ").append(StringUtils.capitalize(categoryName)).append("\n\n");
-			modMap.forEach((modId, versionMap) -> {
-				sb.append("- ").append(modId).append("\n");
-				versionMap.forEach((versionRange, strings) -> {
+			modMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
+				sb.append("- ").append(entry.getKey()).append("\n");
+				entry.getValue().forEach((versionRange, strings) -> {
 					sb.append("  - ").append(versionRange).append("\n");
 					strings.forEach(s -> sb.append("    - ").append(s).append("\n"));
 				});
