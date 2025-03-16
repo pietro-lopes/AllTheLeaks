@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Mixin(AE2wtlibForge.class)
+@Mixin(value = AE2wtlibForge.class, remap = false)
 public class AE2wtlibForgeMixin {
 	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/eventbus/api/IEventBus;addListener(Ljava/util/function/Consumer;)V", ordinal = 1))
 	private <T> void atl$replaceConsumer(IEventBus instance, Consumer<T> tConsumer) {
