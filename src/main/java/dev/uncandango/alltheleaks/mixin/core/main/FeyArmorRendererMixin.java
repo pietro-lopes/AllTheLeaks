@@ -15,7 +15,6 @@ public abstract class FeyArmorRendererMixin extends GeoArmorRenderer<FeyArmorIte
 
 	@Override
 	public void doPostRenderCleanup() {
-		super.doPostRenderCleanup();
 		FeyArmorItem.renderEntity = null;
 	}
 }
