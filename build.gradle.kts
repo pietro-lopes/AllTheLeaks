@@ -298,6 +298,7 @@ dependencies {
     modRuntimeOnly("curse.maven:applied-energistics-2-223794:5641282") // appliedenergistics2-forge-15.2.13.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-wireless-terminals-459929:5217955") // ae2wtlib-15.2.3-forge.jar
     modRuntimeOnly("curse.maven:jei-238222:5846810") // jei-1.20.1-forge-15.20.0.105.jar
+    // modRuntimeOnly("curse.maven:async-jei-just-enough-item-1180017:6139008") // jei-1.20.1-forge-15.20.0.106-5-async.jar
     modRuntimeOnly("curse.maven:railcraft-reborn-901491:5650737") // railcraft-reborn-1.20.1-1.1.7.jar
     modRuntimeOnly("curse.maven:curios-309927:5843594") // curios-forge-5.11.0+1.20.1.jar
 
