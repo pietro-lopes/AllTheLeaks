@@ -1,5 +1,6 @@
 package dev.uncandango.alltheleaks.leaks.client.mods.twilightforest;
 
+import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
@@ -47,10 +48,14 @@ public class UntrackedIssue001 {
 			} catch (IllegalStateException ignored) {
 				return;
 			}
-			var recipeCat = jeiRuntime.getRecipeManager().getRecipeCategory(TransformationPowderCategory.TRANSFORMATION);
-			var entityRenderer = ENTITY_RENDERER.get(recipeCat);
-			var entityMap = (Map) ENTITY_MAP.get(entityRenderer);
-			entityMap.clear();
+			try {
+				var recipeCat = jeiRuntime.getRecipeManager().getRecipeCategory(TransformationPowderCategory.TRANSFORMATION);
+				var entityRenderer = ENTITY_RENDERER.get(recipeCat);
+				var entityMap = (Map) ENTITY_MAP.get(entityRenderer);
+				entityMap.clear();
+			} catch (IllegalStateException e) {
+				AllTheLeaks.LOGGER.warn("Unable to clear entity map from Twilight Jei Plugin: {}", e.getMessage());
+			}
 		}
 	}
 }
