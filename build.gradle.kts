@@ -313,7 +313,7 @@ dependencies {
 //    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.8") // 1.20.1:4.4.9
     modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9") // 1.20.1:4.4.9
     modRuntimeOnly("curse.maven:occultism-361026:5844288") // occultism-1.20.1-1.140.1.jar
-    modRuntimeOnly("curse.maven:travelers-backpack-321117:6288745") // travelersbackpack-forge-1.20.1-9.1.33.jar
+    modRuntimeOnly("curse.maven:travelers-backpack-321117:6370600") // travelersbackpack-forge-1.20.1-9.1.34.jar
     modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
     modRuntimeOnly("curse.maven:tool-belt-260262:5393183") // ToolBelt-1.20.1-1.20.01.jar
     modRuntimeOnly("curse.maven:just-enough-archaeology-890755:5324518") // jearchaeology-1.20.1-1.0.4.jar

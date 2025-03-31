@@ -5,7 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
 import net.minecraftforge.common.MinecraftForge;
 
-@Issue(modId = "travelersbackpack", versionRange = "[9.1.16,)", description = "Clears entity from `BackpackLayerModel#livingEntity`")
+@Issue(modId = "travelersbackpack", versionRange = "[9.1.16,9.1.33]", description = "Clears entity from `BackpackLayerModel#livingEntity`")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = MinecraftForge.EVENT_BUS;
@@ -14,7 +14,7 @@ public class UntrackedIssue001 {
 
 	static {
 		// Dummy to validate variable calls
-		var dummy = BackpackLayerModel.LAYER_MODEL;
+		BackpackLayerModel.LAYER_MODEL.setLivingEntity(null);
 	}
 
 	private void clearEntityFromModel(UpdateableLevel.RenderEnginesUpdated event) {
