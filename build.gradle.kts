@@ -7,7 +7,7 @@ plugins {
     java
     idea
     `maven-publish`
-    id("net.neoforged.moddev.legacyforge") version "2.0.78"
+    id("net.neoforged.moddev.legacyforge") version "2.0.74"
 }
 
 val minecraftVersion: String by extra
@@ -311,7 +311,7 @@ dependencies {
     modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:5838009") // irons_spellbooks-1.20.1-3.4.0.4.jar
     modRuntimeOnly("curse.maven:aether-255308:5786709") // aether-1.20.1-1.5.0-neoforge.jar
 //    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.8") // 1.20.1:4.4.9
-    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.9") // 1.20.1:4.4.9
+    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.7.1.2")
     modRuntimeOnly("curse.maven:occultism-361026:5844288") // occultism-1.20.1-1.140.1.jar
     modRuntimeOnly("curse.maven:travelers-backpack-321117:6370600") // travelersbackpack-forge-1.20.1-9.1.34.jar
     modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
@@ -438,5 +438,9 @@ idea {
     project {
         jdkName = java.sourceCompatibility.toString()
         languageLevel = IdeaLanguageLevel(java.sourceCompatibility.toString())
+    }
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
     }
 }
