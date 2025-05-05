@@ -8,7 +8,7 @@ plugins {
     java
     idea
     `maven-publish`
-    id("net.neoforged.moddev") version "2.0.33-beta"
+    id("net.neoforged.moddev") version "2.0.74"
 }
 
 val minecraftVersion: String by project
@@ -52,7 +52,7 @@ repositories {
     }
     maven {
         // saps.dev Maven (KubeJS and Rhino)
-        url = uri("https://maven.saps.dev/releases")
+        url = uri("https://maven.latvian.dev/releases")
         content {
             includeGroup("dev.latvian.mods")
             includeGroup("dev.latvian.apps")
@@ -69,6 +69,8 @@ repositories {
         name = "Iron's Maven - Release"
         url = uri("https://code.redspace.io/releases")
     }
+
+    maven { url = uri("https://maven.bawnorton.com/releases") }
 
     flatDir {
         dir("libs")
@@ -299,6 +301,7 @@ dependencies {
 //        println("runtimeOnly(\"curse.maven:$nameId-$cfId:$fileId\")")
 //        if (nameId.contains("journeymap")) return@forEach
 //        if (nameId.contains("curios")) return@forEach
+        if (nameId.contains("accessories")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
 
@@ -346,6 +349,35 @@ dependencies {
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
+    compileOnly("curse.maven:create-328085:6323264")
+    compileOnly("curse.maven:jonns-trophies-510170:6298097")
+    compileOnly("curse.maven:relics-mod-445274:6444603")
+    compileOnly("curse.maven:lendercataclysm-551586:6429407")
+    compileOnly("curse.maven:lionfish-api-1001614:6168249")
+    compileOnly("curse.maven:pneumaticcraft-repressurized-281849:6288626")
+    compileOnly("curse.maven:rainboows-1121832:6416604")
+    compileOnly("curse.maven:supplementaries-412082:6462647")
+    compileOnly("curse.maven:selene-499980:6462396")
+    compileOnly("curse.maven:super-factory-manager-306935:6361523")
+    compileOnly("curse.maven:ender-storage-1-8-245174:6159037")
+    compileOnly("blank:AdditionalEntityAttributes:2.0.0+1.21.1-neoforge")
+    runtimeOnly("curse.maven:ars-nouveau-401955:6468110")
+    compileOnly("curse.maven:corail-tombstone-243707:6398190")
+    runtimeOnly("curse.maven:pneumaticcraft-repressurized-281849:6288626")
+    runtimeOnly("curse.maven:patchouli-306770:6164617")
+    compileOnly("curse.maven:xycraft-653786:5601037")
+    compileOnly("curse.maven:immersive-engineering-231951:6466513")
+    compileOnly("curse.maven:cooking-for-blockheads-231484:6459070")
+    compileOnly("curse.maven:mffs-238546:6348338")
+    runtimeOnly("curse.maven:crafting-tweaks-233071:5623443")
+    runtimeOnly("curse.maven:balm-531761:6447094")
+
+    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4")?.let {
+        compileOnly(it)
+    }
+    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.2-beta.4")?.let {
+        implementation(it)
+    }
 
     // Testing
 //    runtimeOnly("blank:journeymap-neoforge:1.21.1-6.0.0-beta.32")

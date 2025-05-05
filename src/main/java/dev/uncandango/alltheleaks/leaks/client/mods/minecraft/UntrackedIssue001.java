@@ -4,9 +4,8 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.level.LevelEvent;
 
-@Issue(modId = "minecraft", versionRange = "1.21.1", mixins = "main.MinecraftMixin")
+@Issue(modId = "minecraft", versionRange = "1.21.1", mixins = {"main.MinecraftMixin"})
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import java.lang.invoke.VarHandle;
 import java.util.Set;
 
-@Issue(modId = "badpackets", versionRange = "[0.8.1]", description = "Clears `ChannelRegistry#handlers` map on server stopped")
+@Issue(modId = "badpackets", versionRange = "[0.8.1,)", description = "Clears `ChannelRegistry#handlers` map on server stopped")
 public class UntrackedIssue001 {
 	public static final VarHandle HANDLERS;
 

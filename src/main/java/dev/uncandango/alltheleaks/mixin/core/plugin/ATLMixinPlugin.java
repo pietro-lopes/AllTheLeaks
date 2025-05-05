@@ -1,6 +1,8 @@
 package dev.uncandango.alltheleaks.mixin.core.plugin;
 
+import com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar;
 import dev.uncandango.alltheleaks.leaks.IssueManager;
+import dev.uncandango.alltheleaks.mixinsq.ATLMixinCanceller;
 import org.apache.commons.lang3.stream.Streams;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -24,7 +26,7 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public void onLoad(String mixinPackage) {
-
+		MixinCancellerRegistrar.register(new ATLMixinCanceller());
 	}
 
 	@Override

@@ -22,6 +22,7 @@ public class ATLProperties {
 	public boolean scoreboardDebug;
 	public boolean debugItemStackModifications;
 	public boolean debugNativeImage;
+	public boolean disableSearchTree;
 	public int version;
 	private JsonObject properties;
 
@@ -46,6 +47,7 @@ public class ATLProperties {
 			this.entitySectionCME = GsonHelper.getAsBoolean(properties, "entitySectionCME", false);
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.debugNativeImage = GsonHelper.getAsBoolean(properties, "debugNativeImage", false);
+			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error
@@ -75,6 +77,7 @@ public class ATLProperties {
 		properties.addProperty("debugItemStackModifications", false);
 		properties.addProperty("version", 1);
 		properties.addProperty("debugNativeImage", false);
+		properties.addProperty("disableSearchTree", false);
 		return properties;
 	}
 
