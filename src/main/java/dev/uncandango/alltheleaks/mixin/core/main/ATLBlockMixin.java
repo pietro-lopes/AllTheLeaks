@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
 public class ATLBlockMixin {
 
 		@Unique
-		private WeakReference<Player> additionalEntityAttributes$breakingPlayer;
+		private WeakReference<Player> additionalEntityAttributes$breakingPlayer = new WeakReference<>(null);
 
 		@Inject(
 			method = {"playerDestroy"},
