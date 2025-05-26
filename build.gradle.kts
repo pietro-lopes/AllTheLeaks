@@ -7,7 +7,7 @@ plugins {
     java
     idea
     `maven-publish`
-    id("net.neoforged.moddev.legacyforge") version "2.0.74"
+    id("net.neoforged.moddev.legacyforge") version "2.0.88"
 }
 
 val minecraftVersion: String by extra
@@ -45,7 +45,7 @@ repositories {
     }
     maven {
         // saps.dev Maven (KubeJS and Rhino)
-        url = uri("https://maven.saps.dev/releases")
+        url = uri("https://maven.latvian.dev/releases")
         content {
             includeGroup("dev.latvian.mods")
             includeGroup("dev.latvian.apps")
@@ -367,6 +367,7 @@ dependencies {
     // Required dependencies runtimes
     modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
 //    modRuntimeOnly("curse.maven:terrafirmacraft-302973:5872631") // TerraFirmaCraft-Forge-1.20.1-3.2.10.jar
+    modCompileOnly("curse.maven:terrafirmacraft-302973:6187491") // TerraFirmaCraft-Forge-1.20.1-3.2.14.jar
     modRuntimeOnly("curse.maven:patchouli-306770:4966125") // Patchouli-1.20.1-84-FORGE.jar
     modRuntimeOnly("curse.maven:ferritecore-429235:4810975") // ferritecore-6.0.1-forge.jar
     modRuntimeOnly("curse.maven:caelus-308989:5281700") // caelus-forge-3.2.0+1.20.1.jar
