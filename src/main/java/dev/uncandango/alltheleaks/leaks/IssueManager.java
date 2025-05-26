@@ -76,22 +76,22 @@ public class IssueManager {
 						}
 					}
 					if (!flagActivated) {
-						AllTheLeaks.LOGGER.info("Skipping feature {} from mod {} as it's feature flag is not activated!", issueId, modId);
+						AllTheLeaks.LOGGER.debug("Skipping feature {} from mod {} as it's feature flag is not activated!", issueId, modId);
 						return;
 					}
 					if (modAbsent != null && LoadingModList.get().getModFileById(modAbsent) != null) {
-						AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as mod {} is present!", issueId, modId, modAbsent);
+						AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as mod {} is present!", issueId, modId, modAbsent);
 						return;
 					}
 					Boolean devOnly = AnnotationHelper.getValue(annotation, "devOnly");
 					if (devOnly && !AllTheLeaks.INDEV) {
-						AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it's dev only!", issueId, modId);
+						AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as it's dev only!", issueId, modId);
 						return;
 					}
 					if (currentDist.isDedicatedServer()) {
 						Dist side = annotation.memberName().contains(".client.mods.") ? Dist.CLIENT : Dist.DEDICATED_SERVER;
 						if (side.isClient()) {
-							AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it is client side only!", issueId, modId);
+							AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as it is client side only!", issueId, modId);
 							return;
 						}
 					}
@@ -147,13 +147,13 @@ public class IssueManager {
 						AllTheLeaks.LOGGER.info("Class {} will be loaded as it matches versions: {} in {}", annotatedClass, modVer, range);
 						return true;
 					} else {
-						AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as mod {} does not match versions: {} in {}", annotatedClass, modId, modVer, range);
+						AllTheLeaks.LOGGER.debug("Class {} will NOT be loaded as mod {} does not match versions: {} in {}", annotatedClass, modId, modVer, range);
 					}
 				} catch (Exception e) {
 					AllTheLeaks.LOGGER.error("Error while comparing versions and instantiating class", e);
 				}
 			} else {
-				AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as mod {} is not present", annotatedClass, modId);
+				AllTheLeaks.LOGGER.debug("Class {} will NOT be loaded as mod {} is not present", annotatedClass, modId);
 			}
 			return false;
 		};
