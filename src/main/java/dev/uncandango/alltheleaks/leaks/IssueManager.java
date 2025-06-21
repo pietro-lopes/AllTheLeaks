@@ -62,16 +62,16 @@ public class IssueManager {
 					}
 				}
 				if (!flagActivated) {
-					AllTheLeaks.LOGGER.info("Skipping feature {} from mod {} as it's feature flag is not activated!", issueId, modId);
+					AllTheLeaks.LOGGER.debug("Skipping feature {} from mod {} as it's feature flag is not activated!", issueId, modId);
 					return;
 				}
 				if (modAbsent != null && LoadingModList.get().getModFileById(modAbsent) != null) {
-					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as mod {} is present!", issueId, modId, modAbsent);
+					AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as mod {} is present!", issueId, modId, modAbsent);
 					return;
 				}
 				Boolean devOnly = AnnotationHelper.getValue(annotation, "devOnly");
 				if (devOnly && !AllTheLeaks.INDEV) {
-					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it's dev only!", issueId, modId);
+					AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as it's dev only!", issueId, modId);
 					return;
 				}
 				Boolean solved = AnnotationHelper.getValue(annotation, "solved");
@@ -79,18 +79,18 @@ public class IssueManager {
 				List<String> extraModDepVersions = AnnotationHelper.getValue(annotation, "extraModDepVersions");
 
 				if (!currentDist.isDedicatedServer() && annotation.memberName().contains(".server.mods.")) {
-					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it is server side only!", issueId, modId);
+					AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as it is server side only!", issueId, modId);
 					return;
 				}
 				if (currentDist.isDedicatedServer()) {
 					Dist side = annotation.memberName().contains(".client.mods.") ? Dist.CLIENT : Dist.DEDICATED_SERVER;
 					if (side.isClient()) {
-						AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it is client side only!", issueId, modId);
+						AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as it is client side only!", issueId, modId);
 						return;
 					}
 				}
 				if (solved) {
-					AllTheLeaks.LOGGER.info("Skipping issue {} from mod {} as it has been solved by mod!", issueId, modId);
+					AllTheLeaks.LOGGER.debug("Skipping issue {} from mod {} as it has been solved by mod!", issueId, modId);
 					return;
 				}
 				String versionRange = AnnotationHelper.getValue(annotation, "versionRange");
@@ -146,8 +146,8 @@ public class IssueManager {
 							for (int i = 0; i < extraModDep.size(); i++) {
 								var dep = LoadingModList.get().getModFileById(extraModDep.get(i));
 								if (dep == null) {
-									AllTheLeaks.LOGGER.info("Extra dependency Mod {} is not present in the mod list", extraModDep.get(i));
-									AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as extra mod dependecy is not present.", annotatedClass);
+									AllTheLeaks.LOGGER.debug("Extra dependency Mod {} is not present in the mod list", extraModDep.get(i));
+									AllTheLeaks.LOGGER.debug("Class {} will NOT be loaded as extra mod dependecy is not present.", annotatedClass);
 									return false;
 								}
 								var rangeDepVer = VersionRange.createFromVersionSpec(extraModDepVersions.get(i));
@@ -156,8 +156,8 @@ public class IssueManager {
 								if (rangeDepVer.containsVersion(depVer) || depVerString.equals("0.0NONE")) {
 									AllTheLeaks.LOGGER.info("Extra dependecy Mod {} matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));
 								} else {
-									AllTheLeaks.LOGGER.info("Extra dependecy Mod {} does NOT matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));
-									AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as extra mod dependecy does not match.", annotatedClass);
+									AllTheLeaks.LOGGER.debug("Extra dependecy Mod {} does NOT matches versions: {} in {}", extraModDep.get(i),dep.versionString(), extraModDepVersions.get(i));
+									AllTheLeaks.LOGGER.debug("Class {} will NOT be loaded as extra mod dependecy does not match.", annotatedClass);
 									return false;
 								}
 							}
@@ -166,13 +166,13 @@ public class IssueManager {
 						AllTheLeaks.LOGGER.info("Class {} will be loaded as it matches versions: {} in {}", annotatedClass, modVer, range);
 						return true;
 					} else {
-						AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as mod {} does not match versions: {} in {}", annotatedClass, modId, modVer, range);
+						AllTheLeaks.LOGGER.debug("Class {} will NOT be loaded as mod {} does not match versions: {} in {}", annotatedClass, modId, modVer, range);
 					}
 				} catch (Exception e) {
 					AllTheLeaks.LOGGER.error("Error while comparing versions and instantiating class", e);
 				}
 			} else {
-				AllTheLeaks.LOGGER.info("Class {} will NOT be loaded as mod {} is not present", annotatedClass, modId);
+				AllTheLeaks.LOGGER.debug("Class {} will NOT be loaded as mod {} is not present", annotatedClass, modId);
 			}
 			return false;
 		};

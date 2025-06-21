@@ -3,3 +3,5 @@ plugins {
 }
 
 rootProject.name = "AllTheLeaks-1.21"
+
+include(":atl-agent")

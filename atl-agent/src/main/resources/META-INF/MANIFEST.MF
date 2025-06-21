@@ -1,0 +1,3 @@
+Can-Redefine-Classes: false
+Can-Retransform-Classes: false
+Premain-Class: dev.uncandango.atl_agent.ATLAgent

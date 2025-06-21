@@ -25,8 +25,8 @@ public class IngredientMixin {
 			if (dedupedIngredient != origIngredient && (Object) dedupedIngredient instanceof IngredientAccessor accessor) {
 				if (ATLProperties.get().debugItemStackModifications) {
 					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
-						Streams.of(dedupedIngredient.getValues()).map(Ingredient.Value::getItems)
-							.forEach(stacks -> stacks.forEach(stack -> ((Lockable) (Object) stack).setLocked(true)));
+						Streams.of(dedupedIngredient.getItems())
+							.forEach(stack -> ((Lockable) (Object) stack).setLocked(true));
 						((Lockable) (Object) dedupedIngredient).setLocked(true);
 					}
 				}

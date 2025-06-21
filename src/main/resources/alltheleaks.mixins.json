@@ -17,6 +17,7 @@
 		"main.ClarentEmiRecipeMixin",
 		"main.ClientPacketListenerMixin",
 		"main.ClientPacketListenerMixin2",
+		"main.ClientPayloadHandlerMixin",
 		"main.CullTaskMixin",
 		"main.EmiLootEntityEmiStackMixin",
 		"main.EntityEmiStackMixin",
@@ -38,9 +39,11 @@
 		"main.ProjectorRenderMixin",
 		"main.RainbowsRendererParticleMixin",
 		"main.RecipeTransferButtonMixin",
+		"main.RecipeUtilsMixin",
+		"main.RegistryManagerMixin",
 		"main.SearchOptionsMixin",
 		"main.SmithingTrimWrapperMixin",
-		"main.SpellSelectionManagerMixin"
+		"main.SpellSelectionManagerMixin", "main.WrappedEnchanterRecipeMixin"
 	],
 	"mixins": [
 		"accessor.ChargeProviderImplAccessor",
@@ -73,7 +76,6 @@
 		"main.RecipeComponentBuilderMixin$MapCodecMixin",
 		"main.RecipeComponentBuilderMixin$ValueMixin",
 		"main.RegistryComponentMixin",
-
 		"main.ServerPlayerMixin",
 		"main.ServerScriptManagerMixin"
 	],

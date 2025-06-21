@@ -3,6 +3,8 @@ import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 import java.nio.file.Files
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 plugins {
     java
@@ -170,7 +172,10 @@ val jeiRuntimeOnly: Configuration by configurations.getting
 val emiRuntimeOnly: Configuration by configurations.getting
 val jeiServerRuntimeOnly: Configuration by configurations.getting
 val emiServerRuntimeOnly: Configuration by configurations.getting
+val atlAgent: Configuration by configurations.creating
 dependencies {
+    atlAgent(project(":atl-agent"))
+
     // Here we go
     val journeymap = "curse.maven:journeymap-32274:5820528" // "1.21.1-6.0.0-beta.28"
     val railcraft = "curse.maven:railcraft-reborn-901491:5650759" // "1.2.2"
@@ -283,13 +288,13 @@ dependencies {
     compileOnly(buildingGadgets)
     compileOnly("curse.maven:ftb-jei-extras-1103259:5725276") // ftbjeiextras-21.1.0.jar
     compileOnly("curse.maven:productivebees-377897:5611632") // productivebees-1.21.0-13.4.0.jar
-    compileOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
+    compileOnly("curse.maven:modernfix-790626:6609557") // modernfix-neoforge-5.23.1+mc1.21.1.jar
     compileOnly(badpackets)
     compileOnly(doggyTalents)
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
-    val minecraftInstanceJson = Files.newInputStream(File(System.getProperty("user.dir") + "/minecraftinstance.json").toPath()).use { inputStream ->
+    val minecraftInstanceJson = Files.newInputStream(project.buildFile.parentFile.resolve("minecraftinstance.json").toPath()).use { inputStream ->
         val jsonReader = JsonReader(inputStream.reader())
         gson.fromJson<JsonObject>(jsonReader, JsonObject::class.java)
     }
@@ -372,6 +377,14 @@ dependencies {
     runtimeOnly("curse.maven:crafting-tweaks-233071:5623443")
     runtimeOnly("curse.maven:balm-531761:6447094")
 
+    implementation("curse.maven:natures-aura-306626:5966337")
+    implementation("curse.maven:nautec-1107394:6544236")
+    // implementation("curse.maven:ender-io-64578:6363527")
+    compileOnly("blank:com.enderio.enderio-machines:7.1.8-alpha")
+
+    runtimeOnly("curse.maven:ars-elemental-561470:6606656")
+    runtimeOnly("curse.maven:ars-elemancy-1153666:6608123")
+
     annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4")?.let {
         compileOnly(it)
     }
@@ -415,6 +428,22 @@ tasks {
     }
     compileJava {
         options.encoding = "UTF-8"
+    }
+    jar {
+        manifest {
+            attributes(
+                mapOf(
+                    // "FMLModType" to "LIBRARY",
+                    "Specification-Title" to modName,
+                    "Specification-Vendor" to "Uncandango",
+                    "Specification-Version" to modVersion,
+                    "Implementation-Title" to modName,
+                    "Implementation-Version" to modVersion,
+                    "Implementation-Vendor" to "Uncandango",
+                    "Implementation-Timestamp" to LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                )
+            )
+        }
     }
 }
 
