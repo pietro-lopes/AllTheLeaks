@@ -145,6 +145,7 @@ neoForge {
                 gameDirectory = file("runs/client")
                 systemProperty("alltheleaks.indev", "true")
                 systemProperty("mixin.debug.export", "true")
+                // jvmArgument("-javaagent:" + rootProject.project(":atl-agent").layout.buildDirectory.dir("libs").get().file("atl_agent-1.0.0.jar"))
                 jvmArguments.addAll(
                     "-XX:+UnlockExperimentalVMOptions",
                     "-XX:+UseG1GC",
@@ -427,6 +428,7 @@ tasks {
         }
     }
     compileJava {
+        dependsOn(project(":atl-agent").tasks.jar.get())
         options.encoding = "UTF-8"
     }
     jar {

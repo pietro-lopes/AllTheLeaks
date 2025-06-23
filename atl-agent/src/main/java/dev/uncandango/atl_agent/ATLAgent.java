@@ -1,5 +1,6 @@
 package dev.uncandango.atl_agent;
 
+import dev.uncandango.atl_agent.transformer.JarInJarDependencyLocatorTransformer;
 import dev.uncandango.atl_agent.transformer.TransformerDiscovererConstantsTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,5 +19,6 @@ public class ATLAgent {
     public static void premain(String arg, Instrumentation inst) {
         LOGGER.debug("Starting ATL Agent...");
 		inst.addTransformer(new TransformerDiscovererConstantsTransformer());
+		// inst.addTransformer(new JarInJarDependencyLocatorTransformer());
     }
 }

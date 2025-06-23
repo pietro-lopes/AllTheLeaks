@@ -5,6 +5,7 @@ import cpw.mods.jarhandling.impl.Jar;
 import cpw.mods.jarhandling.impl.JarContentsImpl;
 import cpw.mods.niofs.union.UnionFileSystem;
 import cpw.mods.niofs.union.UnionFileSystemProvider;
+import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -25,10 +26,10 @@ import java.util.regex.Pattern;
 
 import static dev.uncandango.alltheleaks.AllTheLeaks.LOGGER;
 
-@Issue(issueId = "#289", modId = "neoforge", versionRange = "[21.,)", description = "Memory leak on FancyModLoader https://github.com/neoforged/FancyModLoader/issues/289")
+@Issue(issueId = "#289", modId = "neoforge", versionRange = "[21.,21.1.182]", description = "Memory leak on FancyModLoader https://github.com/neoforged/FancyModLoader/issues/289")
 public class Issue289 {
 	public Issue289() {
-		var modEventBus = ModList.get().getModContainerById("alltheleaks").get().getEventBus();
+		var modEventBus = ModList.get().getModContainerById(AllTheLeaks.MOD_ID).get().getEventBus();
 		modEventBus.addListener(this::closeDanglingJars);
 	}
 
