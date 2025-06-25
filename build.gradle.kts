@@ -351,7 +351,7 @@ dependencies {
     runtimeOnly("curse.maven:advancedae-1084104:5881249") // AdvancedAE-1.1.1-1.21.1.jar
     runtimeOnly("curse.maven:ex-pattern-provider-892005:5887634") // ExtendedAE-1.21-2.1.4-neoforge.jar
     runtimeOnly("curse.maven:productivebees-377897:5903573") // productivebees-1.21.1-13.6.5.jar
-    runtimeOnly("curse.maven:applied-energistics-2-223794:5729094") // appliedenergistics2-19.0.23-beta.jar
+    runtimeOnly("curse.maven:applied-energistics-2-223794:6626602") // appliedenergistics2-19.2.12.jar
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar

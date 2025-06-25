@@ -2,6 +2,7 @@ package dev.uncandango.alltheleaks.mixin.core.main;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.IngredientDedupe;
 import dev.uncandango.alltheleaks.mixin.Lockable;
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.stream.Streams;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Mixin(Ingredient.class)
@@ -26,6 +28,11 @@ public class IngredientMixin {
 				if (ATLProperties.get().debugItemStackModifications) {
 					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
 						Streams.of(dedupedIngredient.getItems())
+							.peek(stack -> {
+								if (stack.isEmpty()) {
+									AllTheLeaks.LOGGER.error("ItemStack from Ingredient {} is empty!", List.of(dedupedIngredient.getValues()));
+								}
+							})
 							.forEach(stack -> ((Lockable) (Object) stack).setLocked(true));
 						((Lockable) (Object) dedupedIngredient).setLocked(true);
 					}
