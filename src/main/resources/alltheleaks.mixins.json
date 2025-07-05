@@ -43,7 +43,8 @@
 		"main.RegistryManagerMixin",
 		"main.SearchOptionsMixin",
 		"main.SmithingTrimWrapperMixin",
-		"main.SpellSelectionManagerMixin", "main.WrappedEnchanterRecipeMixin"
+		"main.SpellSelectionManagerMixin",
+		"main.WrappedEnchanterRecipeMixin"
 	],
 	"mixins": [
 		"accessor.ChargeProviderImplAccessor",

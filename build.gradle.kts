@@ -137,7 +137,7 @@ neoForge {
         }
         configureEach {
             logLevel = org.slf4j.event.Level.DEBUG
-            jvmArgument("-Xmx3000m")
+            jvmArgument("-Xmx5000m")
             jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
             if (type.get().startsWith("client")) {
@@ -308,6 +308,7 @@ dependencies {
 //        if (nameId.contains("journeymap")) return@forEach
 //        if (nameId.contains("curios")) return@forEach
         if (nameId.contains("accessories")) return@forEach
+        if (nameId.contains("owo-lib")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
 
@@ -349,12 +350,13 @@ dependencies {
     runtimeOnly("curse.maven:ftb-jei-extras-1103259:5907752") // ftbjeiextras-21.1.3.jar
     runtimeOnly("curse.maven:glodium-957920:5821676") // Glodium-1.21-2.2-neoforge.jar
     runtimeOnly("curse.maven:advancedae-1084104:5881249") // AdvancedAE-1.1.1-1.21.1.jar
-    runtimeOnly("curse.maven:ex-pattern-provider-892005:5887634") // ExtendedAE-1.21-2.1.4-neoforge.jar
-    runtimeOnly("curse.maven:productivebees-377897:5903573") // productivebees-1.21.1-13.6.5.jar
+    runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645") // ExtendedAE-1.21-2.2.15-neoforge.jar
+    runtimeOnly("curse.maven:productivebees-377897:6710632") // productivebees-1.21.1-13.7.4.jar
     runtimeOnly("curse.maven:applied-energistics-2-223794:6626602") // appliedenergistics2-19.2.12.jar
+    compileOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
-    runtimeOnly("curse.maven:modernfix-790626:5876357") // modernfix-neoforge-5.19.5+mc1.21.1.jar
+    runtimeOnly("curse.maven:modernfix-790626:6725232") // modernfix-neoforge-5.24.1+mc1.21.1.jar
     compileOnly("curse.maven:create-328085:6323264")
     compileOnly("curse.maven:jonns-trophies-510170:6298097")
     compileOnly("curse.maven:relics-mod-445274:6444603")
@@ -385,6 +387,12 @@ dependencies {
 
     runtimeOnly("curse.maven:ars-elemental-561470:6606656")
     runtimeOnly("curse.maven:ars-elemancy-1153666:6608123")
+
+    runtimeOnly("curse.maven:fastworkbench-288885:5670423")
+    runtimeOnly("curse.maven:placebo-283644:6446766")
+    runtimeOnly("curse.maven:guideme-1173950:6688687")
+    runtimeOnly("curse.maven:kotlin-for-forge-351264:6706911")
+    // runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645")
 
     annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4")?.let {
         compileOnly(it)

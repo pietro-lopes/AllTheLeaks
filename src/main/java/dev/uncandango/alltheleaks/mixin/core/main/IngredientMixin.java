@@ -21,11 +21,32 @@ public class IngredientMixin {
 	@WrapMethod(method = "fromValues")
 	private static Ingredient grabIngredient(Stream<? extends Ingredient.Value> stream, Operation<Ingredient> original) {
 		var origIngredient = original.call(stream);
-		if (!origIngredient.isEmpty()) {
+		if (!origIngredient.isEmpty() && !origIngredient.isCustom()) {
 			var dedupedIngredient = IngredientDedupe.intern(origIngredient);
 			//noinspection ConstantValue
 			if (dedupedIngredient != origIngredient && (Object) dedupedIngredient instanceof IngredientAccessor accessor) {
 				if (ATLProperties.get().debugItemStackModifications) {
+					var origStacks = origIngredient.getItems();
+					var dedupeStacks = dedupedIngredient.getItems();
+					if (origStacks.length != dedupeStacks.length) {
+						AllTheLeaks.LOGGER.error("Ingredient stack length is not the same");
+					} else {
+						var isTag = false;
+						var values = origIngredient.getValues();
+						if (values[0] instanceof Ingredient.TagValue) {
+							isTag = true;
+						}
+						if (!isTag) {
+							for (int i = 0; i < origStacks.length; i++) {
+								var origStack = origStacks[i];
+								var dedupeStack = dedupeStacks[i];
+								if (!ItemStack.isSameItemSameComponents(origStack, dedupeStack)) {
+									var error = new IllegalArgumentException("Itemstack is not equal as deduped one");
+									AllTheLeaks.LOGGER.error("Error checking stack integrity", error);
+								}
+							}
+						}
+					}
 					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
 						Streams.of(dedupedIngredient.getItems())
 							.peek(stack -> {
