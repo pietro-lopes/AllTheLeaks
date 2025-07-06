@@ -308,7 +308,7 @@ dependencies {
 //        if (nameId.contains("journeymap")) return@forEach
 //        if (nameId.contains("curios")) return@forEach
         if (nameId.contains("accessories")) return@forEach
-        if (nameId.contains("owo-lib")) return@forEach
+        // if (nameId.contains("owo-lib")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
 
@@ -357,6 +357,7 @@ dependencies {
     runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
     runtimeOnly("curse.maven:titanium-287342:5881103")
     runtimeOnly("curse.maven:modernfix-790626:6725232") // modernfix-neoforge-5.24.1+mc1.21.1.jar
+    compileOnly("curse.maven:modernfix-790626:6725232") // modernfix-neoforge-5.24.1+mc1.21.1.jar
     compileOnly("curse.maven:create-328085:6323264")
     compileOnly("curse.maven:jonns-trophies-510170:6298097")
     compileOnly("curse.maven:relics-mod-445274:6444603")
@@ -393,6 +394,11 @@ dependencies {
     runtimeOnly("curse.maven:guideme-1173950:6688687")
     runtimeOnly("curse.maven:kotlin-for-forge-351264:6706911")
     // runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645")
+
+    // MixinExtras that supports @Expression
+    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0-rc.2")?.let {
+        implementation(it)
+    }
 
     annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4")?.let {
         compileOnly(it)

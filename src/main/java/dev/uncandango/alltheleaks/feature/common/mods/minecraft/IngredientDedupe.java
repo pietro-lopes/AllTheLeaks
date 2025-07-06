@@ -34,6 +34,7 @@ public class IngredientDedupe implements PreparableReloadListener {
 
 			@Override
 			public boolean equals(Ingredient a, Ingredient b) {
+				if (b == null) return false;
 				var aValues = a.getValues();
 				var bValues = b.getValues();
 				if (aValues.length != bValues.length) return false;
