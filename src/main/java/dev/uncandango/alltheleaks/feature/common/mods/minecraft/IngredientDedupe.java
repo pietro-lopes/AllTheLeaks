@@ -23,7 +23,7 @@ import java.util.concurrent.Executor;
 public class IngredientDedupe implements PreparableReloadListener {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;
 	public static IngredientDedupe INSTANCE;
-	private static final boolean MODERNFIX_DEDUPLICATION;
+	public static final boolean MODERNFIX_DEDUPLICATION;
 
 	static {
 		var BASIC_HASH_STRATEGY = new Hash.Strategy<Ingredient>() {

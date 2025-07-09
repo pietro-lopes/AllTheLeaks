@@ -33,7 +33,7 @@ public class IngredientMixin {
 					} else {
 						var isTag = false;
 						var values = origIngredient.getValues();
-						if (values[0] instanceof Ingredient.TagValue) {
+						if (values.length > 0 && values[0] instanceof Ingredient.TagValue) {
 							isTag = true;
 						}
 						if (!isTag) {
@@ -47,7 +47,7 @@ public class IngredientMixin {
 							}
 						}
 					}
-					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
+					if (!IngredientDedupe.MODERNFIX_DEDUPLICATION && !((Lockable) (Object) dedupedIngredient).isLocked()) {
 						Streams.of(dedupedIngredient.getItems())
 							.peek(stack -> {
 								if (stack.isEmpty()) {
