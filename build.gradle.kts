@@ -72,7 +72,7 @@ repositories {
         url = uri("https://maven.tterrag.com/")
         content {
             // need to be specific here due to version overlaps
-            includeGroup("com.jozufozu.flywheel")
+            // includeGroup("com.jozufozu.flywheel")
             includeGroup("com.tterrag.registrate")
             includeGroup("com.simibubi.create")
         }
@@ -249,7 +249,9 @@ dependencies {
     modCompileOnly("curse.maven:betterf3-401648:4641169") // BetterF3-7.0.1-Forge-1.20.1.jar
 //    modCompileOnly("com.lowdragmc.ldlib:ldlib-forge-1.20.1:1.0.26.b") { isTransitive = false }
     modCompileOnly("curse.maven:ldlib-626676:5618585") // ldlib-forge-1.20.1-1.0.26.b.jar
-    modCompileOnly("com.jozufozu.flywheel:flywheel-forge-1.20:0.6.9-4") // flywheel-forge-1.20.1-0.6.9-4.jar
+    // modCompileOnly("com.jozufozu.flywheel:flywheel-forge-1.20:0.6.9-4") // flywheel-forge-1.20.1-0.6.9-4.jar
+    // get from create 0.5.1c
+    modCompileOnly("blank:flywheel-forge-1.20:0.6.9-4") // flywheel-forge-1.20.1-0.6.9-4.jar
     modCompileOnly("curse.maven:gregtechceu-modern-890405:5253480") //
     modCompileOnly("curse.maven:ftb-library-forge-404465:5364190") // ftb-library-forge-2001.2.2.jar
     modCompileOnly("curse.maven:easy-villagers-400514:5153629") //
@@ -286,14 +288,15 @@ dependencies {
     modCompileOnly("curse.maven:domestication-innovation-591149:4578807") // domesticationinnovation-1.7.0-1.20.jar
     modCompileOnly("curse.maven:selene-499980:5938277") // moonlight-1.20-2.13.32-forge.jar
     modCompileOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
+    modCompileOnly("curse.maven:zeta-968868:5418213") // Zeta-1.0-19.jar
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
 //    modCompileOnly("curse.maven:railcraft-reborn-901491:5534181") // not fixed 1.1.6
 
     // Latest versions
-    modRuntimeOnly("curse.maven:create-328085:5838779") // create-1.20.1-0.5.1.j.jar
-    modRuntimeOnly("curse.maven:createaddition-439890:5658602") // createaddition-1.20.1-1.2.4e.jar
+    modRuntimeOnly("curse.maven:create-328085:6641603") // create-1.20.1-6.0.6.jar
+    modRuntimeOnly("curse.maven:createaddition-439890:6306951") // createaddition-1.20.1-1.3.1.jar
     modRuntimeOnly("curse.maven:citadel-331936:5633260")// citadel-2.6.0-1.20.1.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-223794:5641282") // appliedenergistics2-forge-15.2.13.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-wireless-terminals-459929:5217955") // ae2wtlib-15.2.3-forge.jar
@@ -317,7 +320,7 @@ dependencies {
     modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
     modRuntimeOnly("curse.maven:tool-belt-260262:5393183") // ToolBelt-1.20.1-1.20.01.jar
     modRuntimeOnly("curse.maven:just-enough-archaeology-890755:5324518") // jearchaeology-1.20.1-1.0.4.jar
-    modRuntimeOnly("curse.maven:supplementaries-412082:5948497") // supplementaries-1.20-3.1.11.jar
+    modRuntimeOnly("curse.maven:supplementaries-412082:6749363") // supplementaries-1.20-3.1.36.jar
     modRuntimeOnly("curse.maven:betterf3-401648:4863626") // BetterF3-7.0.2-Forge-1.20.1.jar
     modRuntimeOnly("curse.maven:spark-361579:4738952") // spark-1.10.53-forge.jar
     modRuntimeOnly("curse.maven:ftb-library-forge-404465:5567591") // ftb-library-forge-2001.2.4.jar
@@ -362,7 +365,7 @@ dependencies {
     modRuntimeOnly("curse.maven:configuration-444699:4608425") // configuration-forge-1.20.1-2.2.0.jar
 
     */
-    modRuntimeOnly("curse.maven:gregtechceu-modern-890405:5812598") // gtceu-1.20.1-1.4.6.jar
+    modRuntimeOnly("curse.maven:gregtechceu-modern-890405:6254458") // gtceu-1.20.1-1.6.4.jar
 
     // Required dependencies runtimes
     modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
@@ -376,7 +379,7 @@ dependencies {
     modRuntimeOnly("curse.maven:smartbrainlib-661293:5654964") // SmartBrainLib-forge-1.20.1-1.15.jar
     modRuntimeOnly("curse.maven:forbidden-arcanus-309858:5198323") // forbidden_arcanus-1.20.1-2.2.6.jar
     modRuntimeOnly("curse.maven:valhelsia-core-416935:5189548") // valhelsia_core-forge-1.20.1-1.1.2.jar
-    modRuntimeOnly("curse.maven:selene-499980:5938277") // moonlight-1.20-2.13.32-forge.jar
+    modRuntimeOnly("curse.maven:selene-499980:6740431") // moonlight-1.20-2.14.13-forge.jar
     modRuntimeOnly("curse.maven:structure-gel-api-378802:5278429") // structure_gel-1.20.1-2.16.2.jar
     modRuntimeOnly("curse.maven:structurize-298744:5782214") // structurize-1.20.1-1.0.760-snapshot.jar
     modRuntimeOnly("curse.maven:towntalk-900364:5355511") // towntalk-1.20.1-1.1.0.jar
@@ -391,6 +394,7 @@ dependencies {
     modRuntimeOnly("curse.maven:kotlin-for-forge-351264:5402061") // kotlinforforge-4.11.0-all.jar
     modRuntimeOnly("curse.maven:glitchcore-955399:5787839") // GlitchCore-forge-1.20.1-0.0.1.1.jar
     modRuntimeOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
+    modRuntimeOnly("curse.maven:zeta-968868:6432578") // Zeta-1.0-30.jar
 
     // LeakDiagTool
     modRuntimeOnly("blank:leakdiagtool:1.0.0")
