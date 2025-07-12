@@ -47,7 +47,7 @@ public class IngredientMixin {
 							}
 						}
 					}
-					if (!IngredientDedupe.MODERNFIX_DEDUPLICATION && !((Lockable) (Object) dedupedIngredient).isLocked()) {
+					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
 						Streams.of(dedupedIngredient.getItems())
 							.peek(stack -> {
 								if (stack.isEmpty()) {

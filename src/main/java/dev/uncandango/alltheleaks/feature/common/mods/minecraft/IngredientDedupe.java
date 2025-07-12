@@ -8,12 +8,12 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackLinkedSet;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.fml.ModList;
 import org.embeddedt.modernfix.core.ModernFixMixinPlugin;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -23,13 +23,24 @@ import java.util.concurrent.Executor;
 public class IngredientDedupe implements PreparableReloadListener {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;
 	public static IngredientDedupe INSTANCE;
-	public static final boolean MODERNFIX_DEDUPLICATION;
+	private static final boolean MODERNFIX_DEDUPLICATION;
 
 	static {
 		var BASIC_HASH_STRATEGY = new Hash.Strategy<Ingredient>() {
 			@Override
 			public int hashCode(Ingredient o) {
-				return Objects.hashCode(o);
+				if (o == null)
+					return 0;
+
+				int result = 1;
+
+				for (Object element : o.getValues())
+					if (element instanceof Ingredient.ItemValue iv) {
+						result = 31 * result + ItemStackLinkedSet.TYPE_AND_TAG.hashCode(iv.item());
+					} else {
+						result = 31 * result + (element == null ? 0 : element.hashCode());
+					}
+				return result;
 			}
 
 			@Override
