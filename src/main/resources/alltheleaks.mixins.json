@@ -40,6 +40,7 @@
     "main.RainbowsRendererParticleMixin",
     "main.RecipeTransferButtonMixin",
     "main.RecipeUtilsMixin",
+		"main.AmountIngredientMixin",
     "main.RegistryManagerMixin",
     "main.SearchOptionsMixin",
     "main.SmithingTrimWrapperMixin",
@@ -83,8 +84,8 @@
   ],
   "injectors": {
     "defaultRequire": 0
-	},
-	"mixinextras": {
-		"minVersion": "0.5.0-rc.2"
+  },
+  "mixinextras": {
+    "minVersion": "0.5.0-rc.2"
 	}
 }

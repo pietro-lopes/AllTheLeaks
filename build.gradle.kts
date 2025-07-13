@@ -406,7 +406,8 @@ dependencies {
     jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.2-beta.4")?.let {
         implementation(it)
     }
-
+    // From mod Confluence
+    compileOnly("blank:org.confluence.lib:confluence_magic_lib:0.0.1")
     // Testing
 //    runtimeOnly("blank:journeymap-neoforge:1.21.1-6.0.0-beta.32")
 //    api("blank:journeymap-api-neoforge-2.0.0-1.21.4-SNAPSHOT")

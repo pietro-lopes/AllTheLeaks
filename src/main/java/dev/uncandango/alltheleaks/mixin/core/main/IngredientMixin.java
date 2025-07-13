@@ -26,17 +26,13 @@ public class IngredientMixin {
 			//noinspection ConstantValue
 			if (dedupedIngredient != origIngredient && (Object) dedupedIngredient instanceof IngredientAccessor accessor) {
 				if (ATLProperties.get().debugItemStackModifications) {
-					var origStacks = origIngredient.getItems();
-					var dedupeStacks = dedupedIngredient.getItems();
-					if (origStacks.length != dedupeStacks.length) {
-						AllTheLeaks.LOGGER.error("Ingredient stack length is not the same");
-					} else {
-						var isTag = false;
-						var values = origIngredient.getValues();
-						if (values.length > 0 && values[0] instanceof Ingredient.TagValue) {
-							isTag = true;
-						}
-						if (!isTag) {
+					var values = origIngredient.getValues();
+					if (values.length > 0 && values[0] instanceof Ingredient.ItemValue) {
+						var origStacks = origIngredient.getItems();
+						var dedupeStacks = dedupedIngredient.getItems();
+						if (origStacks.length != dedupeStacks.length) {
+							AllTheLeaks.LOGGER.error("Ingredient stack length is not the same");
+						} else {
 							for (int i = 0; i < origStacks.length; i++) {
 								var origStack = origStacks[i];
 								var dedupeStack = dedupeStacks[i];
@@ -48,13 +44,6 @@ public class IngredientMixin {
 						}
 					}
 					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
-						Streams.of(dedupedIngredient.getItems())
-							.peek(stack -> {
-								if (stack.isEmpty()) {
-									AllTheLeaks.LOGGER.error("ItemStack from Ingredient {} is empty!", List.of(dedupedIngredient.getValues()));
-								}
-							})
-							.forEach(stack -> ((Lockable) (Object) stack).setLocked(true));
 						((Lockable) (Object) dedupedIngredient).setLocked(true);
 					}
 				}
