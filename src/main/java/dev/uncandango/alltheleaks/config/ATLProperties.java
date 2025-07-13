@@ -18,8 +18,6 @@ public class ATLProperties {
 	private static final JsonElement defaultProperties = getDefaultProperties();
 	private static ATLProperties INSTANCE;
 	public boolean ingredientDedupe;
-	public boolean entitySectionCME;
-	public boolean scoreboardDebug;
 	public boolean debugItemStackModifications;
 	public boolean debugNativeImage;
 	public boolean disableSearchTree;
@@ -43,8 +41,6 @@ public class ATLProperties {
 			} else {
 				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
 			}
-			this.scoreboardDebug = GsonHelper.getAsBoolean(properties, "scoreboardDebug", false);
-			this.entitySectionCME = GsonHelper.getAsBoolean(properties, "entitySectionCME", false);
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.debugNativeImage = GsonHelper.getAsBoolean(properties, "debugNativeImage", false);
 			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
@@ -72,8 +68,6 @@ public class ATLProperties {
 	private static JsonElement getDefaultProperties() {
 		var properties = new JsonObject();
 		properties.addProperty("ingredientDedupe", false);
-		properties.addProperty("entitySectionCME", false);
-		properties.addProperty("scoreboardDebug", false);
 		properties.addProperty("debugItemStackModifications", false);
 		properties.addProperty("version", 1);
 		properties.addProperty("debugNativeImage", false);
