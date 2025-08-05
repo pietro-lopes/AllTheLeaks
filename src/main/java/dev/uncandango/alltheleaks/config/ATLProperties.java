@@ -24,6 +24,8 @@ public class ATLProperties {
 	public boolean preventSearchIgnoredItems;
 	public boolean ingredientDedupe;
 	public boolean resourceLocationDedupe;
+	public boolean debugItemStackModifications;
+	//public boolean clearJars;
 
 	private ATLProperties() {
 		load();
@@ -41,6 +43,8 @@ public class ATLProperties {
 		properties.addProperty("preventSearchIgnoredItems", false);
 		properties.addProperty("ingredientDedupe", false);
 		properties.addProperty("resourceLocationDedupe", false);
+		properties.addProperty("debugItemStackModifications", false);
+		//properties.addProperty("clearJars", false);
 		return properties;
 	}
 
@@ -51,12 +55,10 @@ public class ATLProperties {
 		try (var reader = Files.newBufferedReader(path)) {
 			properties = GSON.fromJson(reader, JsonObject.class);
 			this.preventSearchIgnoredItems = GsonHelper.getAsBoolean(properties, "preventSearchIgnoredItems", false);
-			if (AllTheLeaks.INDEV) {
-				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
-			} else {
-				this.ingredientDedupe = false;
-			}
+			this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
+			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.resourceLocationDedupe = GsonHelper.getAsBoolean(properties, "resourceLocationDedupe", false);
+			//this.clearJars = GsonHelper.getAsBoolean(properties, "clearJars", false);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error

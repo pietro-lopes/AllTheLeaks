@@ -1,68 +1,92 @@
 package dev.uncandango.alltheleaks.feature.common.mods.minecraft;
 
-import com.google.gson.JsonElement;
-import com.mojang.datafixers.util.Pair;
-import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
+import dev.uncandango.alltheleaks.config.ATLProperties;
+import dev.uncandango.alltheleaks.mixin.Lockable;
+import dev.uncandango.alltheleaks.mixin.core.main.IngredientMixin;
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.ItemStackLinkedSet;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.fml.loading.LoadingModList;
+import org.embeddedt.modernfix.core.ModernFixMixinPlugin;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@Issue(modId = "minecraft", issueId = "Ingredient Deduplication" ,versionRange = "1.20.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.IngredientMixin$TagValueMixin", "main.IngredientMixin$TagValueAccessor", "main.IngredientMixin$ItemValueMixin", "main.IngredientMixin$ItemValueAccessor",}, config = "ingredientDedupe", configActivated = false,
+@Issue(modId = "minecraft", issueId = "Ingredient Deduplication" ,versionRange = "1.20.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.IngredientMixin$TagValueMixin", "main.IngredientMixin$TagValueAccessor", "main.IngredientMixin$ItemValueAccessor", "main.IngredientLockMixin", "main.ItemStackLockMixin", "main.CompoundLockMixin"}, config = "ingredientDedupe", configActivated = false,
 description = "Deduplicates VANILLA ingredients to reduce memory usage")
 public class IngredientDedupe implements PreparableReloadListener {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;
 	public static IngredientDedupe INSTANCE;
+	public static final boolean MODERNFIX_DEDUPLICATION;
 
 	static {
 		var BASIC_HASH_STRATEGY = new Hash.Strategy<Ingredient>() {
 			@Override
 			public int hashCode(Ingredient o) {
+				if (o.isVanilla() && o instanceof IngredientMixin.IngredientAccessor accessor) {
+					if (o == null)
+						return 0;
+
+					int result = 1;
+
+					for (Object element : accessor.getValues())
+						if (element instanceof IngredientMixin.ItemValueAccessor iv) {
+							result = 31 * result + ItemStackLinkedSet.TYPE_AND_TAG.hashCode(iv.getItem()) + iv.getItem().getCount();
+						} else {
+							result = 31 * result + (element == null ? 0 : element.hashCode());
+						}
+					return result;
+				}
 				return Objects.hashCode(o);
 			}
 
 			@Override
 			public boolean equals(Ingredient a, Ingredient b) {
-//				JsonElement aJson = null;
-//				if (a != null) {
-//					aJson = a.toJson();
-//				}
-//				JsonElement bJson = null;
-//				if (b != null) {
-//					bJson = b.toJson();
-//				}
-//				var objEquality = Objects.equals(a, b);
-//				var jsonEquality = Objects.equals(aJson, bJson);
-//				if (objEquality && jsonEquality) {
-//					return true;
-//				}
-//				if (a != null && b != null) {
-//					if (jsonEquality == false && objEquality == true) {
-//						AllTheLeaks.LOGGER.warn("Ingredient: {} from class {} is not equal to: {} from class {}", a, a.getClass(), b, b.getClass());
-//						AllTheLeaks.LOGGER.warn("Jsons: {} vs {}", aJson, bJson);
-//					}
-//					if (jsonEquality == true && objEquality == false) {
-//						AllTheLeaks.LOGGER.warn("Ingredient: {} from class {} parses equally to: {} from class {}", a, a.getClass(), b, b.getClass());
-//					}
-//				}
-//				return false;
-				return Objects.equals(a, b);
+				if (b == null) return false;
+				var aValues = ((IngredientMixin.IngredientAccessor) a).getValues();
+				var bValues = ((IngredientMixin.IngredientAccessor) b).getValues();
+				if (aValues.length != bValues.length) return false;
+				for (int i = 0; i < aValues.length; i++) {
+					var aValue = aValues[i];
+					var bValue = bValues[i];
+					if (aValue.getClass() != bValue.getClass()) return false;
+					if (aValue.getClass() == Ingredient.TagValue.class) {
+						if (!aValue.equals(bValue)) {
+							return false;
+						}
+					} else {
+						if (aValue.getClass() == Ingredient.ItemValue.class) {
+							if (MODERNFIX_DEDUPLICATION) {
+								if (aValue != bValue) {
+									return false;
+								}
+							} else {
+								var aItem = ((IngredientMixin.ItemValueAccessor) aValue).getItem();
+								var bItem = ((IngredientMixin.ItemValueAccessor) bValue).getItem();
+								if (!ItemStackLinkedSet.TYPE_AND_TAG.equals(aItem, bItem) || aItem.getCount() != bItem.getCount()){
+									return false;
+								}
+							}
+						} else return false;
+					}
+				}
+				return true;
 			}
 		};
 		INGREDIENT_CACHE = new ObjectOpenCustomHashSet<>(BASIC_HASH_STRATEGY);
+		if (LoadingModList.get().getModFileById("modernfix") != null) {
+			MODERNFIX_DEDUPLICATION = ModernFixMixinPlugin.instance.isOptionEnabled("perf.ingredient_item_deduplication.IngredientMixin");
+		} else MODERNFIX_DEDUPLICATION = false;
 	}
 
 	public static IngredientDedupe getInstance() {
@@ -73,7 +97,11 @@ public class IngredientDedupe implements PreparableReloadListener {
 	}
 
 	public synchronized static Ingredient intern(Ingredient ingredient) {
-		return INGREDIENT_CACHE.addOrGet(ingredient);
+		var deduped = INGREDIENT_CACHE.addOrGet(ingredient);
+		if (!((Lockable)deduped).atl$isLocked()) {
+			((Lockable)deduped).atl$setLocked(true);
+		}
+		return deduped;
 	}
 
 	@Override

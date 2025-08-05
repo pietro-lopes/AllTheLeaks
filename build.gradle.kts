@@ -141,10 +141,11 @@ legacyForge {
         }
 
         configureEach {
+            // logLevel = org.slf4j.event.Level.DEBUG
             systemProperty("forge.logging.console.level", "debug")
 //            jvmArgument("-XX:+DisableExplicitGC") // Test gc command
             jvmArgument("-Xmx5000m")
-            jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
+            //jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
             jvmArgument("-Dgeckolib.disable_examples=true")
             if (type.get().startsWith("client")) {
@@ -204,18 +205,18 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 
     //Mixins (IDE is crashing with !!, using ?.let instead...)
-    annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")?.let {
+    annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0")?.let {
        compileOnly(it)
     }
-    jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")?.let {
+    jarJar("io.github.llamalad7:mixinextras-forge:0.5.0")?.let {
         implementation(it)
     }
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
-    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.2.0")?.let {
+    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3")?.let {
         compileOnly(it)
     }
-    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.2.0")?.let {
+    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.3.3")?.let {
         implementation(it)
     }
 
@@ -289,6 +290,26 @@ dependencies {
     modCompileOnly("curse.maven:selene-499980:5938277") // moonlight-1.20-2.13.32-forge.jar
     modCompileOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
     modCompileOnly("curse.maven:zeta-968868:5418213") // Zeta-1.0-19.jar
+    //compileOnly("curse.maven:modernfix-790626:6725223")
+    //modCompileOnly("curse.maven:modernfix-790626:6725223")
+    modCompileOnly("dev.latvian.mods:kubejs-forge:2001.6.5-build.16")
+    modCompileOnly("curse.maven:immersive-engineering-231951:6206989")
+    modCompileOnly("curse.maven:ender-io-64578:6761673")
+    modCompileOnly("curse.maven:alchemylib-293426:5037781")
+    modCompileOnly("curse.maven:sgjourney-689083:6390662")
+    modCompileOnly("curse.maven:productivebees-377897:5566102")
+    modCompileOnly("curse.maven:blood-magic-224791:5290993")
+    modCompileOnly("curse.maven:cofh-core-69162:5374122")
+    modCompileOnly("curse.maven:ars-elemental-561470:6390889")
+    modCompileOnly("curse.maven:potion-blender-697859:6033408")
+
+    //modCompileOnly("curse.maven:railcraft-reborn-901491:6149940")
+    //modCompileOnly("curse.maven:corail-woodcutter-331983:5749500")
+    //compileOnly("curse.maven:corail-woodcutter-331983:5749500")
+    modCompileOnly("curse.maven:draconic-evolution-223565:6793843")
+    modCompileOnly("curse.maven:theurgy-430636:6145150")
+    modCompileOnly("curse.maven:mekanism-268560:6552911")
+    modCompileOnly("curse.maven:enigmatic-legacy-336184:5600004")
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -300,6 +321,7 @@ dependencies {
     modRuntimeOnly("curse.maven:citadel-331936:5633260")// citadel-2.6.0-1.20.1.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-223794:5641282") // appliedenergistics2-forge-15.2.13.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-wireless-terminals-459929:5217955") // ae2wtlib-15.2.3-forge.jar
+    modCompileOnly("curse.maven:jei-238222:5846810") // jei-1.20.1-forge-15.20.0.105.jar
     modRuntimeOnly("curse.maven:jei-238222:5846810") // jei-1.20.1-forge-15.20.0.105.jar
     // modRuntimeOnly("curse.maven:async-jei-just-enough-item-1180017:6139008") // jei-1.20.1-forge-15.20.0.106-5-async.jar
     modRuntimeOnly("curse.maven:railcraft-reborn-901491:5650737") // railcraft-reborn-1.20.1-1.1.7.jar
@@ -338,13 +360,15 @@ dependencies {
     modRuntimeOnly("curse.maven:mythicbotany-400058:5101899") // MythicBotany-1.20.1-4.0.3.jar
     modRuntimeOnly("curse.maven:refined-storage-243076:4844585") // refinedstorage-1.12.4.jar
     modRuntimeOnly("curse.maven:small-ships-450659:5566900") // smallships-forge-1.20.1-2.0.0-b1.4.jar
-    modRuntimeOnly("curse.maven:modernfix-790626:5676014")
+    //modRuntimeOnly("curse.maven:modernfix-790626:6766127") // modernfix-forge-5.24.3+mc1.20.1.jar
+    modCompileOnly("curse.maven:modernfix-790626:6766127")
+    compileOnly("curse.maven:modernfix-790626:6766127")
     modRuntimeOnly("curse.maven:iceberg-520110:5838149") // Iceberg-1.20.1-forge-1.1.25.jar
-    modRuntimeOnly("curse.maven:emi-580555:5872526") // emi-1.1.18+1.20.1+forge.jar
+    // modRuntimeOnly("curse.maven:emi-580555:5872526") // emi-1.1.18+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:nuclearcraft-neoteric-840010:5916571") // NuclearCraft-1.20.1-1.1.0-rc.3.jar
     modRuntimeOnly("curse.maven:difficulty-lock-390886:5572725") // difficultylock-1.20.1-4.6.jar
     modRuntimeOnly("curse.maven:corpse-316582:5816907") // corpse-forge-1.20.1-1.0.17.jar
-    modRuntimeOnly("curse.maven:emi-loot-681783:5760210") // emi_loot-0.7.4+1.20.1+forge.jar
+    // modRuntimeOnly("curse.maven:emi-loot-681783:5760210") // emi_loot-0.7.4+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:findme-291936:5074609") // findme-3.2.1-forge.jar
     modRuntimeOnly("curse.maven:badpackets-615134:4784395") // badpackets-forge-0.4.3.jar
     modRuntimeOnly("curse.maven:alexs-mobs-426558:5698791") // alexsmobs-1.22.9.jar
@@ -365,7 +389,8 @@ dependencies {
     modRuntimeOnly("curse.maven:configuration-444699:4608425") // configuration-forge-1.20.1-2.2.0.jar
 
     */
-    modRuntimeOnly("curse.maven:gregtechceu-modern-890405:6254458") // gtceu-1.20.1-1.6.4.jar
+    modRuntimeOnly("curse.maven:gregtechceu-modern-890405:6792524") // gtceu-1.20.1-1.6.4.jar
+    runtimeOnly("curse.maven:gregtechceu-modern-890405:6792524")
 
     // Required dependencies runtimes
     modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
@@ -395,6 +420,7 @@ dependencies {
     modRuntimeOnly("curse.maven:glitchcore-955399:5787839") // GlitchCore-forge-1.20.1-0.0.1.1.jar
     modRuntimeOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
     modRuntimeOnly("curse.maven:zeta-968868:6432578") // Zeta-1.0-30.jar
+    modRuntimeOnly("curse.maven:ender-io-64578:6274905") // EnderIO-1.20.1-6.2.11-beta-all.jar
 
     // LeakDiagTool
     modRuntimeOnly("blank:leakdiagtool:1.0.0")

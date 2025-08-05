@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.objectweb.asm.Type;
+import org.spongepowered.asm.util.Annotations;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

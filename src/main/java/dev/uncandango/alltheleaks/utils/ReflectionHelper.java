@@ -3,17 +3,36 @@ package dev.uncandango.alltheleaks.utils;
 import com.google.common.collect.Maps;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import org.jetbrains.annotations.Nullable;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.FrameNode;
+import org.objectweb.asm.tree.IntInsnNode;
+import org.objectweb.asm.tree.InvokeDynamicInsnNode;
+import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.LookupSwitchInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.TableSwitchInsnNode;
+import org.objectweb.asm.tree.TypeInsnNode;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ReflectionHelper {
 	public static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
@@ -176,4 +195,24 @@ public class ReflectionHelper {
 		}
 		return handler;
 	}
+
+	public static void dumpClass(ClassNode classNode, String className){
+		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+
+		try {
+			classNode.accept(cw);
+		} catch (Throwable e) {
+			AllTheLeaks.LOGGER.error(e.getMessage(), e);
+		}
+		byte[] clazz = cw.toByteArray();
+
+		try {
+			final Path tempFile = Files.createTempDirectory("classDump").resolve(className.replaceAll("/", ".") + ".class");
+			Files.write(tempFile, clazz);
+			AllTheLeaks.LOGGER.debug("Wrote {} byte class file {} to {}", clazz.length, className, tempFile);
+		} catch (IOException e) {
+			AllTheLeaks.LOGGER.error("Failed to write class file {}", className, e);
+		}
+	}
+
 }

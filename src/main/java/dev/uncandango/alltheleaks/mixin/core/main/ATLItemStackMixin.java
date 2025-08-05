@@ -41,7 +41,7 @@ public abstract class ATLItemStackMixin implements UpdateableLevel<ItemStack> {
 	@Mixin(ItemStack.class)
 	public static class Statistics {
 		@Inject(method = {"<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V", "<init>(Lnet/minecraft/nbt/CompoundTag;)V"}, at = @At("TAIL"))
-		private void increaseStackCount(CallbackInfo ci) {
+		private void atl$increaseStackCount(CallbackInfo ci) {
 			if (ItemStackCreationStatistics.currentPlugin != null) {
 				ItemStackCreationStatistics.addToCounter();
 			}

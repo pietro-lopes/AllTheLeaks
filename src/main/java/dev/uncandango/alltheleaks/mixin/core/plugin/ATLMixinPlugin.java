@@ -1,9 +1,18 @@
 package dev.uncandango.alltheleaks.mixin.core.plugin;
 
+import com.bawnorton.mixinsquared.adjuster.MixinAnnotationAdjusterRegistrar;
 import com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar;
+import cpw.mods.modlauncher.api.INameMappingService;
+import dev.uncandango.alltheleaks.fix.common.mods.kubejs.FixItemStackModification;
 import dev.uncandango.alltheleaks.leaks.IssueManager;
+import dev.uncandango.alltheleaks.mixinsq.ATLMixinAdjuster;
 import dev.uncandango.alltheleaks.mixinsq.ATLMixinCanceller;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -14,8 +23,7 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void onLoad(String mixinPackage) {
-		// No use yet
-		//	MixinAnnotationAdjusterRegistrar.register(new ATLMixinAdjuster());
+		MixinAnnotationAdjusterRegistrar.register(new ATLMixinAdjuster());
 		MixinCancellerRegistrar.register(new ATLMixinCanceller());
     }
 
@@ -40,9 +48,12 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    }
+		if (mixinClassName.equals("dev.uncandango.alltheleaks.mixin.core.main.IngredientKJSMixin")) {
+			FixItemStackModification.transformClass(targetClass);
+		}
+	}
 
-    @Override
+	@Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
 }
