@@ -141,8 +141,10 @@ legacyForge {
         }
 
         configureEach {
-            // logLevel = org.slf4j.event.Level.DEBUG
+            //logLevel = org.slf4j.event.Level.DEBUG
             systemProperty("forge.logging.console.level", "debug")
+            systemProperty("forge.logging.markers", "LOADING")
+            //loggingConfigFile
 //            jvmArgument("-XX:+DisableExplicitGC") // Test gc command
             jvmArgument("-Xmx5000m")
             //jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
@@ -161,7 +163,7 @@ legacyForge {
                     "-XX:MaxGCPauseMillis=50",
                     "-XX:G1HeapRegionSize=32M"
                 )
-                jvmArgument("-Xlog:safepoint:file=safepoint.log::filecount=0")
+                //jvmArgument("-Xlog:safepoint:file=safepoint.log::filecount=0")
             }
         }
     }
@@ -310,6 +312,9 @@ dependencies {
     modCompileOnly("curse.maven:theurgy-430636:6145150")
     modCompileOnly("curse.maven:mekanism-268560:6552911")
     modCompileOnly("curse.maven:enigmatic-legacy-336184:5600004")
+    modCompileOnly("curse.maven:integrated-tunnels-251389:6829060")
+    modCompileOnly("curse.maven:super-factory-manager-306935:6849465")
+
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -363,6 +368,7 @@ dependencies {
     //modRuntimeOnly("curse.maven:modernfix-790626:6766127") // modernfix-forge-5.24.3+mc1.20.1.jar
     modCompileOnly("curse.maven:modernfix-790626:6766127")
     compileOnly("curse.maven:modernfix-790626:6766127")
+    //modRuntimeOnly("curse.maven:modernfix-790626:6766127")
     modRuntimeOnly("curse.maven:iceberg-520110:5838149") // Iceberg-1.20.1-forge-1.1.25.jar
     // modRuntimeOnly("curse.maven:emi-580555:5872526") // emi-1.1.18+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:nuclearcraft-neoteric-840010:5916571") // NuclearCraft-1.20.1-1.1.0-rc.3.jar
@@ -390,7 +396,7 @@ dependencies {
 
     */
     modRuntimeOnly("curse.maven:gregtechceu-modern-890405:6792524") // gtceu-1.20.1-1.6.4.jar
-    runtimeOnly("curse.maven:gregtechceu-modern-890405:6792524")
+    //runtimeOnly("curse.maven:gregtechceu-modern-890405:6792524")
 
     // Required dependencies runtimes
     modRuntimeOnly("curse.maven:cloth-config-348521:5729105")
@@ -418,12 +424,13 @@ dependencies {
     modRuntimeOnly("curse.maven:fzzy-config-1005914:5908784") // fzzy_config-0.5.7+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:kotlin-for-forge-351264:5402061") // kotlinforforge-4.11.0-all.jar
     modRuntimeOnly("curse.maven:glitchcore-955399:5787839") // GlitchCore-forge-1.20.1-0.0.1.1.jar
-    modRuntimeOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
+    // ACTIVATING THIS WILL CAUSE LOGS TO BE WARN ONLY
+    //modRuntimeOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
     modRuntimeOnly("curse.maven:zeta-968868:6432578") // Zeta-1.0-30.jar
     modRuntimeOnly("curse.maven:ender-io-64578:6274905") // EnderIO-1.20.1-6.2.11-beta-all.jar
 
     // LeakDiagTool
-    modRuntimeOnly("blank:leakdiagtool:1.0.0")
+    //modRuntimeOnly("blank:leakdiagtool:1.0.0")
 }
 
 tasks {

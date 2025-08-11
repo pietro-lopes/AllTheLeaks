@@ -1,32 +1,28 @@
 package dev.uncandango.alltheleaks.feature.common.mods.minecraft;
 
+import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
-import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.mixin.Lockable;
 import dev.uncandango.alltheleaks.mixin.core.main.IngredientMixin;
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackLinkedSet;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fml.loading.LoadingModList;
 import org.embeddedt.modernfix.core.ModernFixMixinPlugin;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@Issue(modId = "minecraft", issueId = "Ingredient Deduplication" ,versionRange = "1.20.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.IngredientMixin$TagValueMixin", "main.IngredientMixin$TagValueAccessor", "main.IngredientMixin$ItemValueAccessor", "main.IngredientLockMixin", "main.ItemStackLockMixin", "main.CompoundLockMixin"}, config = "ingredientDedupe", configActivated = false,
+@Issue(modId = "minecraft", issueId = "Ingredient Deduplication" ,versionRange = "1.20.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "main.IngredientMixin$TagValueMixin", "main.IngredientMixin$TagValueAccessor", "main.IngredientMixin$ItemValueAccessor", "main.IngredientLockMixin", "main.ItemStackLockMixin", "main.CompoundLockMixin", "main.ListTagLockMixin", "main.IntArrayTagMixin", "main.LongArrayTagMixin", "main.ByteArrayTagMixin","main.IngredientItemValueMixin", "main.CapabilityProviderAccessor"}, config = "ingredientDedupe", configActivated = false,
 description = "Deduplicates VANILLA ingredients to reduce memory usage")
-public class IngredientDedupe implements PreparableReloadListener {
+public class IngredientDedupe {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;
-	public static IngredientDedupe INSTANCE;
 	public static final boolean MODERNFIX_DEDUPLICATION;
 
 	static {
@@ -73,7 +69,7 @@ public class IngredientDedupe implements PreparableReloadListener {
 							} else {
 								var aItem = ((IngredientMixin.ItemValueAccessor) aValue).getItem();
 								var bItem = ((IngredientMixin.ItemValueAccessor) bValue).getItem();
-								if (!ItemStackLinkedSet.TYPE_AND_TAG.equals(aItem, bItem) || aItem.getCount() != bItem.getCount()){
+								if (!ItemStack.isSameItemSameTags(aItem, bItem) || aItem.getCount() != bItem.getCount()){
 									return false;
 								}
 							}
@@ -89,28 +85,11 @@ public class IngredientDedupe implements PreparableReloadListener {
 		} else MODERNFIX_DEDUPLICATION = false;
 	}
 
-	public static IngredientDedupe getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new IngredientDedupe();
-		}
-		return INSTANCE;
-	}
-
 	public synchronized static Ingredient intern(Ingredient ingredient) {
 		var deduped = INGREDIENT_CACHE.addOrGet(ingredient);
 		if (!((Lockable)deduped).atl$isLocked()) {
 			((Lockable)deduped).atl$setLocked(true);
 		}
 		return deduped;
-	}
-
-	@Override
-	public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
-		return CompletableFuture.runAsync(INGREDIENT_CACHE::clear, backgroundExecutor).thenCompose(preparationBarrier::wait);
-	}
-
-	@Override
-	public String getName() {
-		return "atl_ingredient_dedupe";
 	}
 }

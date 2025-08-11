@@ -3,8 +3,8 @@ package dev.uncandango.alltheleaks.mixin.core.main;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import dev.uncandango.alltheleaks.AllTheLeaks;
-import dev.uncandango.alltheleaks.mixin.Lockable;
 import dev.uncandango.alltheleaks.exceptions.ATLUnsupportedOperation;
+import dev.uncandango.alltheleaks.mixin.Lockable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,9 +28,6 @@ public abstract class ItemStackLockMixin extends CapabilityProvider<ItemStack> i
 
 	@Shadow
 	public abstract Item getItem();
-
-	@Shadow
-	protected abstract void forgeInit();
 
 	@Unique
 	private boolean atl$locked = false;
@@ -90,7 +87,7 @@ public abstract class ItemStackLockMixin extends CapabilityProvider<ItemStack> i
 
 	@Override
 	public void atl$setLocked(boolean locked) {
-		if (atl$locked) return;
+		if (atl$locked && locked) return;
 		this.getCapabilities();
 		if (this.tag != null) {
 			((Lockable)this.tag).atl$setLocked(true);

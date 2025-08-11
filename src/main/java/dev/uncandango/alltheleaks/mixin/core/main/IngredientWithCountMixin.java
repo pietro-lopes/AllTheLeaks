@@ -16,10 +16,10 @@ import java.util.Arrays;
 @Mixin(IngredientWithCount.class)
 public abstract class IngredientWithCountMixin extends AbstractIngredient {
 
-	@Shadow
+	@Shadow(remap = false)
 	@Final
 	private Ingredient wrappedIngredient;
-	@Shadow
+	@Shadow(remap = false)
 	@Final
 	private int count;
 	@Unique

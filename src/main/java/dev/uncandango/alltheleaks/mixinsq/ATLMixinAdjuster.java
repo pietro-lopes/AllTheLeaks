@@ -8,10 +8,10 @@ import com.google.common.collect.Sets;
 import cpw.mods.modlauncher.Launcher;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.CompatibleHashes;
-import dev.uncandango.alltheleaks.mixin.core.main.IngredientWithCountMixin;
+import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.utils.MethodNodeHasher;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.LoadingModList;
 import org.embeddedt.modernfix.core.ModernFixMixinPlugin;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -34,14 +34,26 @@ public class ATLMixinAdjuster implements MixinAnnotationAdjuster {
 		if (!IS_SRG && mixinClassName.startsWith("dev.uncandango.alltheleaks.mixin.core.")) {
 			return processHashes(targetClassNames,mixinClassName,annotationNode, handlerNode);
 		}
-		if (mixinClassName.equals("dev.uncandango.alltheleaks.mixin.core.main.IngredientWithCountMixin")){
-			if (ModList.get().isLoaded("modernfix")){
-				if (ModernFixMixinPlugin.instance.isOptionEnabled("perf.faster_ingredients.IngredientMixin")){
-					return UNIQUE;
-				}
+		if (isModernfixFeatureOn("main.IngredientWithCountMixin", mixinClassName, "perf.faster_ingredients.IngredientMixin")) return UNIQUE;
+		if (isModernfixFeatureOn("main.IngredientItemValueMixin", mixinClassName, "perf.ingredient_item_deduplication.IngredientItemValueMixin")) return UNIQUE;
+		if (isATLFeatureOn(Set.of("main.IngredientSetMixin","main.NormalizedTypedItemStackMixin"), mixinClassName, !ATLProperties.get().ingredientDedupe)) return UNIQUE;
+		return annotationNode;
+	}
+
+	private boolean isModernfixFeatureOn(String myMixin, String currentMixin, String modernfixMixin){
+		if (("dev.uncandango.alltheleaks.mixin.core." + myMixin).equals(currentMixin)) {
+			if (LoadingModList.get().getModFileById("modernfix") != null) {
+				return ModernFixMixinPlugin.instance.isOptionEnabled(modernfixMixin);
 			}
 		}
-		return annotationNode;
+		return false;
+	}
+
+	private boolean isATLFeatureOn(Set<String> myMixin, String currentMixin, boolean feature){
+		if (myMixin.stream().anyMatch(mixin -> ("dev.uncandango.alltheleaks.mixin.core." + mixin).equals(currentMixin))){
+			return feature;
+		}
+		return false;
 	}
 
 	public static final Map<String, Lazy<Integer>> hashCodes = new ConcurrentHashMap<>();

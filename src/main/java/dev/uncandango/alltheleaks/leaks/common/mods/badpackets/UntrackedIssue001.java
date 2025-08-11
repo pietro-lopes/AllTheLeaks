@@ -1,14 +1,10 @@
 package dev.uncandango.alltheleaks.leaks.common.mods.badpackets;
 
 import dev.uncandango.alltheleaks.annotation.Issue;
-import dev.uncandango.alltheleaks.mixin.core.accessor.ConnectionAccessor;
-import dev.uncandango.alltheleaks.mixin.core.accessor.FakePlayerNetHandlerAccessor;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
-import lol.bai.badpackets.impl.handler.ServerPacketHandler;
 import lol.bai.badpackets.impl.registry.ChannelRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStoppedEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 
 import java.lang.invoke.VarHandle;
 import java.util.Set;

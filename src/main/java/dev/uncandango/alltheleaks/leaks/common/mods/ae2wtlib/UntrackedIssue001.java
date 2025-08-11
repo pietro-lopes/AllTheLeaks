@@ -5,6 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 
 import java.lang.invoke.VarHandle;
 import java.util.WeakHashMap;
@@ -22,6 +23,7 @@ public class UntrackedIssue001 {
 		var gameBus = MinecraftForge.EVENT_BUS;
 		gameBus.addListener(this::clearPlayers);
 		gameBus.addListener(this::clearPlayersLogout);
+		gameBus.addListener(this::clearOnServerStopped);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -32,5 +34,10 @@ public class UntrackedIssue001 {
 	@SuppressWarnings("rawtypes")
 	private void clearPlayersLogout(PlayerEvent.PlayerLoggedOutEvent event) {
 		((WeakHashMap)PLAYERS.get()).remove(event.getEntity());
+	}
+
+	@SuppressWarnings("rawtypes")
+	private void clearOnServerStopped(ServerStoppedEvent event) {
+		((WeakHashMap)PLAYERS.get()).clear();
 	}
 }

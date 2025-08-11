@@ -2,30 +2,38 @@ package dev.uncandango.alltheleaks.report;
 
 import dev.uncandango.alltheleaks.AllTheLeaks;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportManager {
 	static int currentTick;
-	static final List<ReportTask> tasks = new ArrayList<>();
+	static final Map<String, ReportTask> tasks = new HashMap<>();
 
 	public static void tick(){
 		currentTick++;
 		tickAllTasks();
 	}
 
-	public static boolean registerTask(String name, int tickInternal, Runnable task){
-		return tasks.add(new ReportTask(name, tickInternal, task));
+	public static void registerTask(String name, int tickInternal, Runnable task){
+		tasks.put(name, new ReportTask(name, tickInternal, task));
 	}
 
-	static int getCurrentTick() {
+	public static boolean isRegistered(String name){
+		return tasks.containsKey(name);
+	}
+
+	public static int getCurrentTick() {
 		return currentTick;
 	}
 
 	private static void tickAllTasks() {
-		for (var task : tasks) {
+		for (var task : tasks.values()) {
 			task.tick();
 		}
+	}
+
+	public static void stop(String name) {
+		tasks.get(name).stop();
 	}
 
 	static class ReportTask {
@@ -33,11 +41,17 @@ public class ReportManager {
 		private final Runnable task;
 		private final String name;
 		private int lastTickReported;
+		private boolean stopped;
 
 		public ReportTask(String name, int tickInterval, Runnable task) {
 			this.tickInterval = tickInterval;
 			this.task = task;
 			this.name = name;
+			this.stopped = false;
+		}
+
+		public void stop(){
+			this.stopped = true;
 		}
 
 		void tick(){
@@ -53,7 +67,7 @@ public class ReportManager {
 		}
 
 		boolean shouldRun(){
-			return ReportManager.getCurrentTick() - lastTickReported > tickInterval;
+			return !stopped && ReportManager.getCurrentTick() - lastTickReported > tickInterval;
 		}
 	}
 }

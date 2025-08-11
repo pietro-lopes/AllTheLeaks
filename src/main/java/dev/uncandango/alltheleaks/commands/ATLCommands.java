@@ -1,64 +1,134 @@
 package dev.uncandango.alltheleaks.commands;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import com.google.gson.JsonElement;
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.datafixers.util.Pair;
-import com.sun.management.HotSpotDiagnosticMXBean;
 import dev.uncandango.alltheleaks.AllTheLeaks;
-import mezz.jei.core.collect.SetMultiMap;
-import net.minecraft.client.Minecraft;
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
+import dev.uncandango.alltheleaks.mixin.Trackable;
+import dev.uncandango.alltheleaks.mixin.core.main.IngredientMixin;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.fml.ModList;
+import org.embeddedt.modernfix.world.ThreadDumper;
 
-import java.lang.management.ManagementFactory;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public final class ATLCommands {
 
-    public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
+    public static void registerClientCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
         dispatcher.register(
                 Commands.literal("atl")
                         .then(
-							Commands.literal("run_full_gc")
+							Commands.literal("run_explicit_gc")
 								.executes(cmd -> runGc(cmd.getSource()))
 						)
-						.then(Commands.literal("dump_ingredient_duplicates")
+						.then(Commands.literal("dump_ingredient_duplicates").requires(source -> AllTheLeaks.INDEV)
 							.executes(cmd -> dumpIngredientDuplicates(cmd.getSource()))
+						)
+						.then(
+							Commands.literal("force_refresh")
+								.executes(cmd -> checkLeaking(cmd.getSource(), true))
+						)
+						.then(
+							Commands.literal("reset_statistics")
+								.executes(cmd -> resetStatistics(cmd.getSource()))
+						)
+						.then(
+							Commands.literal("thread_dump").requires(source -> ModList.get().isLoaded("modernfix"))
+								.executes(cmd -> doModernFixThreadDump(cmd.getSource()))
 						)
 		);
     }
 
-    @SuppressWarnings("SameReturnValue")
+	private static int doModernFixThreadDump(CommandSourceStack source) {
+		AllTheLeaks.LOGGER.error(ThreadDumper.obtainThreadDump());
+		source.sendSystemMessage(Component.literal("Thread dump done, check latest.log"));
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int resetStatistics(CommandSourceStack source) {
+		runGc(source);
+		MemoryMonitor.Statistics.reset();
+		return Command.SINGLE_SUCCESS;
+	}
+
+	public static void registerServerCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
+		dispatcher.register(
+			Commands.literal("atl")
+				.then(
+					Commands.literal("run_explicit_gc")
+						.executes(cmd -> runGc(cmd.getSource()))
+				)
+				.then(
+					Commands.literal("force_refresh")
+						.executes(cmd -> checkLeaking(cmd.getSource(), true))
+				)
+				.then(
+					Commands.literal("reset_statistics")
+						.executes(cmd -> resetStatistics(cmd.getSource()))
+				)
+				.then(
+					Commands.literal("thread_dump").requires(source -> ModList.get().isLoaded("modernfix"))
+						.executes(cmd -> doModernFixThreadDump(cmd.getSource()))
+				)
+		);
+	}
+
+	public static int checkLeaking(CommandSourceStack source, boolean shouldRunGc) {
+		if (shouldRunGc) {
+			if (runGc(source) == 0) return 0;
+		}
+		Trackable.clearNullReferences();
+
+		// Events for logging
+
+		AllTheLeaks.LOGGER.info("Logging events from checking leak");
+		MemoryMonitor.getEventsSummary().forEach(AllTheLeaks.LOGGER::info);
+
+		List<Component> lines = new ArrayList<>();
+		Trackable.getSummary().forEach((baseClazz, summaryMap) -> {
+			if (summaryMap.isEmpty()) return;
+			lines.add(Component.translatable("%s:", baseClazz.getSimpleName()));
+			summaryMap.forEach((innerClazz, count) -> {
+				var module = innerClazz.getModule();
+				if (module != null) {
+					lines.add(Component.translatable("- %s (%s): %s", innerClazz.getSimpleName(), module.getName(), count));
+				} else {
+					lines.add(Component.translatable("- %s: %s", innerClazz.getSimpleName(), count));
+				}
+			});
+		});
+		if (lines.isEmpty()){
+			source.sendSystemMessage(Component.literal("No leak was found so far...").withStyle(ChatFormatting.GREEN));
+		} else {
+			source.sendSystemMessage(Component.literal("Listing leaks...").withStyle(ChatFormatting.YELLOW));
+			lines.forEach(source::sendSystemMessage);
+		}
+		return Command.SINGLE_SUCCESS;
+	}
+
 	public static int runGc(CommandSourceStack source) {
-		try {
-			var server = ManagementFactory.getPlatformMBeanServer();
-			var hotSpotDiagnosticMXBean = ManagementFactory.newPlatformMXBeanProxy(
-				server, "com.sun.management:type=HotSpotDiagnostic", HotSpotDiagnosticMXBean.class);
-			var gcDisabled = Boolean.parseBoolean(hotSpotDiagnosticMXBean.getVMOption("DisableExplicitGC").getValue());
-			if (gcDisabled) {
-				source.sendFailure(Component.literal("Explicit GC is disabled, remove arguments -XX:+DisableExplicitGC"));
-				return 0;
-			}
-		} catch (Exception e) {
-			AllTheLeaks.LOGGER.error("Error while instancing MXBean: {}", e.getMessage());
+		if (!MemoryMonitor.runExplicitGc()) {
+			source.sendFailure(Component.literal("Explicit GC is disabled, remove arguments -XX:+DisableExplicitGC"));
 			return 0;
 		}
-		System.gc();
-		return 1;
+		return Command.SINGLE_SUCCESS;
     }
 
 	public static int dumpIngredientDuplicates(CommandSourceStack source) {
 		Multimap<JsonElement, Pair<Ingredient, ResourceLocation>> recipeJsonToIngredientMap = HashMultimap.create();
-		Minecraft.getInstance().level.getRecipeManager().getRecipes().forEach(recipe -> {
+		source.getRecipeManager().getRecipes().forEach(recipe -> {
 			var ingredients = recipe.getIngredients();
 			for (Ingredient ingredient : ingredients) {
 				var jsonElement = ingredient.toJson();
@@ -75,6 +145,19 @@ public final class ATLCommands {
 				AllTheLeaks.LOGGER.warn("Ingredients with the same json: {}", key);
 				innerIngredientSet.forEach(ingredient -> {
 					AllTheLeaks.LOGGER.warn("  - {}", ingredient);
+					if (ingredient.isVanilla()) {
+						if (ingredient instanceof IngredientMixin.IngredientAccessor accessor) {
+							for (var ivalue : accessor.getValues()) {
+								if (ivalue instanceof IngredientMixin.ItemValueAccessor iv) {
+									var is = iv.getItem();
+									AllTheLeaks.LOGGER.warn("    - {} - {}", is.getItemHolder().unwrapKey().get().location(), is.getTag());
+								}
+								if (ivalue instanceof Ingredient.TagValue tv) {
+									AllTheLeaks.LOGGER.warn("    - {}", tv.serialize());
+								}
+							}
+						}
+					}
 				});
 			}
 		});

@@ -1,7 +1,7 @@
 package dev.uncandango.alltheleaks.mixin.core.main;
 
+import dev.uncandango.alltheleaks.implementations.ATLUnmodifiable;
 import dev.uncandango.alltheleaks.mixin.Lockable;
-import dev.uncandango.alltheleaks.implementations.ATLUnmodifiableMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -23,7 +23,7 @@ public class CompoundLockMixin implements Lockable {
 
 	@Override
 	public void atl$setLocked(boolean locked) {
-		if (!atl$locked) {
+		if (!atl$locked && locked) {
 			atl$lockCompoundTag((CompoundTag)(Object) this);
 		}
 		atl$locked = locked;
@@ -32,11 +32,11 @@ public class CompoundLockMixin implements Lockable {
 	@Unique
 	private static void atl$lockCompoundTag(CompoundTag tag) {
 		Map<String, Tag> oldMap = ObfuscationReflectionHelper.getPrivateValue(CompoundTag.class, tag, FMLEnvironment.production ? "f_128329_" : "tags");
-		if (!oldMap.getClass().getSimpleName().equals("ATLUnmodifiableMap")) {
-			ObfuscationReflectionHelper.setPrivateValue(CompoundTag.class, tag, ATLUnmodifiableMap.unmodifiableMap(oldMap), FMLEnvironment.production ? "f_128329_" : "tags");
+		if (!oldMap.getClass().getSimpleName().equals("ATLUnmodifiable")) {
+			ObfuscationReflectionHelper.setPrivateValue(CompoundTag.class, tag, ATLUnmodifiable.unmodifiableMap(oldMap), FMLEnvironment.production ? "f_128329_" : "tags");
 			for (var key : tag.getAllKeys()) {
-				if (tag.get(key) instanceof CompoundTag ct){
-					atl$lockCompoundTag(ct);
+				if (tag.get(key) instanceof Lockable lockable){
+					lockable.atl$setLocked(true);
 				}
 			}
 		}

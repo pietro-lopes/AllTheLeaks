@@ -7,8 +7,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.RandomAccess;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.BiConsumer;
@@ -17,10 +20,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
+public class ATLUnmodifiable<K,V> implements Map<K,V>, Serializable {
 	@java.io.Serial
 	private static final long serialVersionUID = -1034234728574286014L;
 
@@ -29,13 +33,13 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 
 	public static <K,V> Map<K,V> unmodifiableMap(Map<? extends K, ? extends V> m) {
 		// Not checking for subclasses because of heap pollution and information leakage.
-		if (m.getClass() == ATLUnmodifiableMap.class) {
+		if (m.getClass() == ATLUnmodifiable.class) {
 			return (Map<K,V>) m;
 		}
-		return new ATLUnmodifiableMap<>(m);
+		return new ATLUnmodifiable<>(m);
 	}
 	
-	ATLUnmodifiableMap(Map<? extends K, ? extends V> m) {
+	private ATLUnmodifiable(Map<? extends K, ? extends V> m) {
 		if (m==null)
 			throw new NullPointerException();
 		this.m = m;
@@ -72,7 +76,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 
 	public Set<Map.Entry<K,V>> entrySet() {
 		if (entrySet==null)
-			entrySet = new ATLUnmodifiableMap.ATLUnmodifiableEntrySet<>(m.entrySet());
+			entrySet = new ATLUnmodifiable.ATLUnmodifiableEntrySet<>(m.entrySet());
 		return entrySet;
 	}
 
@@ -175,7 +179,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 
 		static <K, V> Consumer<Entry<? extends K, ? extends V>> entryConsumer(
 			Consumer<? super Entry<K, V>> action) {
-			return e -> action.accept(new ATLUnmodifiableMap.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>(e));
+			return e -> action.accept(new ATLUnmodifiable.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>(e));
 		}
 
 		public void forEach(Consumer<? super Entry<K, V>> action) {
@@ -208,7 +212,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 				Spliterator<Entry<K, V>> split = s.trySplit();
 				return split == null
 					? null
-					: new ATLUnmodifiableMap.ATLUnmodifiableEntrySet.ATLUnmodifiableEntrySetSpliterator<>(split);
+					: new ATLUnmodifiable.ATLUnmodifiableEntrySet.ATLUnmodifiableEntrySetSpliterator<>(split);
 			}
 
 			@Override
@@ -239,7 +243,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 
 		@SuppressWarnings("unchecked")
 		public Spliterator<Entry<K,V>> spliterator() {
-			return new ATLUnmodifiableMap.ATLUnmodifiableEntrySet.ATLUnmodifiableEntrySetSpliterator<>(
+			return new ATLUnmodifiable.ATLUnmodifiableEntrySet.ATLUnmodifiableEntrySetSpliterator<>(
 				(Spliterator<Map.Entry<K, V>>) c.spliterator());
 		}
 
@@ -276,7 +280,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 		public Object[] toArray() {
 			Object[] a = c.toArray();
 			for (int i=0; i<a.length; i++)
-				a[i] = new ATLUnmodifiableMap.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>((Map.Entry<? extends K, ? extends V>)a[i]);
+				a[i] = new ATLUnmodifiable.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>((Map.Entry<? extends K, ? extends V>)a[i]);
 			return a;
 		}
 
@@ -288,7 +292,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 			Object[] arr = c.toArray(a.length==0 ? a : Arrays.copyOf(a, 0));
 
 			for (int i=0; i<arr.length; i++)
-				arr[i] = new ATLUnmodifiableMap.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>((Map.Entry<? extends K, ? extends V>)arr[i]);
+				arr[i] = new ATLUnmodifiable.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>((Map.Entry<? extends K, ? extends V>)arr[i]);
 
 			if (arr.length > a.length)
 				return (T[])arr;
@@ -309,7 +313,7 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 			if (!(o instanceof Map.Entry))
 				return false;
 			return c.contains(
-				new ATLUnmodifiableMap.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>((Map.Entry<?,?>) o));
+				new ATLUnmodifiable.ATLUnmodifiableEntrySet.ATLUnmodifiableEntry<>((Map.Entry<?,?>) o));
 		}
 
 		/**
@@ -375,6 +379,17 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 		return new ATLUnmodifiableSet<>(s);
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> unmodifiableList(List<? extends T> list) {
+		if (list.getClass() == ATLUnmodifiableList.class || list.getClass() == ATLUnmodifiableRandomAccessList.class) {
+			return (List<T>) list;
+		}
+
+		return (list instanceof RandomAccess ?
+			new ATLUnmodifiableRandomAccessList<>(list) :
+			new ATLUnmodifiableList<>(list));
+	}
+
 	/**
 	 * @serial include
 	 */
@@ -386,6 +401,129 @@ public class ATLUnmodifiableMap<K,V> implements Map<K,V>, Serializable {
 		ATLUnmodifiableSet(Set<? extends E> s)     {super(s);}
 		public boolean equals(Object o) {return o == this || c.equals(o);}
 		public int hashCode()           {return c.hashCode();}
+	}
+
+	static class ATLUnmodifiableList<E> extends ATLUnmodifiableCollection<E>
+		implements List<E> {
+		@java.io.Serial
+		private static final long serialVersionUID = -283967356065247728L;
+
+		@SuppressWarnings("serial") // Conditionally serializable
+		final List<? extends E> list;
+
+		ATLUnmodifiableList(List<? extends E> list) {
+			super(list);
+			this.list = list;
+		}
+
+		public boolean equals(Object o) {return o == this || list.equals(o);}
+		public int hashCode()           {return list.hashCode();}
+
+		public E get(int index) {return list.get(index);}
+		public E set(int index, E element) {
+			throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+		}
+		public void add(int index, E element) {
+			throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+		}
+		public E remove(int index) {
+			throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+		}
+		public int indexOf(Object o)            {return list.indexOf(o);}
+		public int lastIndexOf(Object o)        {return list.lastIndexOf(o);}
+		public boolean addAll(int index, Collection<? extends E> c) {
+			throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+		}
+
+		@Override
+		public void replaceAll(UnaryOperator<E> operator) {
+			throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+		}
+		@Override
+		public void sort(Comparator<? super E> c) {
+			throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+		}
+
+		public ListIterator<E> listIterator()   {return listIterator(0);}
+
+		public ListIterator<E> listIterator(final int index) {
+			return new ListIterator<E>() {
+				private final ListIterator<? extends E> i
+					= list.listIterator(index);
+
+				public boolean hasNext()     {return i.hasNext();}
+				public E next()              {return i.next();}
+				public boolean hasPrevious() {return i.hasPrevious();}
+				public E previous()          {return i.previous();}
+				public int nextIndex()       {return i.nextIndex();}
+				public int previousIndex()   {return i.previousIndex();}
+
+				public void remove() {
+					throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+				}
+				public void set(E e) {
+					throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+				}
+				public void add(E e) {
+					throw new ATLUnsupportedOperation("Modification of this object is not allowed!");
+				}
+
+				@Override
+				public void forEachRemaining(Consumer<? super E> action) {
+					i.forEachRemaining(action);
+				}
+			};
+		}
+
+		public List<E> subList(int fromIndex, int toIndex) {
+			return new ATLUnmodifiableList<>(list.subList(fromIndex, toIndex));
+		}
+
+		/**
+		 * UnmodifiableRandomAccessList instances are serialized as
+		 * UnmodifiableList instances to allow them to be deserialized
+		 * in pre-1.4 JREs (which do not have UnmodifiableRandomAccessList).
+		 * This method inverts the transformation.  As a beneficial
+		 * side-effect, it also grafts the RandomAccess marker onto
+		 * UnmodifiableList instances that were serialized in pre-1.4 JREs.
+		 *
+		 * Note: Unfortunately, UnmodifiableRandomAccessList instances
+		 * serialized in 1.4.1 and deserialized in 1.4 will become
+		 * UnmodifiableList instances, as this method was missing in 1.4.
+		 */
+		@java.io.Serial
+		private Object readResolve() {
+			return (list instanceof RandomAccess
+				? new ATLUnmodifiableRandomAccessList<>(list)
+				: this);
+		}
+	}
+
+	static class ATLUnmodifiableRandomAccessList<E> extends ATLUnmodifiableList<E>
+		implements RandomAccess
+	{
+		ATLUnmodifiableRandomAccessList(List<? extends E> list) {
+			super(list);
+		}
+
+		public List<E> subList(int fromIndex, int toIndex) {
+			return new ATLUnmodifiableRandomAccessList<>(
+				list.subList(fromIndex, toIndex));
+		}
+
+		@java.io.Serial
+		private static final long serialVersionUID = -2542308836966382001L;
+
+		/**
+		 * Allows instances to be deserialized in pre-1.4 JREs (which do
+		 * not have UnmodifiableRandomAccessList).  UnmodifiableList has
+		 * a readResolve method that inverts this transformation upon
+		 * deserialization.
+		 */
+		@java.io.Serial
+		private Object writeReplace() {
+			return new ATLUnmodifiableList<>(list);
+		}
 	}
 
 	static class ATLUnmodifiableCollection<E> implements Collection<E>, Serializable {

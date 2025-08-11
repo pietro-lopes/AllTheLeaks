@@ -15,6 +15,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.system.MemoryUtil;
@@ -47,7 +48,17 @@ public class UntrackedIssue004 {
 			Map<String, UnionFileSystem> copyFileSystems = new HashMap<>();
 			Set<FileSystem> validFS = new HashSet<>();
 			try {
-				MethodHandles.Lookup LOOKUP = getTrustedLookup();
+				Unsafe UNSAFE;
+				if (FMLEnvironment.dist.isClient()) {
+					UNSAFE = ObfuscationReflectionHelper.getPrivateValue(MemoryUtil.class, null, "UNSAFE");
+				} else {
+					UNSAFE = ObfuscationReflectionHelper.getPrivateValue(Unsafe.class, null, "theUnsafe");
+				}
+
+				if (UNSAFE == null) throw new IllegalAccessException("Not possible to grab UNSAFE");
+				Field fieldImplLookup = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
+
+				MethodHandles.Lookup LOOKUP = (MethodHandles.Lookup) UNSAFE.getObject(UNSAFE.staticFieldBase(fieldImplLookup), UNSAFE.staticFieldOffset(fieldImplLookup));
 
 				VarHandle fsVH = LOOKUP.findVarHandle(Jar.class, "filesystem", UnionFileSystem.class);
 				VarHandle layersVH = LOOKUP.findVarHandle(ModuleLayerHandler.class, "completedLayers", EnumMap.class);
@@ -147,12 +158,5 @@ public class UntrackedIssue004 {
 				}
 			}
 		});
-	}
-
-	private MethodHandles.Lookup getTrustedLookup() throws IllegalAccessException, NoSuchFieldException {
-		Unsafe UNSAFE = ObfuscationReflectionHelper.getPrivateValue(MemoryUtil.class, null, "UNSAFE");
-		if (UNSAFE == null) throw new IllegalAccessException("Not possible to grab UNSAFE");
-		Field fieldImplLookup = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
-		return (MethodHandles.Lookup) UNSAFE.getObject(UNSAFE.staticFieldBase(fieldImplLookup), UNSAFE.staticFieldOffset(fieldImplLookup));
 	}
 }

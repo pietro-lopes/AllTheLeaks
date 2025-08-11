@@ -1,9 +1,5 @@
 package dev.uncandango.alltheleaks.exceptions;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ATLUnsupportedOperation extends UnsupportedOperationException {
@@ -31,16 +27,4 @@ public class ATLUnsupportedOperation extends UnsupportedOperationException {
 		}
 		return 0;
 	}
-//
-//	public static MutableComponent reportErrors(int tickCount) {
-//		var current = errorCount.get();
-//		if (current > lastReported.get()) {
-//			if (tickCount - lastTickReported.get() > 300) { // 300 ticks, 15s
-//				lastReported.set(current);
-//				lastTickReported.set(tickCount);
-//				return Component.translatable("[AllTheLeaks] There are %s errors related to Ingredient Dedupe, check logs for more info and report to developer.", current).withStyle(ChatFormatting.RED);
-//			}
-//		}
-//		return Component.empty();
-//	}
 }
