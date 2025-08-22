@@ -22,7 +22,7 @@ public interface Trackable {
 
 		@Override
 		public boolean equals(WeakReference<Trackable> o, WeakReference<Trackable> k1) {
-			return Objects.equals(o.get(), k1 == null ? null : k1.get());
+			return k1 != null && k1.get() == o.get();
 		}
 	};
 	ReentrantLock LOCK = new ReentrantLock();

@@ -215,7 +215,7 @@ public class MemoryMonitor {
 
 		public static void evaluateMemory() {
 			if (FMLEnvironment.dist.isClient()) {
-				if (Minecraft.getInstance().isPaused()) return;
+				if (Minecraft.getInstance().isPaused() || Minecraft.getInstance().level == null) return;
 			}
 			var used = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			if (currentUsedMemory > used) {

@@ -21,7 +21,9 @@ public class GameBusEvent {
 
 	@SubscribeEvent
 	public static void onServerTick(TickEvent.ServerTickEvent event){
-		ReportManager.tick();
+		if (event.phase == TickEvent.Phase.END) {
+			ReportManager.tick();
+		}
 	}
 
 	@SubscribeEvent

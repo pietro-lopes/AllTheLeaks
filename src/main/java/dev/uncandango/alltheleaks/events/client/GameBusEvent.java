@@ -30,7 +30,9 @@ public class GameBusEvent {
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event){
-		ReportManager.tick();
+		if (event.phase == TickEvent.Phase.END) {
+			ReportManager.tick();
+		}
 	}
 
 	@SubscribeEvent
