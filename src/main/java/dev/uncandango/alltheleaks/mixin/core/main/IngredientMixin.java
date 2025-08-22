@@ -8,11 +8,9 @@ import dev.uncandango.alltheleaks.feature.common.mods.minecraft.IngredientDedupe
 import dev.uncandango.alltheleaks.mixin.Lockable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.apache.commons.lang3.stream.Streams;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 @Mixin(Ingredient.class)
@@ -43,8 +41,8 @@ public class IngredientMixin {
 							}
 						}
 					}
-					if (!((Lockable) (Object) dedupedIngredient).isLocked()) {
-						((Lockable) (Object) dedupedIngredient).setLocked(true);
+					if (!((Lockable) (Object) dedupedIngredient).atl$isLocked()) {
+						((Lockable) (Object) dedupedIngredient).atl$setLocked(true);
 					}
 				}
 				// KubeJS bug is populating itemstacks with Air, this is a workaround to force a re-calculation

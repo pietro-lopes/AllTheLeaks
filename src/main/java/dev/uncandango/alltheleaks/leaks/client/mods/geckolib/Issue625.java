@@ -1,6 +1,7 @@
 package dev.uncandango.alltheleaks.leaks.client.mods.geckolib;
 
 import dev.uncandango.alltheleaks.annotation.Issue;
+import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -16,7 +17,7 @@ public class Issue625 {
 		gameBus.addListener(this::clearActor);
 	}
 
-	private void clearActor(LevelEvent.Unload event){
+	private void clearActor(UpdateableLevel.RenderEnginesUpdated event){
 		ACTOR.set((Object)null);
 	}
 

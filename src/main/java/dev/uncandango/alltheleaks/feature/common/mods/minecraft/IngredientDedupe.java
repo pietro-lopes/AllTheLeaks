@@ -1,28 +1,25 @@
 package dev.uncandango.alltheleaks.feature.common.mods.minecraft;
 
+import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
+import dev.uncandango.alltheleaks.mixin.core.accessor.PatchedDataComponentMapAccessor;
 import it.unimi.dsi.fastutil.Hash;
 import it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectMaps;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackLinkedSet;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.LoadingModList;
 import org.embeddedt.modernfix.core.ModernFixMixinPlugin;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@Issue(modId = "minecraft", issueId = "Ingredient Deduplication",versionRange = "1.21.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor"}, config = "ingredientDedupe", configActivated = false)
-public class IngredientDedupe implements PreparableReloadListener {
+@Issue(modId = "minecraft", issueId = "Ingredient Deduplication",versionRange = "1.21.1", mixins = {"main.IngredientMixin", "main.IngredientMixin$IngredientAccessor", "accessor.PatchedDataComponentMapAccessor", "accessor.HolderReferenceAccessor", "main.HolderReferenceMixin", "main.IngredientLockMixin", "main.ItemStackLockMixin"}, config = "ingredientDedupe", configActivated = false)
+public class IngredientDedupe {
 	private static final ObjectOpenCustomHashSet<Ingredient> INGREDIENT_CACHE;
-	public static IngredientDedupe INSTANCE;
 	private static final boolean MODERNFIX_DEDUPLICATION;
 
 	static {
@@ -36,7 +33,7 @@ public class IngredientDedupe implements PreparableReloadListener {
 
 				for (Object element : o.getValues())
 					if (element instanceof Ingredient.ItemValue iv) {
-						result = 31 * result + ItemStackLinkedSet.TYPE_AND_TAG.hashCode(iv.item());
+						result = 31 * result + ItemStackLinkedSet.TYPE_AND_TAG.hashCode(iv.item()) + (iv.item().getCount() > 1 ? iv.item().getCount() : 0);
 					} else {
 						result = 31 * result + (element == null ? 0 : element.hashCode());
 					}
@@ -64,7 +61,11 @@ public class IngredientDedupe implements PreparableReloadListener {
 									return false;
 								}
 							} else {
-								if (!ItemStack.isSameItemSameComponents(item, item1)){
+								// Debug
+//								if (ItemStack.isSameItemSameComponents(item, item1) && !strictIsSameItemSameComponents(item, item1)) {
+//									AllTheLeaks.LOGGER.warn("Item {} and {} are not the same?", item, item1);
+//								}
+								if (item.getCount() != item1.getCount() || !ItemStack.isSameItemSameComponents(item, item1)){
 									return false;
 								}
 							}
@@ -75,29 +76,43 @@ public class IngredientDedupe implements PreparableReloadListener {
 			}
 		};
 		INGREDIENT_CACHE = new ObjectOpenCustomHashSet<>(BASIC_HASH_STRATEGY);
-		if (ModList.get().isLoaded("modernfix")) {
+		if (LoadingModList.get().getModFileById("modernfix") != null) {
 			MODERNFIX_DEDUPLICATION = ModernFixMixinPlugin.instance.isOptionEnabled("perf.ingredient_item_deduplication.IngredientMixin");
 		} else MODERNFIX_DEDUPLICATION = false;
 	}
 
-	public static IngredientDedupe getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new IngredientDedupe();
+	// for debug
+	private static boolean strictIsSameItemSameComponents(ItemStack item1, ItemStack item2) {
+		if (item1.getComponents() instanceof PatchedDataComponentMapAccessor accessor1 && item2.getComponents() instanceof PatchedDataComponentMapAccessor accessor2) {
+			if (!accessor1.atl$getPrototype().equals(accessor2.atl$getPrototype())) {
+				return false;
+			}
+			var aPatch = accessor1.atl$getPatch();
+			var bPatch = accessor2.atl$getPatch();
+			if (aPatch != bPatch) {
+				if (aPatch.size() != bPatch.size()) {
+					return false;
+				}
+				for (var entry : Reference2ObjectMaps.fastIterable(aPatch)) {
+					var value = bPatch.get(entry.getKey());
+					if (value == null) {
+						return false;
+					}
+					if (value.isPresent() != entry.getValue().isPresent()) {
+						return false;
+					} else if (value.isPresent() && value.get() != entry.getValue().get()) {
+						return false;
+					}
+				}
+			}
+			return true;
+		} else {
+			return item1.getComponents() == item2.getComponents();
 		}
-		return INSTANCE;
 	}
 
 	public synchronized static Ingredient intern(Ingredient ingredient) {
 		return INGREDIENT_CACHE.addOrGet(ingredient);
 	}
 
-	@Override
-	public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
-		return CompletableFuture.runAsync(INGREDIENT_CACHE::clear, backgroundExecutor).thenCompose(preparationBarrier::wait);
-	}
-
-	@Override
-	public String getName() {
-		return "atl_ingredient_dedupe";
-	}
 }

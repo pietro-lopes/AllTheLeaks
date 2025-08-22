@@ -5,6 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.core.accessor.PlayerAdvancementsAccessor;
 import net.minecraft.server.PlayerAdvancements;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
@@ -23,7 +24,18 @@ public class Issue1487 {
 
 	private void clearOnLevelUnload(LevelEvent.Unload event) {
 		if (!event.getLevel().isClientSide()){
-			atl$fakeAdvancements.entrySet().removeIf(entry -> entry.getValue() != null && entry.getValue() instanceof PlayerAdvancementsAccessor accessor && accessor.getPlayer().level() == event.getLevel());
+			atl$fakeAdvancements.entrySet().removeIf(entry -> {
+				if (entry.getValue() != null && entry.getValue() instanceof PlayerAdvancementsAccessor accessor) {
+				  if(accessor.getPlayer().level() == event.getLevel()) {
+					  var player = accessor.getPlayer();
+					  if (player.connection.player instanceof FakePlayer) {
+						  player.connection.player = null;
+					  }
+					  return true;
+				  }
+				}
+				return false;
+			});
 		}
 	}
 

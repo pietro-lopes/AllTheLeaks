@@ -4,6 +4,7 @@ import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.api.windows.ProcessMemoryCounter;
 import dev.uncandango.alltheleaks.api.windows.PsApi;
 import net.minecraft.Util;
+import net.neoforged.fml.loading.FMLEnvironment;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.Platform;
 import org.lwjgl.system.windows.Kernel32;
@@ -16,13 +17,16 @@ public class MemoryStats {
 	public static volatile String memoryString = "OS Used Memory: Fetching...";
 
 	static {
-		var status = Platform.get() == Platform.WINDOWS;
-		if (status) {
-			try {
-				PsApi.getLibrary();
-			} catch (Throwable e) {
-				AllTheLeaks.LOGGER.error("Error while instancing PsApi: {}", e.getMessage());
-				status = false;
+		var status = false;
+		if (!FMLEnvironment.dist.isDedicatedServer()) {
+			status = Platform.get() == Platform.WINDOWS;
+			if (status) {
+				try {
+					PsApi.getLibrary();
+				} catch (Throwable e) {
+					AllTheLeaks.LOGGER.error("Error while instancing PsApi: {}", e.getMessage());
+					status = false;
+				}
 			}
 		}
 		ENABLED = status;

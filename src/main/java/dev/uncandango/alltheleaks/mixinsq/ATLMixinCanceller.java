@@ -1,8 +1,10 @@
 package dev.uncandango.alltheleaks.mixinsq;
 
 import com.bawnorton.mixinsquared.api.MixinCanceller;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.LoadingModList;
 import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.gametest.GameTestHooks;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +17,10 @@ public class ATLMixinCanceller implements MixinCanceller {
 		if (isLoaded("additionalentityattributes")) {
 			list.add("de.dafuqs.additionalentityattributes.mixin.common.BlockMixin");
 		}
+//		if (isLoaded("sfm") && !GameTestHooks.isGametestEnabled()) {
+//			list.add("ca.teamdman.sfm.mixins.GameTestInfoMixin");
+//			list.add("ca.teamdman.sfm.mixins.StructureTemplateManagerMixin");
+//		}
 		return list;
 	});
 

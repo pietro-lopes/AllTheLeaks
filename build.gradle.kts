@@ -192,7 +192,8 @@ dependencies {
     val easyvillager = "curse.maven:easy-villagers-400514:5724571" // 1.1.23
     val iceberg = "curse.maven:iceberg-520110:5750025" // 1.2.8
     val findme = "curse.maven:findme-291936:5511906" // 3.3.1
-    val ars = "curse.maven:ars-nouveau-401955:5721123" // 5.1.0
+//    val ars = "curse.maven:ars-nouveau-401955:5721123" // 5.1.0
+    val ars = "curse.maven:ars-nouveau-401955:6640732" // 5.8.4
     val ftbquests = "curse.maven:ftb-quests-forge-289412:5635133" // 2101.1.0
     val securitycraft = "curse.maven:security-craft-64760:5655403" // 1.9.10-beta9
     val lootr = "curse.maven:lootr-361276:5709012" // 10.33.82
@@ -232,6 +233,7 @@ dependencies {
     val buildingGadgets = "curse.maven:building-gadgets-298187:5615703" // buildinggadgets2-1.3.7.jar
     val badpackets = "curse.maven:badpackets-615134:5430629" // badpackets-neo-0.8.1.jar
     val doggyTalents = "curse.maven:doggy-talents-next-694492:5611845" // DoggyTalentsNext-1.21-1.18.28.jar
+    val transferLabels = "curse.maven:transfer-labels-1184406:6540203" // transfer_labels-0.1.0.jar
 
     // You need to download yourself and put on "libs" folder
     // https://www.curseforge.com/minecraft/mc-mods/entityculling/files/all?page=1&pageSize=20&version=1.21.1&gameVersionTypeId=6
@@ -292,6 +294,7 @@ dependencies {
     compileOnly("curse.maven:modernfix-790626:6609557") // modernfix-neoforge-5.23.1+mc1.21.1.jar
     compileOnly(badpackets)
     compileOnly(doggyTalents)
+    compileOnly(transferLabels)
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
@@ -343,7 +346,7 @@ dependencies {
     runtimeOnly("curse.maven:playeranimator-658587:5698755") // player-animation-lib-forge-2.0.0-alpha1+1.21.jar
 
     // LeakDiagTool
-    runtimeOnly("blank:leakdiagtool:0.0.1-beta")
+    //runtimeOnly("blank:leakdiagtool:0.0.1-beta")
 
     // for Ingredient Dedupe runtime test
 
@@ -354,10 +357,10 @@ dependencies {
     runtimeOnly("curse.maven:productivebees-377897:6710632") // productivebees-1.21.1-13.7.4.jar
     runtimeOnly("curse.maven:applied-energistics-2-223794:6626602") // appliedenergistics2-19.2.12.jar
     compileOnly("curse.maven:industrial-foregoing-266515:5880501")
-    runtimeOnly("curse.maven:industrial-foregoing-266515:5880501")
-    runtimeOnly("curse.maven:titanium-287342:5881103")
-    runtimeOnly("curse.maven:modernfix-790626:6725232") // modernfix-neoforge-5.24.1+mc1.21.1.jar
-    compileOnly("curse.maven:modernfix-790626:6725232") // modernfix-neoforge-5.24.1+mc1.21.1.jar
+    runtimeOnly("curse.maven:industrial-foregoing-266515:6626624")
+    runtimeOnly("curse.maven:titanium-287342:6875285")
+    runtimeOnly("curse.maven:modernfix-790626:6766126") // modernfix-neoforge-5.24.3+mc1.21.1.jar
+    compileOnly("curse.maven:modernfix-790626:6766126") // modernfix-neoforge-5.24.3+mc1.21.1.jar
     compileOnly("curse.maven:create-328085:6323264")
     compileOnly("curse.maven:jonns-trophies-510170:6298097")
     compileOnly("curse.maven:relics-mod-445274:6444603")
@@ -380,6 +383,7 @@ dependencies {
     compileOnly("curse.maven:mffs-238546:6348338")
     runtimeOnly("curse.maven:crafting-tweaks-233071:5623443")
     runtimeOnly("curse.maven:balm-531761:6447094")
+    runtimeOnly("curse.maven:transfer-labels-1184406:6771226")
 
     implementation("curse.maven:natures-aura-306626:5966337")
     implementation("curse.maven:nautec-1107394:6544236")
@@ -387,23 +391,29 @@ dependencies {
     compileOnly("blank:com.enderio.enderio-machines:7.1.8-alpha")
 
     runtimeOnly("curse.maven:ars-elemental-561470:6606656")
-    runtimeOnly("curse.maven:ars-elemancy-1153666:6608123")
+    runtimeOnly("curse.maven:ars-elemancy-1153666:6622015")
 
     runtimeOnly("curse.maven:fastworkbench-288885:5670423")
     runtimeOnly("curse.maven:placebo-283644:6446766")
     runtimeOnly("curse.maven:guideme-1173950:6688687")
     runtimeOnly("curse.maven:kotlin-for-forge-351264:6706911")
-    // runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645")
+    runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645")
+
+    runtimeOnly("curse.maven:refined-storage-243076:6904639")
+    runtimeOnly("curse.maven:refined-storage-jei-integration-1230497:6359014")
+
+    runtimeOnly("curse.maven:cloth-config-348521:5729127")
+    runtimeOnly("curse.maven:betterf3-401648:5873258")
 
     // MixinExtras that supports @Expression
-    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0-rc.2")?.let {
+    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0")?.let {
         implementation(it)
     }
 
-    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4")?.let {
+    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3")?.let {
         compileOnly(it)
     }
-    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.2-beta.4")?.let {
+    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.3")?.let {
         implementation(it)
     }
     // From mod Confluence
