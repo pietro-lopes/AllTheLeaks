@@ -19,6 +19,7 @@ public class DebugScreenOverlayMixin {
 
 	@ModifyReturnValue(method = "getSystemInformation", at = @At("RETURN"))
 	private List<String> atl$addRightText(List<String> original){
+		if (!MemoryStats.ENABLED) return original;
 		if (4 > original.size()) {
 			original.addLast(MemoryStats.getMemoryWorkingSetSize());
 		} else {
