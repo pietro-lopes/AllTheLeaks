@@ -215,10 +215,10 @@ dependencies {
     }
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
-    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3")?.let {
+    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.5-beta.2")?.let {
         compileOnly(it)
     }
-    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.3.3")?.let {
+    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.3.5-beta.2")?.let {
         implementation(it)
     }
 

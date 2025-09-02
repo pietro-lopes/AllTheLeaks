@@ -36,7 +36,8 @@ public class GameBusEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPlayerCloneLowest(PlayerEvent.Clone event){
 		if (event.getOriginal().getRemovalReason() == null) {
-			AllTheLeaks.LOGGER.error("Cloned player is invalid, removal reason is null!", new ATLIllegalState(ATLIllegalState.TYPE.NO_REMOVAL_REASON,"Cannot have null removal reason on Clone event!"));
+			var error = new ATLIllegalState(ATLIllegalState.TYPE.NO_REMOVAL_REASON,"Cannot have null removal reason on Clone event!");
+			AllTheLeaks.LOGGER.error(error.getMessage());
 		}
 	}
 

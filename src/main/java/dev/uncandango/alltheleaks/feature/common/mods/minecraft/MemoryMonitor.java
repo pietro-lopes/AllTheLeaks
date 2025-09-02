@@ -131,7 +131,11 @@ public class MemoryMonitor {
 		if (formattedSummary.isEmpty()) {
 			lines.add(prefix + "No memory leak detected!");
 		} else {
-			lines.add(prefix + "Memory Leaks detected: (" + ChatFormatting.GREEN + "/atl force_refresh" + ChatFormatting.RESET + " to update)");
+			if (padding) {
+				lines.add(prefix + "Memory Leaks detected: (" + ChatFormatting.GREEN + "/atl force_refresh" + ChatFormatting.RESET + " to update)");
+			} else {
+				lines.add(prefix + "Memory Leaks detected: (/atl force_refresh to update)");
+			}
 			lines.addAll(formattedSummary);
 		}
 		return lines;
@@ -173,7 +177,7 @@ public class MemoryMonitor {
 					source = server.createCommandSourceStack();
 				}
 			}
-			if (source == null) return;;
+			if (source == null) return;
 			source.sendSystemMessage(Component.literal("You reached 90% memory usage, showing leaking objects so far...").withStyle(ChatFormatting.RED));
 			source.sendSystemMessage(Component.literal(getMemoryStatistics()));
 			ATLCommands.checkLeaking(source, false);
@@ -221,7 +225,7 @@ public class MemoryMonitor {
 			if (currentUsedMemory > used) {
 				if (stableCount < stableTicksThreshold) {
 					var diff = currentMinMemory > 0 ? 1 - ((double)used/currentMinMemory) : 1;
-					if (Math.abs(diff) > 0.01) {
+					if (Math.abs(diff) > 0.02) {
 						stableCount = 0;
 						// AllTheLeaks.LOGGER.info("Stable count was reset with diff of {}", diff);
 					} else {
