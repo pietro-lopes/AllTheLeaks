@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.embeddedt.modernfix.world.ThreadDumper;
 
 import java.util.ArrayList;
@@ -119,6 +120,10 @@ public final class ATLCommands {
 	}
 
 	public static int runGc(CommandSourceStack source) {
+		var server = ServerLifecycleHooks.getCurrentServer();
+		if (server != null) {
+			server.executeBlocking(() -> server.saveEverything(true, true, true));
+		}
 		if (!MemoryMonitor.runExplicitGc()) {
 			source.sendFailure(Component.literal("Explicit GC is disabled, remove arguments -XX:+DisableExplicitGC"));
 			return 0;
