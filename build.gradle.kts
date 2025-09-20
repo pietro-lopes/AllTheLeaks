@@ -177,6 +177,18 @@ val atlAgent: Configuration by configurations.creating
 dependencies {
     atlAgent(project(":atl-agent"))
 
+    // MixinExtras that supports @Expression
+    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0")?.let {
+        implementation(it)
+    }
+
+    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3")?.let {
+        compileOnly(it)
+    }
+    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.3")?.let {
+        implementation(it)
+    }
+
     // Here we go
     val journeymap = "curse.maven:journeymap-32274:5820528" // "1.21.1-6.0.0-beta.28"
     val railcraft = "curse.maven:railcraft-reborn-901491:5650759" // "1.2.2"
@@ -291,10 +303,42 @@ dependencies {
     compileOnly(buildingGadgets)
     compileOnly("curse.maven:ftb-jei-extras-1103259:5725276") // ftbjeiextras-21.1.0.jar
     compileOnly("curse.maven:productivebees-377897:5611632") // productivebees-1.21.0-13.4.0.jar
-    compileOnly("curse.maven:modernfix-790626:6609557") // modernfix-neoforge-5.23.1+mc1.21.1.jar
+    //compileOnly("curse.maven:modernfix-790626:6609557") // modernfix-neoforge-5.23.1+mc1.21.1.jar
     compileOnly(badpackets)
     compileOnly(doggyTalents)
     compileOnly(transferLabels)
+    compileOnly("curse.maven:modernfix-790626:6766126") // modernfix-neoforge-5.24.3+mc1.21.1.jar
+    compileOnly("curse.maven:create-328085:6323264")
+    compileOnly("curse.maven:jonns-trophies-510170:6298097")
+    compileOnly("curse.maven:relics-mod-445274:6444603")
+    compileOnly("curse.maven:lendercataclysm-551586:6429407")
+    compileOnly("curse.maven:lionfish-api-1001614:6168249")
+    compileOnly("curse.maven:pneumaticcraft-repressurized-281849:6288626")
+    compileOnly("curse.maven:rainboows-1121832:6416604")
+    compileOnly("curse.maven:supplementaries-412082:6462647")
+    compileOnly("curse.maven:selene-499980:6462396")
+    compileOnly("curse.maven:super-factory-manager-306935:6361523")
+    compileOnly("curse.maven:ender-storage-1-8-245174:6159037")
+    // From mod All The Arcanist Gear
+    compileOnly("blank:AdditionalEntityAttributes:2.0.0+1.21.1-neoforge")
+    compileOnly("curse.maven:industrial-foregoing-266515:6626624")
+    compileOnly("curse.maven:corail-tombstone-243707:6398190")
+    compileOnly("curse.maven:xycraft-653786:5601037")
+    compileOnly("curse.maven:immersive-engineering-231951:6466513")
+    compileOnly("curse.maven:cooking-for-blockheads-231484:6459070")
+    compileOnly("curse.maven:mffs-238546:6348338")
+    compileOnly("curse.maven:natures-aura-306626:5966337")
+    compileOnly("curse.maven:nautec-1107394:6544236")
+    // From mod EnderIO
+    compileOnly("blank:com.enderio.enderio-machines:7.1.8-alpha")
+    // From mod Confluence
+    compileOnly("blank:org.confluence.lib:confluence_magic_lib:0.0.1")
+    compileOnly("curse.maven:draconic-evolution-223565:6943035")
+    compileOnly("curse.maven:oritech-1030830:6807350")
+    // From mod Create
+    compileOnly("blank:flywheel-neoforge:1.21.1:1.0.2")
+    compileOnly("curse.maven:ftb-chunks-forge-314906:6900454")
+    compileOnly("curse.maven:what-are-they-up-to-945479:6418577")
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
@@ -307,11 +351,7 @@ dependencies {
         val cfId = addonJson.get("addonID").asNumber
         val nameId = addonJson.get("webSiteURL").asString.split("/").last()
         val fileId = addonJson.getAsJsonObject("installedFile").asJsonObject.get("id").asNumber
-//        println("runtimeOnly(\"curse.maven:$nameId-$cfId:$fileId\")")
-//        if (nameId.contains("journeymap")) return@forEach
-//        if (nameId.contains("curios")) return@forEach
         if (nameId.contains("accessories")) return@forEach
-        // if (nameId.contains("owo-lib")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
 
@@ -330,6 +370,7 @@ dependencies {
     jeiRuntimeOnly(minecoloniesRuntime)
     jeiServerRuntimeOnly(minecoloniesRuntime)
     jeiRuntimeOnly(jepRuntime)
+    jeiRuntimeOnly("curse.maven:ftb-jei-extras-1103259:5907752") // ftbjeiextras-21.1.3.jar
 
     emiRuntimeOnly(jeiEmi)
     emiServerRuntimeOnly(jeiEmi)
@@ -340,87 +381,6 @@ dependencies {
     emiRuntimeOnly(minecoloniesRuntime)
     emiServerRuntimeOnly(minecoloniesRuntime)
 
-    // Dependencies for runtime
-//    jeiRuntimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
-//    emiRuntimeOnly("curse.maven:glitchcore-955399:5660740") // GlitchCore-neoforge-1.21.1-2.1.0.0.jar
-    runtimeOnly("curse.maven:playeranimator-658587:5698755") // player-animation-lib-forge-2.0.0-alpha1+1.21.jar
-
-    // LeakDiagTool
-    //runtimeOnly("blank:leakdiagtool:0.0.1-beta")
-
-    // for Ingredient Dedupe runtime test
-
-    runtimeOnly("curse.maven:ftb-jei-extras-1103259:5907752") // ftbjeiextras-21.1.3.jar
-    runtimeOnly("curse.maven:glodium-957920:5821676") // Glodium-1.21-2.2-neoforge.jar
-    runtimeOnly("curse.maven:advancedae-1084104:5881249") // AdvancedAE-1.1.1-1.21.1.jar
-    runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645") // ExtendedAE-1.21-2.2.15-neoforge.jar
-    runtimeOnly("curse.maven:productivebees-377897:6710632") // productivebees-1.21.1-13.7.4.jar
-    runtimeOnly("curse.maven:applied-energistics-2-223794:6626602") // appliedenergistics2-19.2.12.jar
-    compileOnly("curse.maven:industrial-foregoing-266515:5880501")
-    runtimeOnly("curse.maven:industrial-foregoing-266515:6626624")
-    runtimeOnly("curse.maven:titanium-287342:6875285")
-    runtimeOnly("curse.maven:modernfix-790626:6766126") // modernfix-neoforge-5.24.3+mc1.21.1.jar
-    compileOnly("curse.maven:modernfix-790626:6766126") // modernfix-neoforge-5.24.3+mc1.21.1.jar
-    compileOnly("curse.maven:create-328085:6323264")
-    compileOnly("curse.maven:jonns-trophies-510170:6298097")
-    compileOnly("curse.maven:relics-mod-445274:6444603")
-    compileOnly("curse.maven:lendercataclysm-551586:6429407")
-    compileOnly("curse.maven:lionfish-api-1001614:6168249")
-    compileOnly("curse.maven:pneumaticcraft-repressurized-281849:6288626")
-    compileOnly("curse.maven:rainboows-1121832:6416604")
-    compileOnly("curse.maven:supplementaries-412082:6462647")
-    compileOnly("curse.maven:selene-499980:6462396")
-    compileOnly("curse.maven:super-factory-manager-306935:6361523")
-    compileOnly("curse.maven:ender-storage-1-8-245174:6159037")
-    compileOnly("blank:AdditionalEntityAttributes:2.0.0+1.21.1-neoforge")
-    runtimeOnly("curse.maven:ars-nouveau-401955:6468110")
-    compileOnly("curse.maven:corail-tombstone-243707:6398190")
-    runtimeOnly("curse.maven:pneumaticcraft-repressurized-281849:6288626")
-    runtimeOnly("curse.maven:patchouli-306770:6164617")
-    compileOnly("curse.maven:xycraft-653786:5601037")
-    compileOnly("curse.maven:immersive-engineering-231951:6466513")
-    compileOnly("curse.maven:cooking-for-blockheads-231484:6459070")
-    compileOnly("curse.maven:mffs-238546:6348338")
-    runtimeOnly("curse.maven:crafting-tweaks-233071:5623443")
-    runtimeOnly("curse.maven:balm-531761:6447094")
-    runtimeOnly("curse.maven:transfer-labels-1184406:6771226")
-
-    implementation("curse.maven:natures-aura-306626:5966337")
-    implementation("curse.maven:nautec-1107394:6544236")
-    // implementation("curse.maven:ender-io-64578:6363527")
-    compileOnly("blank:com.enderio.enderio-machines:7.1.8-alpha")
-
-    runtimeOnly("curse.maven:ars-elemental-561470:6606656")
-    runtimeOnly("curse.maven:ars-elemancy-1153666:6622015")
-
-    runtimeOnly("curse.maven:fastworkbench-288885:5670423")
-    runtimeOnly("curse.maven:placebo-283644:6446766")
-    runtimeOnly("curse.maven:guideme-1173950:6688687")
-    runtimeOnly("curse.maven:kotlin-for-forge-351264:6706911")
-    runtimeOnly("curse.maven:ex-pattern-provider-892005:6628645")
-
-    runtimeOnly("curse.maven:refined-storage-243076:6904639")
-    runtimeOnly("curse.maven:refined-storage-jei-integration-1230497:6359014")
-
-    runtimeOnly("curse.maven:cloth-config-348521:5729127")
-    runtimeOnly("curse.maven:betterf3-401648:5873258")
-
-    // MixinExtras that supports @Expression
-    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0")?.let {
-        implementation(it)
-    }
-
-    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3")?.let {
-        compileOnly(it)
-    }
-    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.3")?.let {
-        implementation(it)
-    }
-    // From mod Confluence
-    compileOnly("blank:org.confluence.lib:confluence_magic_lib:0.0.1")
-    // Testing
-//    runtimeOnly("blank:journeymap-neoforge:1.21.1-6.0.0-beta.32")
-//    api("blank:journeymap-api-neoforge-2.0.0-1.21.4-SNAPSHOT")
 }
 
 tasks {

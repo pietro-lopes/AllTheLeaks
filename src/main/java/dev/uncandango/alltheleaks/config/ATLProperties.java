@@ -15,14 +15,15 @@ import java.nio.file.Path;
 public class ATLProperties {
 	private static final Gson GSON = new GsonBuilder().setLenient().setPrettyPrinting().disableHtmlEscaping().serializeNulls().create();
 	private static final Path path = FMLPaths.CONFIGDIR.get().resolve("alltheleaks.json");
-	private static final JsonElement defaultProperties = getDefaultProperties();
+	private static final JsonObject defaultProperties = getDefaultProperties();
 	private static ATLProperties INSTANCE;
 	public boolean ingredientDedupe;
 	public boolean debugItemStackModifications;
 	public boolean debugNativeImage;
 	public boolean disableSearchTree;
+	public int logIntervalInMinutes;
 	public int version;
-	private JsonObject properties;
+	private static JsonObject properties;
 
 	private ATLProperties() {
 		load();
@@ -44,15 +45,22 @@ public class ATLProperties {
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.debugNativeImage = GsonHelper.getAsBoolean(properties, "debugNativeImage", false);
 			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
-		} catch (IOException e) {
+			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
+		} catch (Throwable e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error
+		}
+		finally {
+			save();
 		}
 	}
 
 	public static void save() {
 		try (var writer = Files.newBufferedWriter(path)) {
-			GSON.toJson(defaultProperties, writer);
+			defaultProperties.asMap().forEach((key,val) -> {
+				properties.asMap().putIfAbsent(key, val);
+			});
+			GSON.toJson(properties, writer);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to save config file", e);
 		}
@@ -65,13 +73,14 @@ public class ATLProperties {
 		return INSTANCE;
 	}
 
-	private static JsonElement getDefaultProperties() {
+	private static JsonObject getDefaultProperties() {
 		var properties = new JsonObject();
 		properties.addProperty("ingredientDedupe", false);
 		properties.addProperty("debugItemStackModifications", false);
 		properties.addProperty("version", 1);
 		properties.addProperty("debugNativeImage", false);
 		properties.addProperty("disableSearchTree", false);
+		properties.addProperty("logIntervalInMinutes", 10);
 		return properties;
 	}
 

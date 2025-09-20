@@ -18,7 +18,6 @@ import net.minecraft.network.chat.HoverEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.CrashReportCallables;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
@@ -29,7 +28,6 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import org.spongepowered.asm.launch.platform.container.ContainerHandleModLauncherEx;
 import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.throwables.ClassAlreadyLoadedException;
@@ -39,6 +37,7 @@ import org.spongepowered.asm.util.perf.Profiler;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
+import java.util.HashSet;
 import java.util.Set;
 
 @EventBusSubscriber(modid = AllTheLeaks.MOD_ID)
@@ -57,7 +56,8 @@ public class CommonEvents {
 			}
 			ReportManager.registerTask("clear_memory_leak_map", 6000, Trackable::clearNullReferences);
 			CrashReportCallables.registerCrashCallable("AllTheLeaks", CommonEvents::generateReportForCrashReport);
-			ReportManager.registerTask("passive_memory_leak_report", 12000, () -> MemoryMonitor.logFullSummary(AllTheLeaks.LOGGER::info));
+			var logIntervalInTicks = ATLProperties.get().logIntervalInMinutes * 60 * 20;
+			ReportManager.registerTask("passive_memory_leak_report", logIntervalInTicks, () -> MemoryMonitor.logFullSummary(AllTheLeaks.LOGGER::info));
 			ReportManager.registerTask("update_leak_summary", 100, MemoryMonitor::updateLeakSummary);
 			ReportManager.registerTask("too_much_memory_usage", 100, MemoryMonitor::tooMuchMemoryUsage);
 
@@ -74,10 +74,10 @@ public class CommonEvents {
 			MethodHandle unhandledMixinsMH = ReflectionHelper.getMethodFromClass(MIXIN_CONFIG_CLASS, "getUnhandledTargets", MethodType.methodType(Set.class), false);
 			var config = Config.create("alltheleaks.mixins.json", MixinEnvironment.getCurrentEnvironment(), null);
 			Set<String> unhandled = (Set<String>) unhandledMixinsMH.invoke(config.getConfig());
-
+			var unhandledCopy = new HashSet<>(unhandled);
 			ILogger auditLogger = MixinService.getService().getLogger("mixin.audit");
 
-			for (String target : unhandled) {
+			for (String target : unhandledCopy) {
 				try {
 					auditLogger.info("Force-loading class {}", target);
 					MixinService.getService().getClassProvider().findClass(target, true);

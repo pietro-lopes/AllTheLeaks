@@ -14,8 +14,9 @@ public class ReportManager {
 		tickAllTasks();
 	}
 
-	public static void registerTask(String name, int tickInternal, Runnable task){
-		tasks.put(name, new ReportTask(name, tickInternal, task));
+	public static void registerTask(String name, int tickInterval, Runnable task){
+		if (tickInterval <= 0) return;
+		tasks.put(name, new ReportTask(name, tickInterval, task));
 	}
 
 	public static boolean isRegistered(String name){

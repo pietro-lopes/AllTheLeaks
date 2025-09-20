@@ -5,7 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
-@Issue(issueId = "#1931", modId = "ars_nouveau", versionRange = "[5.8.4,)")
+@Issue(issueId = "#1931", modId = "ars_nouveau", versionRange = "[5.8.4,5.10.3]")
 public class Issue1931 {
 	public Issue1931() {
 		var gameBus = NeoForge.EVENT_BUS;

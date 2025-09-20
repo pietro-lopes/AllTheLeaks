@@ -4,7 +4,6 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.core.accessor.RecipeTransferManagerAccessor;
 import mezz.jei.common.Internal;
 import mezz.jei.library.runtime.JeiRuntime;
-import net.neoforged.bus.api.Event;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;

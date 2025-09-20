@@ -16,6 +16,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.embeddedt.modernfix.world.ThreadDumper;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryUtil;
@@ -165,6 +166,10 @@ public final class ATLCommands {
 	}
 
 	public static int runGc(CommandSourceStack source) {
+		var server = ServerLifecycleHooks.getCurrentServer();
+		if (server != null) {
+			server.executeBlocking(() -> server.saveEverything(true, true, true));
+		}
 		if (!MemoryMonitor.runExplicitGc()) {
 			source.sendFailure(Component.literal("Explicit GC is disabled, remove arguments -XX:+DisableExplicitGC"));
 			return 0;
