@@ -339,6 +339,7 @@ dependencies {
     compileOnly("blank:flywheel-neoforge:1.21.1:1.0.2")
     compileOnly("curse.maven:ftb-chunks-forge-314906:6900454")
     compileOnly("curse.maven:what-are-they-up-to-945479:6418577")
+    compileOnly("curse.maven:apotheosis-313970:6926309")
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
