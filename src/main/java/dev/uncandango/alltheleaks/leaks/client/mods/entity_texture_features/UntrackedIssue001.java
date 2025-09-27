@@ -17,7 +17,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "entity_texture_features", versionRange = "[6.2.5,)")
+@Issue(modId = "entity_texture_features", versionRange = "[6.2.5,7.0.0)")
 public class UntrackedIssue001 {
 	public static final VarHandle ETF$HELDENTITY;
 	public static final VarHandle ETF$ETFPLAYERTEXTURE;

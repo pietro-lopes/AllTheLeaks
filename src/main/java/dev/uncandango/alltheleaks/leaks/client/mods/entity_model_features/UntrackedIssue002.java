@@ -9,20 +9,20 @@ import traben.entity_model_features.models.animation.EMFAnimationEntityContext;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "entity_model_features", versionRange = "[2.2.6,3.0.0)")
-public class UntrackedIssue001 {
+@Issue(modId = "entity_model_features", versionRange = "[3.0.0,)")
+public class UntrackedIssue002 {
 	public static final VarHandle EMF$HELDITERATION;
+
+	public UntrackedIssue002() {
+		var gameBus = NeoForge.EVENT_BUS;
+		gameBus.addListener(this::clearContextAfterRender);
+	}
 
 	static {
 		EMF$HELDITERATION = ReflectionHelper.getFieldFromClass(LivingEntityRenderer.class, "emf$heldIteration", EMFAnimationEntityContext.IterationContext.class, false);
 	}
 
-	public UntrackedIssue001() {
-		var gameBus = NeoForge.EVENT_BUS;
-		gameBus.addListener(this::clearCachedEntityFromRenderer);
-	}
-
-	private void clearCachedEntityFromRenderer(RenderLivingEvent.Post<?, ?> event) {
-		EMF$HELDITERATION.set(event.getRenderer(), null);
+	private void clearContextAfterRender(RenderLivingEvent.Post<?,?> event) {
+		EMF$HELDITERATION.set(event.getRenderer(), (Object) null);
 	}
 }

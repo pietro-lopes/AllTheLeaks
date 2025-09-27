@@ -22,6 +22,7 @@ public class ATLProperties {
 	public boolean debugNativeImage;
 	public boolean disableSearchTree;
 	public int logIntervalInMinutes;
+	public boolean showSummaryOnDebugScreen;
 	public int version;
 	private static JsonObject properties;
 
@@ -46,9 +47,9 @@ public class ATLProperties {
 			this.debugNativeImage = GsonHelper.getAsBoolean(properties, "debugNativeImage", false);
 			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
 			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
+			this.showSummaryOnDebugScreen = GsonHelper.getAsBoolean(properties, "showSummaryOnDebugScreen", true);
 		} catch (Throwable e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
-			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error
 		}
 		finally {
 			save();
@@ -56,6 +57,9 @@ public class ATLProperties {
 	}
 
 	public static void save() {
+		if (properties == null) {
+			properties = defaultProperties.deepCopy();
+		}
 		try (var writer = Files.newBufferedWriter(path)) {
 			defaultProperties.asMap().forEach((key,val) -> {
 				properties.asMap().putIfAbsent(key, val);
@@ -81,6 +85,7 @@ public class ATLProperties {
 		properties.addProperty("debugNativeImage", false);
 		properties.addProperty("disableSearchTree", false);
 		properties.addProperty("logIntervalInMinutes", 10);
+		properties.addProperty("showSummaryOnDebugScreen", true);
 		return properties;
 	}
 

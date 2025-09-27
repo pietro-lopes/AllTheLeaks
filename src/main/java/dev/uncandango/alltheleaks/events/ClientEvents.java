@@ -2,6 +2,7 @@ package dev.uncandango.alltheleaks.events;
 
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.commands.ATLCommands;
+import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.exceptions.ATLUnsupportedOperation;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
 import dev.uncandango.alltheleaks.mixin.Trackable;
@@ -102,6 +103,7 @@ public class ClientEvents {
 	private static final boolean IS_BETTERF3_LOADED = LoadingModList.get().getModFileById("betterf3") != null;
 	@SubscribeEvent
 	public static void onDebugRender(CustomizeGuiOverlayEvent.DebugText event){
+		if (!ATLProperties.get().showSummaryOnDebugScreen) return;
 		if (Minecraft.getInstance().getDebugOverlay().showDebugScreen() && Minecraft.getInstance().player != null){
 			if (IS_BETTERF3_LOADED) return;
 			event.getLeft().addAll(MemoryMonitor.getFullSummary(MemoryMonitor.DEBUG_MOD_PREFIX, true));
