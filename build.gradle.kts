@@ -215,10 +215,10 @@ dependencies {
     }
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 
-    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.5-beta.2")?.let {
+    annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.6-beta.1")?.let {
         compileOnly(it)
     }
-    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.3.5-beta.2")?.let {
+    jarJar("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.3.6-beta.1")?.let {
         implementation(it)
     }
 
@@ -314,7 +314,18 @@ dependencies {
     modCompileOnly("curse.maven:enigmatic-legacy-336184:5600004")
     modCompileOnly("curse.maven:integrated-tunnels-251389:6829060")
     modCompileOnly("curse.maven:super-factory-manager-306935:6849465")
-
+    modCompileOnly("curse.maven:i-wanna-skate-695018:4576733")
+    modCompileOnly("curse.maven:what-are-they-up-to-945479:6315241")
+    modCompileOnly("curse.maven:xaeros-minimap-263420:6778028")
+    modCompileOnly("curse.maven:botania-225643:6870713") // Botania-1.20.1-450-FORGE.jar
+    modCompileOnly("curse.maven:shulkerboxtooltip-315811:4611155")
+    modCompileOnly("curse.maven:fire-spread-tweaks-446366:6186005")
+    modCompileOnly("curse.maven:crash-utilities-371813:4716086")
+    modCompileOnly("curse.maven:forgified-fabric-api-889079:6289136")
+    modCompileOnly("blank:fabric-networking-api-v1:1.3.11+503a202477")
+    modCompileOnly("curse.maven:create-mobile-packages-1232978:6763649")
+    modCompileOnly("curse.maven:easy-piglins-419372:6213598")
+    //modCompileOnly("curse.maven:advanced-loot-info-1205426:7018898")
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -341,7 +352,7 @@ dependencies {
     modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:5838009") // irons_spellbooks-1.20.1-3.4.0.4.jar
     modRuntimeOnly("curse.maven:aether-255308:5786709") // aether-1.20.1-1.5.0-neoforge.jar
 //    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.8") // 1.20.1:4.4.9
-    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.7.1.2")
+    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.8.2")
     modRuntimeOnly("curse.maven:occultism-361026:5844288") // occultism-1.20.1-1.140.1.jar
     modRuntimeOnly("curse.maven:travelers-backpack-321117:6370600") // travelersbackpack-forge-1.20.1-9.1.34.jar
     modRuntimeOnly("curse.maven:ars-nouveau-401955:5600384") // ars_nouveau-1.20.1-4.12.4-all.jar
@@ -357,7 +368,7 @@ dependencies {
     modRuntimeOnly("curse.maven:blue-skies-312918:5010316") // blue_skies-1.20.1-1.3.31.jar
     modRuntimeOnly("curse.maven:just-enough-resources-jer-240630:5057220") // JustEnoughResources-1.20.1-1.4.0.247.jar
     modRuntimeOnly("curse.maven:minecolonies-245506:5874253") // minecolonies-1.20.1-1.1.716-snapshot.jar
-    modRuntimeOnly("curse.maven:pneumaticcraft-repressurized-281849:5680613") // pneumaticcraft-repressurized-6.0.17+mc1.20.1.jar
+    modRuntimeOnly("curse.maven:pneumaticcraft-repressurized-281849:6142963") // pneumaticcraft-repressurized-6.0.20+mc1.20.1.jar
     modRuntimeOnly("curse.maven:athena-841890:5176879") // athena-forge-1.20.1-3.1.2.jar
     modRuntimeOnly("curse.maven:evilcraft-74610:5776778") // EvilCraft-1.20.1-1.2.48.jar
     modRuntimeOnly("curse.maven:the-twilight-forest-227639:5468648") // twilightforest-1.20.1-4.3.2508-universal.jar
@@ -380,11 +391,14 @@ dependencies {
     modRuntimeOnly("curse.maven:alexs-mobs-426558:5698791") // alexsmobs-1.22.9.jar
     modRuntimeOnly("curse.maven:mowzies-mobs-250498:6224182") // mowziesmobs-1.7.1.jar
     modRuntimeOnly("curse.maven:serene-seasons-291874:5790653") // SereneSeasons-1.20.1-9.1.0.0.jar
-    modRuntimeOnly("curse.maven:entity-texture-features-fabric-568563:5921292") // entity_texture_features_forge_1.20.1-6.2.8.jar
-    modRuntimeOnly("curse.maven:entity-model-features-844662:5722712") // entity_model_features_forge_1.20.1-2.2.6.jar
+//    modRuntimeOnly("curse.maven:entity-texture-features-fabric-568563:5921292") // entity_texture_features_forge_1.20.1-6.2.8.jar
+//    modRuntimeOnly("curse.maven:entity-model-features-844662:5722712") // entity_model_features_forge_1.20.1-2.2.6.jar
     modRuntimeOnly("curse.maven:beans-backpacks-946775:5368249") // BeansBackpacks-forge-1.20.1-2.0.jar
     modRuntimeOnly("curse.maven:phosphophyllite-412551:6085275") // phosphophyllite-1.20.1-0.7.0-alpha.0.2.jar
     modRuntimeOnly("curse.maven:domestication-innovation-591149:4911955") // domesticationinnovation-1.7.1-1.20.1.jar
+
+    modRuntimeOnly("curse.maven:entity-texture-features-fabric-568563:6954759")
+    modRuntimeOnly("curse.maven:entity-model-features-844662:6922712")
 
     /* Greg headache before MDG legacy
     1. Download jar
@@ -419,7 +433,7 @@ dependencies {
     modRuntimeOnly("curse.maven:blockui-522992:5658253") // blockui-1.20.1-1.0.186-beta.jar
     modRuntimeOnly("curse.maven:cyclops-core-232758:5583765") // CyclopsCore-1.20.1-1.19.5.jar
     modRuntimeOnly("curse.maven:libx-412525:5207625") // LibX-1.20.1-5.0.14.jar
-    modRuntimeOnly("curse.maven:botania-225643:5594997") // Botania-1.20.1-446-FORGE.jar
+    modRuntimeOnly("curse.maven:botania-225643:6870713") // Botania-1.20.1-450-FORGE.jar
     modRuntimeOnly("curse.maven:collective-342584:5840216") // collective-1.20.1-7.87.jar
     modRuntimeOnly("curse.maven:fzzy-config-1005914:5908784") // fzzy_config-0.5.7+1.20.1+forge.jar
     modRuntimeOnly("curse.maven:kotlin-for-forge-351264:5402061") // kotlinforforge-4.11.0-all.jar
@@ -428,6 +442,12 @@ dependencies {
     //modRuntimeOnly("curse.maven:mana-and-artifice-406360:6056053") // mna-forge-1.20.1-3.1.0.4-all.jar
     modRuntimeOnly("curse.maven:zeta-968868:6432578") // Zeta-1.0-30.jar
     modRuntimeOnly("curse.maven:ender-io-64578:6274905") // EnderIO-1.20.1-6.2.11-beta-all.jar
+    modRuntimeOnly("curse.maven:i-wanna-skate-695018:4576733")
+    modRuntimeOnly("curse.maven:what-are-they-up-to-945479:6315241")
+    modRuntimeOnly("curse.maven:xaeros-minimap-263420:6778028")
+    modRuntimeOnly("curse.maven:shulkerboxtooltip-315811:4611155")
+    modRuntimeOnly("curse.maven:fire-spread-tweaks-446366:6186005")
+    modRuntimeOnly("curse.maven:crash-utilities-371813:4716086")
 
     // LeakDiagTool
     //modRuntimeOnly("blank:leakdiagtool:1.0.0")

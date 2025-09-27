@@ -7,6 +7,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.datafixers.util.Pair;
 import dev.uncandango.alltheleaks.AllTheLeaks;
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.ClearLeakedLevelChunks;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
 import dev.uncandango.alltheleaks.mixin.Trackable;
 import dev.uncandango.alltheleaks.mixin.core.main.IngredientMixin;
@@ -87,6 +88,7 @@ public final class ATLCommands {
 	}
 
 	public static int checkLeaking(CommandSourceStack source, boolean shouldRunGc) {
+		ClearLeakedLevelChunks.execute();
 		if (shouldRunGc) {
 			if (runGc(source) == 0) return 0;
 		}

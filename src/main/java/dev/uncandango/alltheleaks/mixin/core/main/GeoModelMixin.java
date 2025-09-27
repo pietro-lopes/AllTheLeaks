@@ -1,5 +1,7 @@
 package dev.uncandango.alltheleaks.mixin.core.main;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import dev.uncandango.alltheleaks.annotation.CompatibleHashes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -9,13 +11,17 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.core.molang.MolangQueries;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.util.RenderUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.function.DoubleSupplier;
 import java.util.function.Function;
 
 @SuppressWarnings("DataFlowIssue")
@@ -26,6 +32,7 @@ public class GeoModelMixin {
      * @author Uncandango
      * @reason Too 🧠🤏 to proper make an accurate mixin for those changes.
      */
+	@CompatibleHashes(values = {-1337987194, 1741660753})
     @Overwrite
     public <T extends GeoAnimatable> void applyMolangQueries(T animatable, double animTime) {
         MolangParser parser = MolangParser.INSTANCE;
@@ -64,5 +71,14 @@ public class GeoModelMixin {
 	@Unique
 	private static <T,R> R alltheleaks$computeIfPresent(T entity, Function<T, R> function, R defaultValue) {
 		return entity == null ? defaultValue : function.apply(entity);
+	}
+
+
+	@SuppressWarnings("MixinAnnotationTarget")
+	@CompatibleHashes(values = -1957930875)
+	@Redirect(method = "handleAnimations", at = @At(value = "INVOKE", target = "Lsoftware/bernie/geckolib/core/molang/MolangParser;setValue(Ljava/lang/String;Ljava/util/function/DoubleSupplier;)V"))
+	private void withoutCapturingLambda(MolangParser instance, String name, DoubleSupplier value, @Local AnimationState animationState){
+		var weakAnimationState = new WeakReference<>(animationState);
+		instance.setValue(name, () -> alltheleaks$computeIfPresent(weakAnimationState.get(), state -> state.getController().getAnimationSpeed(), 0).doubleValue());
 	}
 }

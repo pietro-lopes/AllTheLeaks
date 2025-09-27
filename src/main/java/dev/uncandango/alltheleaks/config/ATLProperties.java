@@ -16,16 +16,16 @@ import java.nio.file.Path;
 public class ATLProperties {
 	private static final Gson GSON = new GsonBuilder().setLenient().setPrettyPrinting().disableHtmlEscaping().serializeNulls().create();
 	private static final Path path = FMLPaths.CONFIGDIR.get().resolve("alltheleaks.json");
-	private JsonObject properties;
-	private static final JsonElement defaultProperties = getDefaultProperties();
+	private static JsonObject properties;
+	private static final JsonObject defaultProperties = getDefaultProperties();
 	private static ATLProperties INSTANCE;
-
 
 	public boolean preventSearchIgnoredItems;
 	public boolean ingredientDedupe;
 	public boolean resourceLocationDedupe;
 	public boolean debugItemStackModifications;
-	//public boolean clearJars;
+	public int logIntervalInMinutes;
+	public boolean showSummaryOnDebugScreen;
 
 	private ATLProperties() {
 		load();
@@ -38,13 +38,14 @@ public class ATLProperties {
 		return INSTANCE;
 	}
 
-	private static JsonElement getDefaultProperties() {
+	private static JsonObject getDefaultProperties() {
 		var properties = new JsonObject();
 		properties.addProperty("preventSearchIgnoredItems", false);
 		properties.addProperty("ingredientDedupe", false);
 		properties.addProperty("resourceLocationDedupe", false);
 		properties.addProperty("debugItemStackModifications", false);
-		//properties.addProperty("clearJars", false);
+		properties.addProperty("logIntervalInMinutes", 10);
+		properties.addProperty("showSummaryOnDebugScreen", true);
 		return properties;
 	}
 
@@ -58,16 +59,24 @@ public class ATLProperties {
 			this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
 			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
 			this.resourceLocationDedupe = GsonHelper.getAsBoolean(properties, "resourceLocationDedupe", false);
-			//this.clearJars = GsonHelper.getAsBoolean(properties, "clearJars", false);
+			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
+			this.showSummaryOnDebugScreen = GsonHelper.getAsBoolean(properties, "showSummaryOnDebugScreen", true);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
-			properties = new JsonObject(); // Initialize with an empty JsonObject in case of error
+		} finally {
+			save();
 		}
 	}
 
 	public static void save() {
+		if (properties == null) {
+			properties = defaultProperties.deepCopy();
+		}
 		try (var writer = Files.newBufferedWriter(path)) {
-			GSON.toJson(defaultProperties, writer);
+			defaultProperties.asMap().forEach((key,val) -> {
+				properties.asMap().putIfAbsent(key, val);
+			});
+			GSON.toJson(properties, writer);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to save config file", e);
 		}

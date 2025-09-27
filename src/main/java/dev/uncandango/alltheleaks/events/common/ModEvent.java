@@ -41,10 +41,10 @@ public class ModEvent {
 			}
 			ReportManager.registerTask("clear_memory_leak_map", 6000, Trackable::clearNullReferences);
 			CrashReportCallables.registerCrashCallable("AllTheLeaks", ModEvent::generateReportForCrashReport);
-			ReportManager.registerTask("passive_memory_leak_report", 12000, () -> MemoryMonitor.logFullSummary(AllTheLeaks.LOGGER::info));
+			var logIntervalInTicks = ATLProperties.get().logIntervalInMinutes * 60 * 20;
+			ReportManager.registerTask("passive_memory_leak_report", logIntervalInTicks, () -> MemoryMonitor.logFullSummary(AllTheLeaks.LOGGER::info));
 			ReportManager.registerTask("update_leak_summary", 100, MemoryMonitor::updateLeakSummary);
 			ReportManager.registerTask("too_much_memory_usage", 100, MemoryMonitor::tooMuchMemoryUsage);
-
 
 			if (AllTheLeaks.INDEV) {
 				auditMyMixinsOnly();

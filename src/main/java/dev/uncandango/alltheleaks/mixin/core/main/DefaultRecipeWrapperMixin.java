@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Arrays;
 
-@Mixin(DefaultRecipeWrapper.class)
+@Mixin(value = DefaultRecipeWrapper.class, remap = false)
 public class DefaultRecipeWrapperMixin {
 
 	@CompatibleHashes(values = {-1828317208})
-	@ModifyExpressionValue(method = "lambda$setRecipe$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/Ingredient;getItems()[Lnet/minecraft/world/item/ItemStack;"))
+	@ModifyExpressionValue(method = "lambda$setRecipe$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/Ingredient;getItems()[Lnet/minecraft/world/item/ItemStack;", remap = true))
 	private static ItemStack[] atl$safeStack(ItemStack[] original){
 		return Arrays.stream(original).map(ItemStack::copy).toArray(ItemStack[]::new);
 	}
