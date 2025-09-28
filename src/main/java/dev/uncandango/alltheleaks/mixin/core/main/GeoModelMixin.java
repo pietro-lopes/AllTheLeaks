@@ -26,7 +26,7 @@ import java.util.function.Function;
 
 @SuppressWarnings("DataFlowIssue")
 @Pseudo
-@Mixin(value = GeoModel.class, remap = false)
+@Mixin(value = GeoModel.class, remap = false, priority = 1100) // later priority
 public class GeoModelMixin {
     /**
      * @author Uncandango
