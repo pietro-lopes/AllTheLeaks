@@ -140,6 +140,7 @@ neoForge {
             jvmArgument("-Xmx5000m")
             jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
+            jvmArgument("-XX:+DisableExplicitGC")
             if (type.get().startsWith("client")) {
                 programArguments.addAll("--width", "1920", "--height", "1080")
                 gameDirectory = file("runs/client")
@@ -212,7 +213,7 @@ dependencies {
     val dummmmmmy = "curse.maven:mmmmmmmmmmmm-225738:5779508" // 1.21-2.0.6
     val jeiEmi = "curse.maven:jei-238222:5781415" // jei-1.21.1-neoforge-19.19.6.235.jar
     val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
-    val jeiRuntime = "curse.maven:jei-238222:5846880" // jei-1.21.1-neoforge-19.21.0.247.jar
+    val jeiRuntime = "curse.maven:jei-238222:7057366" // jei-1.21.1-neoforge-19.25.0.322.jar
     val etf = "curse.maven:entity-texture-features-fabric-568563:5734430" // entity_texture_features_neoforge_1.21-6.2.5.jar
     val etfRuntime = "curse.maven:entity-texture-features-fabric-568563:5874160" // entity_texture_features_neoforge_1.21.1-6.2.7.jar
     val emf = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
