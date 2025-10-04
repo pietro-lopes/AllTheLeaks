@@ -145,7 +145,7 @@ legacyForge {
             systemProperty("forge.logging.console.level", "debug")
             systemProperty("forge.logging.markers", "LOADING")
             //loggingConfigFile
-//            jvmArgument("-XX:+DisableExplicitGC") // Test gc command
+            jvmArgument("-XX:+DisableExplicitGC") // Test gc command
             jvmArgument("-Xmx5000m")
             //jvmArgument("-XX:+IgnoreUnrecognizedVMOptions")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
@@ -443,9 +443,11 @@ dependencies {
     modRuntimeOnly("curse.maven:zeta-968868:6432578") // Zeta-1.0-30.jar
     modRuntimeOnly("curse.maven:ender-io-64578:6274905") // EnderIO-1.20.1-6.2.11-beta-all.jar
     modRuntimeOnly("curse.maven:i-wanna-skate-695018:4576733")
+    modRuntimeOnly("curse.maven:coroutil-237749:5096038")
     modRuntimeOnly("curse.maven:what-are-they-up-to-945479:6315241")
     modRuntimeOnly("curse.maven:xaeros-minimap-263420:6778028")
     modRuntimeOnly("curse.maven:shulkerboxtooltip-315811:4611155")
+    modRuntimeOnly("curse.maven:collective-342584:7062349")
     modRuntimeOnly("curse.maven:fire-spread-tweaks-446366:6186005")
     modRuntimeOnly("curse.maven:crash-utilities-371813:4716086")
 

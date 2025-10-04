@@ -16,6 +16,8 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
+import javax.management.JMX;
+import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -52,9 +54,24 @@ public class MemoryMonitor {
 	public static boolean runExplicitGc(){
 		if (!isExplicitGcDisabled()){
 			System.gc();
-			LAST_RUN_GC.set(Util.getMillis());
 		} else {
-			AllTheLeaks.LOGGER.warn("Tried to run explicit GC but it was disabled.");
+			if (!diagnosticGcRun()) {
+				AllTheLeaks.LOGGER.warn("Tried to run explicit GC but it was disabled.");
+				return false;
+			}
+		}
+		LAST_RUN_GC.set(Util.getMillis());
+		return true;
+	}
+
+	public static boolean diagnosticGcRun(){
+		try {
+			var server = ManagementFactory.getPlatformMBeanServer();
+			var diagnostic = ObjectName.getInstance("com.sun.management:type=DiagnosticCommand");
+			var beanProxy = JMX.newMXBeanProxy(server, diagnostic, DiagnosticGcRun.class);
+			beanProxy.gcRun();
+		} catch (Exception e){
+			AllTheLeaks.LOGGER.warn("Failed to run gc with diagnostic proxy: {}", e.getMessage());
 			return false;
 		}
 		return true;
@@ -207,6 +224,10 @@ public class MemoryMonitor {
 		public int getCount(){
 			return this.count.get();
 		}
+	}
+
+	public interface DiagnosticGcRun {
+		String gcRun();
 	}
 
 	public static class Statistics {
