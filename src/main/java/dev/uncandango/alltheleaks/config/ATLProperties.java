@@ -25,6 +25,7 @@ public class ATLProperties {
 	public boolean showSummaryOnDebugScreen;
 	public int version;
 	private static JsonObject properties;
+	public int memoryUsageWarningPercentage;
 
 	private ATLProperties() {
 		load();
@@ -48,6 +49,7 @@ public class ATLProperties {
 			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
 			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
 			this.showSummaryOnDebugScreen = GsonHelper.getAsBoolean(properties, "showSummaryOnDebugScreen", true);
+			this.memoryUsageWarningPercentage = GsonHelper.getAsInt(properties, "memoryUsageWarningPercentage", 90);
 		} catch (Throwable e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 		}
@@ -86,6 +88,7 @@ public class ATLProperties {
 		properties.addProperty("disableSearchTree", false);
 		properties.addProperty("logIntervalInMinutes", 10);
 		properties.addProperty("showSummaryOnDebugScreen", true);
+		properties.addProperty("memoryUsageWarningPercentage", 90);
 		return properties;
 	}
 

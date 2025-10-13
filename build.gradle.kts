@@ -332,6 +332,8 @@ dependencies {
     compileOnly("curse.maven:nautec-1107394:6544236")
     // From mod EnderIO
     compileOnly("blank:com.enderio.enderio-machines:7.1.8-alpha")
+    compileOnly("blank:com.enderio.enderio-base:8.0.4-alpha")
+    compileOnly("blank:com.enderio.endercore:8.0.4-alpha")
     // From mod Confluence
     compileOnly("blank:org.confluence.lib:confluence_magic_lib:0.0.1")
     compileOnly("curse.maven:draconic-evolution-223565:6943035")
@@ -341,6 +343,7 @@ dependencies {
     compileOnly("curse.maven:ftb-chunks-forge-314906:6900454")
     compileOnly("curse.maven:what-are-they-up-to-945479:6418577")
     compileOnly("curse.maven:apotheosis-313970:6926309")
+    compileOnly("blank:accessories_compat_layer-neoforge:0.1.10+1.21.1")
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()

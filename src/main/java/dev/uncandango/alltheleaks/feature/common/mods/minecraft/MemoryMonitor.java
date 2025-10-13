@@ -5,6 +5,7 @@ import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.api.windows.PsApi;
 import dev.uncandango.alltheleaks.commands.ATLCommands;
+import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.exceptions.ATLIllegalState;
 import dev.uncandango.alltheleaks.mixin.Trackable;
 import dev.uncandango.alltheleaks.report.ReportManager;
@@ -182,7 +183,7 @@ public class MemoryMonitor {
 
 	public static void tooMuchMemoryUsage() {
 		double percentUsage = (double)MemoryMonitor.Statistics.getCurrentMinMemoryInMb() / MemoryMonitor.Statistics.getMaxMemoryInMb();
-		if (percentUsage > 0.90) {
+		if (percentUsage > ATLProperties.get().memoryUsageWarningPercentage / 100.0F) {
 			CommandSourceStack source = null;
 			if (FMLEnvironment.dist.isClient()) {
 				var player = Minecraft.getInstance().player;
@@ -196,7 +197,7 @@ public class MemoryMonitor {
 				}
 			}
 			if (source == null) return;;
-			source.sendSystemMessage(Component.literal("You reached 90% memory usage, showing leaking objects so far...").withStyle(ChatFormatting.RED));
+			source.sendSystemMessage(Component.literal("You reached " + ATLProperties.get().memoryUsageWarningPercentage +"% memory usage, showing leaking objects so far...").withStyle(ChatFormatting.RED));
 			source.sendSystemMessage(Component.literal(getMemoryStatistics()));
 			ATLCommands.checkLeaking(source, false);
 			ReportManager.stop("too_much_memory_usage");
