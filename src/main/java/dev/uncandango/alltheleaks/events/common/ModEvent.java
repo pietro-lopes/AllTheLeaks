@@ -44,7 +44,9 @@ public class ModEvent {
 			var logIntervalInTicks = ATLProperties.get().logIntervalInMinutes * 60 * 20;
 			ReportManager.registerTask("passive_memory_leak_report", logIntervalInTicks, () -> MemoryMonitor.logFullSummary(AllTheLeaks.LOGGER::info));
 			ReportManager.registerTask("update_leak_summary", 100, MemoryMonitor::updateLeakSummary);
-			ReportManager.registerTask("too_much_memory_usage", 100, MemoryMonitor::tooMuchMemoryUsage);
+			if (ATLProperties.get().memoryUsageWarningPercentage > 0) {
+				ReportManager.registerTask("too_much_memory_usage", 100, MemoryMonitor::tooMuchMemoryUsage);
+			}
 
 			if (AllTheLeaks.INDEV) {
 				auditMyMixinsOnly();

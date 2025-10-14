@@ -1,6 +1,8 @@
 package dev.uncandango.alltheleaks.leaks.common.mods.forge;
 
 import com.google.common.base.Stopwatch;
+import cpw.mods.jarhandling.SecureJar;
+import cpw.mods.jarhandling.impl.Jar;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
@@ -9,16 +11,22 @@ import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.ListenerList;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventListener;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
+import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
+import org.apache.maven.artifact.versioning.VersionRange;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.VarHandle;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Issue(modId = "forge", versionRange = "[47.2,)",
+@Issue(modId = "forge", issueId = "eventbus-#39", versionRange = "[47.2,)",
 	description = "Regenerate listeners cache on server stopped")
-public class UntrackedIssue003 {
+public class Issue39 {
 	public static final MethodHandle GET_LISTENERS;
 	public static final VarHandle ALL_LISTS;
 	public static final VarHandle LISTS;
@@ -31,8 +39,22 @@ public class UntrackedIssue003 {
 		LISTS = ReflectionHelper.getFieldFromClass(ListenerList.class, "lists", LISTENER_LIST_INST_CLASS.arrayType(), false);
 	}
 
-	public UntrackedIssue003() {
+	public Issue39() {
 		var gameBus = MinecraftForge.EVENT_BUS;
+		try {
+			var eventBusJar = ((Jar) SecureJar.from(Path.of(gameBus.getClass().getProtectionDomain().getCodeSource().getLocation().toURI())));
+			var busVersion = eventBusJar.getManifest().getAttributes("net/minecraftforge/eventbus/service/").getValue("Implementation-Version");
+			eventBusJar.getRootPath().getFileSystem().close();
+			var version = new DefaultArtifactVersion(busVersion);
+			var range = VersionRange.createFromVersionSpec("[6.2.26,)");
+			if (range.containsVersion(version)) {
+				AllTheLeaks.LOGGER.debug("Skipping memory leak fix on Event Bus: version range {} contains version {}", range, version);
+				return;
+			}
+		} catch (URISyntaxException | IOException | InvalidVersionSpecificationException e) {
+			AllTheLeaks.LOGGER.error("Error while querying version of event bus", e);
+			return;
+		}
 		gameBus.addListener(EventPriority.LOWEST, this::rebuildListenersCache);
 	}
 

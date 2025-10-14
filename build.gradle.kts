@@ -326,6 +326,8 @@ dependencies {
     modCompileOnly("curse.maven:create-mobile-packages-1232978:6763649")
     modCompileOnly("curse.maven:easy-piglins-419372:6213598")
     //modCompileOnly("curse.maven:advanced-loot-info-1205426:7018898")
+    modCompileOnly("curse.maven:spark-361579:4738952")
+
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3

@@ -99,6 +99,7 @@
     "main.FakeLevelManagerMixin",
     "main.FluidHandlerItemCapacityMixin",
     "main.ForgeEventHandlerMixin",
+    "main.ForgeServerSparkPluginMixin",
     "main.IngredientItemValueMixin",
     "main.IngredientKJSMixin",
     "main.IngredientLockMixin",

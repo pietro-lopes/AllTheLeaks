@@ -35,10 +35,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-@Issue(modId = "forge", versionRange = "*", description = "Memory leak on FML") // , config = "clearJars"
-public class UntrackedIssue004 {
+@Issue(modId = "forge", issueId = "#10684", versionRange = "*", description = "Memory leak on FML") // , config = "clearJars"
+public class Issue10684 {
 	@SuppressWarnings("removal")
-	public UntrackedIssue004() {
+	public Issue10684() {
 		var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::closeDanglingJars);
 	}
