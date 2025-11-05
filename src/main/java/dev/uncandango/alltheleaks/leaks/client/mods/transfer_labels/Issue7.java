@@ -5,7 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
 import net.neoforged.neoforge.common.NeoForge;
 
-@Issue(modId = "transfer_labels", versionRange = "[0.1.0,)")
+@Issue(modId = "transfer_labels", versionRange = "[0.1.0,0.1.7)")
 public class Issue7 {
 	public Issue7() {
 		var gameBus = NeoForge.EVENT_BUS;

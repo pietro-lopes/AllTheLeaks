@@ -74,6 +74,17 @@ repositories {
 
     maven { url = uri("https://maven.bawnorton.com/releases") }
 
+    maven {
+        // location of the maven that hosts JEI files since January 2023
+        name = "Jared's maven"
+        url = uri("https://maven.blamejared.com/")
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = uri("https://modmaven.dev")
+    }
+
     flatDir {
         dir("libs")
     }
@@ -386,6 +397,15 @@ dependencies {
     emiRuntimeOnly(minecoloniesRuntime)
     emiServerRuntimeOnly(minecoloniesRuntime)
 
+//    compileOnly("curse.maven:applied-energistics-2-223794:7027323")
+    runtimeOnly("curse.maven:applied-energistics-2-223794:7027323")
+    runtimeOnly("curse.maven:zerocore-247921:7092612")
+    runtimeOnly("curse.maven:extreme-reactors-250277:7093773")
+    runtimeOnly("curse.maven:potionsmaster-356801:6826199")
+    compileOnly("curse.maven:crafting-tweaks-233071:6784518")
+    runtimeOnly("mezz.jei:jei-1.21.1-neoforge:19.25.0.322")
+    runtimeOnly("curse.maven:minecolonies-245506:7110495")
+    runtimeOnly("curse.maven:blockui-522992:7041877")
 }
 
 tasks {

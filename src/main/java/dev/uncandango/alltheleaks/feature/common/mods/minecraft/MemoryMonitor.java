@@ -108,6 +108,8 @@ public class MemoryMonitor {
 		}
 		var clientLevelUpdate = CLIENT_LEVEL_UPDATE.getCount();
 		if (clientLevelUpdate > 0) lines.add("Client Level Updates: " + clientLevelUpdate);
+		var clientPlayerLogout = CLIENT_PLAYER_LOGOUT.getCount();
+		if (clientPlayerLogout > 0) lines.add("Client Player Logout: " + clientPlayerLogout);
 		var clientPlayerClone = CLIENT_PLAYER_CLONE.getCount();
 		if (clientPlayerClone > 0) lines.add("Client Player Clone: " + clientPlayerClone);
 		var serverPlayerClone = SERVER_PLAYER_CLONE.getCount();
@@ -209,6 +211,7 @@ public class MemoryMonitor {
 		WORLD_JOIN_SINGLEPLAYER(new AtomicInteger()),
 		WORLD_JOIN_MULTIPLAYER(new AtomicInteger()),
 		CLIENT_PLAYER_CLONE(new AtomicInteger()),
+		CLIENT_PLAYER_LOGOUT(new AtomicInteger()),
 		SERVER_PLAYER_CLONE(new AtomicInteger()),
 		SERVER_PLAYER_LOGOUT(new AtomicInteger()),
 		SERVER_STOP(new AtomicInteger());

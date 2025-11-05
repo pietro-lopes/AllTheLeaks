@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.core.accessor;
+package dev.uncandango.alltheleaks.mixin.core.main.accessor;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderOwner;

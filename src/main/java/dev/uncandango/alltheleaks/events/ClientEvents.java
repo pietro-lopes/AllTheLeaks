@@ -4,6 +4,7 @@ import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.commands.ATLCommands;
 import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.exceptions.ATLUnsupportedOperation;
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.IngredientDedupe;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
 import dev.uncandango.alltheleaks.mixin.Trackable;
 import dev.uncandango.alltheleaks.mixin.UpdateableLevel;
@@ -89,6 +90,12 @@ public class ClientEvents {
 	public static void onClientPlayerClone(ClientPlayerNetworkEvent.Clone event){
 		Trackable.startTracking(event.getOldPlayer());
 		MemoryMonitor.EventStatistics.CLIENT_PLAYER_CLONE.increment();
+	}
+
+	@SubscribeEvent
+	public static void onClientPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event){
+		Trackable.startTracking(event.getPlayer());
+		MemoryMonitor.EventStatistics.CLIENT_PLAYER_LOGOUT.increment();
 	}
 
 	@SubscribeEvent

@@ -15,6 +15,7 @@ public class UntrackedIssue004 {
 	public UntrackedIssue004() {
 		var gameBus = NeoForge.EVENT_BUS;
 		gameBus.addListener(this::clearMenuOnPlayerClone);
+		gameBus.addListener(this::clearMenuOnPlayerLogout);
 	}
 
 	static {
@@ -23,6 +24,10 @@ public class UntrackedIssue004 {
 	}
 
 	private void clearMenuOnPlayerClone(ClientPlayerNetworkEvent.Clone event){
+		GRINDSTONE_MENU.set((Object)null);
+	}
+
+	private void clearMenuOnPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event){
 		GRINDSTONE_MENU.set((Object)null);
 	}
 

@@ -2,7 +2,6 @@ package dev.uncandango.alltheleaks.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.uncandango.alltheleaks.AllTheLeaks;
 import net.minecraft.util.GsonHelper;
@@ -17,6 +16,7 @@ public class ATLProperties {
 	private static final Path path = FMLPaths.CONFIGDIR.get().resolve("alltheleaks.json");
 	private static final JsonObject defaultProperties = getDefaultProperties();
 	private static ATLProperties INSTANCE;
+	private static JsonObject properties;
 	public boolean ingredientDedupe;
 	public boolean debugItemStackModifications;
 	public boolean debugNativeImage;
@@ -24,38 +24,12 @@ public class ATLProperties {
 	public int logIntervalInMinutes;
 	public boolean showSummaryOnDebugScreen;
 	public int version;
-	private static JsonObject properties;
 	public int memoryUsageWarningPercentage;
+	public boolean debugChunkLoading;
+	public boolean debugThreadsStuck;
 
 	private ATLProperties() {
 		load();
-	}
-
-	public void load() {
-		if (!path.toFile().exists()) {
-			save();
-		}
-		try (var reader = Files.newBufferedReader(path)) {
-			properties = GSON.fromJson(reader, JsonObject.class);
-			version = GsonHelper.getAsInt(properties, "version", 0);
-			if (version == 0) {
-				// Force it to false because at some point we shipped it as true
-				this.ingredientDedupe = false;
-			} else {
-				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
-			}
-			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
-			this.debugNativeImage = GsonHelper.getAsBoolean(properties, "debugNativeImage", false);
-			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
-			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
-			this.showSummaryOnDebugScreen = GsonHelper.getAsBoolean(properties, "showSummaryOnDebugScreen", true);
-			this.memoryUsageWarningPercentage = GsonHelper.getAsInt(properties, "memoryUsageWarningPercentage", 90);
-		} catch (Throwable e) {
-			AllTheLeaks.LOGGER.error("Failed to load config file", e);
-		}
-		finally {
-			save();
-		}
 	}
 
 	public static void save() {
@@ -63,7 +37,7 @@ public class ATLProperties {
 			properties = defaultProperties.deepCopy();
 		}
 		try (var writer = Files.newBufferedWriter(path)) {
-			defaultProperties.asMap().forEach((key,val) -> {
+			defaultProperties.asMap().forEach((key, val) -> {
 				properties.asMap().putIfAbsent(key, val);
 			});
 			GSON.toJson(properties, writer);
@@ -89,7 +63,37 @@ public class ATLProperties {
 		properties.addProperty("logIntervalInMinutes", 10);
 		properties.addProperty("showSummaryOnDebugScreen", true);
 		properties.addProperty("memoryUsageWarningPercentage", 90);
+		properties.addProperty("debugChunkLoading", false);
+		properties.addProperty("debugThreadsStuck", false);
 		return properties;
+	}
+
+	public void load() {
+		if (!path.toFile().exists()) {
+			save();
+		}
+		try (var reader = Files.newBufferedReader(path)) {
+			properties = GSON.fromJson(reader, JsonObject.class);
+			version = GsonHelper.getAsInt(properties, "version", 0);
+			if (version == 0) {
+				// Force it to false because at some point we shipped it as true
+				this.ingredientDedupe = false;
+			} else {
+				this.ingredientDedupe = GsonHelper.getAsBoolean(properties, "ingredientDedupe", false);
+			}
+			this.debugItemStackModifications = GsonHelper.getAsBoolean(properties, "debugItemStackModifications", false);
+			this.debugNativeImage = GsonHelper.getAsBoolean(properties, "debugNativeImage", false);
+			this.disableSearchTree = GsonHelper.getAsBoolean(properties, "disableSearchTree", false);
+			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
+			this.showSummaryOnDebugScreen = GsonHelper.getAsBoolean(properties, "showSummaryOnDebugScreen", true);
+			this.memoryUsageWarningPercentage = GsonHelper.getAsInt(properties, "memoryUsageWarningPercentage", 90);
+			this.debugChunkLoading = GsonHelper.getAsBoolean(properties, "debugChunkLoading", false);
+			this.debugThreadsStuck = GsonHelper.getAsBoolean(properties, "debugThreadsStuck", false);
+		} catch (Throwable e) {
+			AllTheLeaks.LOGGER.error("Failed to load config file", e);
+		} finally {
+			save();
+		}
 	}
 
 }

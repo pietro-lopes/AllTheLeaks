@@ -2,12 +2,12 @@ package dev.uncandango.alltheleaks.leaks.client.mods.ftblibrary;
 
 import dev.ftb.mods.ftblibrary.ui.GuiHelper;
 import dev.uncandango.alltheleaks.annotation.Issue;
-import dev.uncandango.alltheleaks.mixin.core.accessor.BaseScreenAccessor;
+import dev.uncandango.alltheleaks.mixin.core.main.accessor.BaseScreenAccessor;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
-@Issue(modId = "ftblibrary", versionRange = "[2101.1.1,)", mixins = "accessor.BaseScreenAccessor")
+@Issue(modId = "ftblibrary", versionRange = "[2101.1.1,)", mixins = "main.accessor.BaseScreenAccessor")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

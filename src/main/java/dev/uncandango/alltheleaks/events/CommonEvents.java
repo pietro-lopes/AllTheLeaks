@@ -1,9 +1,11 @@
 package dev.uncandango.alltheleaks.events;
 
 import dev.uncandango.alltheleaks.AllTheLeaks;
+import dev.uncandango.alltheleaks.commands.ATLCommands;
 import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.exceptions.ATLIllegalState;
 import dev.uncandango.alltheleaks.exceptions.ATLUnsupportedOperation;
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.IngredientDedupe;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
 import dev.uncandango.alltheleaks.leaks.IssueManager;
 import dev.uncandango.alltheleaks.mixin.Trackable;
@@ -18,10 +20,13 @@ import net.minecraft.network.chat.HoverEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.CrashReportCallables;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -181,6 +186,7 @@ public class CommonEvents {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPlayerCloneLowest(PlayerEvent.Clone event){
 		if (event.getOriginal().getRemovalReason() == null) {
+			if (ModList.get().isLoaded("playerrevive")) return; // we skip if this mod is loaded
 			AllTheLeaks.LOGGER.error("Cloned player is invalid, removal reason is null!", new ATLIllegalState(ATLIllegalState.TYPE.NO_REMOVAL_REASON,"Cannot have null removal reason on Clone event!"));
 		}
 	}
@@ -199,5 +205,17 @@ public class CommonEvents {
 	@SubscribeEvent
 	public static void onUnloadLevel(LevelEvent.Unload event) {
 		Trackable.startTracking(event.getLevel());
+	}
+
+	@SubscribeEvent
+	public static void registerCommonCommands(RegisterCommandsEvent event) {
+		ATLCommands.registerCommonCommands(event.getDispatcher(), event.getBuildContext());
+	}
+
+	@SubscribeEvent
+	public static void onReloadListener(AddReloadListenerEvent event){
+		if (ATLProperties.get().ingredientDedupe) {
+			event.addListener(IngredientDedupe.getInstance());
+		}
 	}
 }

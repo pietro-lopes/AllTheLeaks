@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.core.accessor;
+package dev.uncandango.alltheleaks.mixin.core.main.accessor;
 
 import journeymap.common.Journeymap;
 import net.minecraft.server.MinecraftServer;

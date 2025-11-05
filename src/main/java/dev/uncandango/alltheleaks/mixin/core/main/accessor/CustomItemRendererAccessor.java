@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.core.accessor;
+package dev.uncandango.alltheleaks.mixin.core.main.accessor;
 
 import com.anthonyhilyard.iceberg.renderer.CustomItemRenderer;
 import net.minecraft.world.entity.Entity;

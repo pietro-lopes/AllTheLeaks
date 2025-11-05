@@ -5,7 +5,7 @@ import dev.latvian.mods.kubejs.script.ScriptManager;
 import dev.latvian.mods.kubejs.script.ScriptType;
 import dev.latvian.mods.kubejs.server.ServerScriptManager;
 import dev.uncandango.alltheleaks.mixin.ServerScriptManagerExtension;
-import dev.uncandango.alltheleaks.mixin.core.accessor.ContextFactoryAccessor;
+import dev.uncandango.alltheleaks.mixin.core.main.accessor.ContextFactoryAccessor;
 import net.minecraft.server.packs.PackResources;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.spongepowered.asm.mixin.Mixin;

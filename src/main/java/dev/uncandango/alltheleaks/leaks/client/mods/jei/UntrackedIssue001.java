@@ -1,14 +1,14 @@
 package dev.uncandango.alltheleaks.leaks.client.mods.jei;
 
 import dev.uncandango.alltheleaks.annotation.Issue;
-import dev.uncandango.alltheleaks.mixin.core.accessor.RecipeTransferManagerAccessor;
+import dev.uncandango.alltheleaks.mixin.core.main.accessor.RecipeTransferManagerAccessor;
 import mezz.jei.common.Internal;
 import mezz.jei.library.runtime.JeiRuntime;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
-@Issue(modId = "jei", versionRange = "[19.19.5.232,)", mixins = "accessor.RecipeTransferManagerAccessor")
+@Issue(modId = "jei", versionRange = "[19.19.5.232,)", mixins = "main.accessor.RecipeTransferManagerAccessor")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.core.accessor;
+package dev.uncandango.alltheleaks.mixin.core.main.accessor;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

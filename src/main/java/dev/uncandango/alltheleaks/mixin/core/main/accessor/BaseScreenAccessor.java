@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.core.accessor;
+package dev.uncandango.alltheleaks.mixin.core.main.accessor;
 
 import dev.ftb.mods.ftblibrary.ui.BaseScreen;
 import net.minecraft.client.gui.screens.Screen;

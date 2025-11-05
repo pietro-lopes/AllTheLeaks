@@ -1,13 +1,13 @@
 package dev.uncandango.alltheleaks.leaks.client.mods.journeymap;
 
 import dev.uncandango.alltheleaks.annotation.Issue;
-import dev.uncandango.alltheleaks.mixin.core.accessor.EntityComparatorAccessor;
+import dev.uncandango.alltheleaks.mixin.core.main.accessor.EntityComparatorAccessor;
 import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import journeymap.client.model.EntityHelper;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "journeymap", versionRange = "[1.21.1-6.0.0-beta.28,1.21.1-6.0.0-beta.32]", mixins = {"accessor.EntityComparatorAccessor", "main.EntityHelperMixin"})
+@Issue(modId = "journeymap", versionRange = "[1.21.1-6.0.0-beta.28,1.21.1-6.0.0-beta.32]", mixins = {"main.accessor.EntityComparatorAccessor", "main.EntityHelperMixin"})
 public class UntrackedIssue001 {
 	private static final VarHandle entityDistanceComparator;
 	private static final VarHandle entityDTODistanceComparator;

@@ -2,26 +2,28 @@ package dev.uncandango.alltheleaks.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.sun.management.HotSpotDiagnosticMXBean;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import dev.uncandango.alltheleaks.AllTheLeaks;
-import dev.uncandango.alltheleaks.api.windows.PsApi;
 import dev.uncandango.alltheleaks.config.ATLProperties;
+import dev.uncandango.alltheleaks.diag.common.mods.minecraft.DebugChunkLoading;
 import dev.uncandango.alltheleaks.diag.common.mods.minecraft.DebugNativeImage;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
 import dev.uncandango.alltheleaks.mixin.Trackable;
-import dev.uncandango.alltheleaks.utils.MemoryStats;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.DimensionArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.embeddedt.modernfix.world.ThreadDumper;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryUtil;
 
-import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -67,6 +69,27 @@ public final class ATLCommands {
 		return Command.SINGLE_SUCCESS;
 	}
 
+	public static void registerCommonCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
+		dispatcher.register(
+			Commands.literal("atl")
+				.then(
+					Commands.literal("track_chunk").requires(source -> ATLProperties.get().debugChunkLoading)
+						.executes(cmd -> clearTrackingChunks(cmd.getSource()))
+						.then(
+							Commands.argument("x", IntegerArgumentType.integer())
+								.then(
+									Commands.argument("z", IntegerArgumentType.integer())
+										.executes(cmd -> startTrackingChunks(cmd.getSource(), IntegerArgumentType.getInteger(cmd, "x"), IntegerArgumentType.getInteger(cmd, "z"), null))
+										.then(
+											Commands.argument("dimension", DimensionArgument.dimension())
+												.executes(cmd -> startTrackingChunks(cmd.getSource(), IntegerArgumentType.getInteger(cmd, "x"), IntegerArgumentType.getInteger(cmd, "z"), DimensionArgument.getDimension(cmd, "dimension")))
+										)
+								)
+						)
+				)
+		);
+	}
+
 	public static void registerServerCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
 		dispatcher.register(
 			Commands.literal("atl")
@@ -89,9 +112,32 @@ public final class ATLCommands {
 		);
 	}
 
+	public static int startTrackingChunks(CommandSourceStack source, int x, int z, @Nullable ServerLevel level) {
+		if (level == null) {
+			level = source.getLevel();
+		}
+		if (level == null) {
+			source.sendFailure(Component.literal("Missing dimension argument!"));
+			return 0;
+		}
+		var chunkPos = new ChunkPos(x, z);
+		var dimension = level.dimension();
+		DebugChunkLoading.addTrackingChunk(dimension, chunkPos);
+		source.sendSuccess(() -> Component.translatable("Starting to track events for chunk %s from dimension %s", Component.literal(chunkPos.toString()).withStyle(ChatFormatting.GREEN), Component.literal(dimension.location().toString()).withStyle(ChatFormatting.YELLOW)), true);
+		return 1;
+	}
+
+	public static int clearTrackingChunks(CommandSourceStack source) {
+		DebugChunkLoading.clearTrackingChunks();
+		source.sendSuccess(() -> Component.literal("Cleared tracking chunks, now tracking everything."), true);
+		return 1;
+	}
+
 	public static int checkLeaking(CommandSourceStack source, boolean shouldRunGc) {
 		if (shouldRunGc) {
-			if (runGc(source) == 0) return 0;
+			if (runGc(source) == 0) {
+				return 0;
+			}
 		}
 		Trackable.clearNullReferences();
 
@@ -102,7 +148,9 @@ public final class ATLCommands {
 
 		List<Component> lines = new ArrayList<>();
 		Trackable.getSummary().forEach((baseClazz, summaryMap) -> {
-			if (summaryMap.isEmpty()) return;
+			if (summaryMap.isEmpty()) {
+				return;
+			}
 			lines.add(Component.translatable("%s:", baseClazz.getSimpleName()));
 			summaryMap.forEach((innerClazz, count) -> {
 				var module = innerClazz.getModule();
@@ -113,7 +161,7 @@ public final class ATLCommands {
 				}
 			});
 		});
-		if (lines.isEmpty()){
+		if (lines.isEmpty()) {
 			source.sendSystemMessage(Component.literal("No leak was found so far...").withStyle(ChatFormatting.GREEN));
 		} else {
 			source.sendSystemMessage(Component.literal("Listing leaks...").withStyle(ChatFormatting.YELLOW));

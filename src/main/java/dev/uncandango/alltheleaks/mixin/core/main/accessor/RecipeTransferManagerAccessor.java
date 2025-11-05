@@ -1,4 +1,4 @@
-package dev.uncandango.alltheleaks.mixin.core.accessor;
+package dev.uncandango.alltheleaks.mixin.core.main.accessor;
 
 import mezz.jei.library.recipes.RecipeTransferManager;
 import net.minecraft.world.inventory.AbstractContainerMenu;
