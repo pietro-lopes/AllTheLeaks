@@ -16,7 +16,7 @@ public abstract class GeoArmorRendererMixin implements UpdateableLevel<GeoArmorR
 	@Shadow
 	protected Entity currentEntity;
 
-	@Inject(method = "<init>", at = @At("RETURN"))
+	@Inject(method = "<init>(Lsoftware/bernie/geckolib/model/GeoModel;)V", at = @At("RETURN"))
 	private void registerInstance(CallbackInfo ci) {
 		UpdateableLevel.register(this);
 	}

@@ -252,6 +252,8 @@ dependencies {
     modCompileOnly("curse.maven:betterf3-401648:4641169") // BetterF3-7.0.1-Forge-1.20.1.jar
 //    modCompileOnly("com.lowdragmc.ldlib:ldlib-forge-1.20.1:1.0.26.b") { isTransitive = false }
     modCompileOnly("curse.maven:ldlib-626676:5618585") // ldlib-forge-1.20.1-1.0.26.b.jar
+    //modCompileOnly("curse.maven:ldlib-626676:6133711") // ldlib-forge-1.20.1-1.0.34.jar
+
     // modCompileOnly("com.jozufozu.flywheel:flywheel-forge-1.20:0.6.9-4") // flywheel-forge-1.20.1-0.6.9-4.jar
     // get from create 0.5.1c
     modCompileOnly("blank:flywheel-forge-1.20:0.6.9-4") // flywheel-forge-1.20.1-0.6.9-4.jar
@@ -327,7 +329,8 @@ dependencies {
     modCompileOnly("curse.maven:easy-piglins-419372:6213598")
     //modCompileOnly("curse.maven:advanced-loot-info-1205426:7018898")
     modCompileOnly("curse.maven:spark-361579:4738952")
-
+    modCompileOnly("curse.maven:clientsort-1049891:7120739")
+    modCompileOnly("curse.maven:octo-lib-916747:6274623")
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -378,6 +381,7 @@ dependencies {
     modRuntimeOnly("curse.maven:mythicbotany-400058:5101899") // MythicBotany-1.20.1-4.0.3.jar
     modRuntimeOnly("curse.maven:refined-storage-243076:4844585") // refinedstorage-1.12.4.jar
     modRuntimeOnly("curse.maven:small-ships-450659:5566900") // smallships-forge-1.20.1-2.0.0-b1.4.jar
+    modRuntimeOnly("curse.maven:modernfix-790626:6837713")
     //modRuntimeOnly("curse.maven:modernfix-790626:6766127") // modernfix-forge-5.24.3+mc1.20.1.jar
     modCompileOnly("curse.maven:modernfix-790626:6766127")
     compileOnly("curse.maven:modernfix-790626:6766127")
@@ -401,6 +405,14 @@ dependencies {
 
     modRuntimeOnly("curse.maven:entity-texture-features-fabric-568563:6954759")
     modRuntimeOnly("curse.maven:entity-model-features-844662:6922712")
+    modRuntimeOnly("curse.maven:clientsort-1049891:7120739")
+    modRuntimeOnly("curse.maven:octo-lib-916747:6274623")
+    modRuntimeOnly("curse.maven:relics-mod-445274:6976293")
+    modRuntimeOnly("curse.maven:immersive-ui-1021685:6023593")
+    modRuntimeOnly("curse.maven:perception-1112793:6451454")
+
+    modRuntimeOnly("curse.maven:ferritecore-429235:4810975")
+
 
     /* Greg headache before MDG legacy
     1. Download jar

@@ -27,6 +27,7 @@ public class ATLProperties {
 	public int logIntervalInMinutes;
 	public boolean showSummaryOnDebugScreen;
 	public int memoryUsageWarningPercentage;
+	public boolean debugThreadsStuck;
 
 	private ATLProperties() {
 		load();
@@ -48,6 +49,7 @@ public class ATLProperties {
 		properties.addProperty("logIntervalInMinutes", 10);
 		properties.addProperty("showSummaryOnDebugScreen", true);
 		properties.addProperty("memoryUsageWarningPercentage", 90);
+		properties.addProperty("debugThreadsStuck", false);
 		return properties;
 	}
 
@@ -64,6 +66,7 @@ public class ATLProperties {
 			this.logIntervalInMinutes = GsonHelper.getAsInt(properties, "logIntervalInMinutes", 10);
 			this.showSummaryOnDebugScreen = GsonHelper.getAsBoolean(properties, "showSummaryOnDebugScreen", true);
 			this.memoryUsageWarningPercentage = GsonHelper.getAsInt(properties, "memoryUsageWarningPercentage", 90);
+			this.debugThreadsStuck = GsonHelper.getAsBoolean(properties, "debugThreadsStuck", false);
 		} catch (IOException e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 		} finally {

@@ -71,6 +71,12 @@ public class GameBusEvent {
 	}
 
 	@SubscribeEvent
+	public static void onPlayerLoggout(ClientPlayerNetworkEvent.LoggingOut event) {
+		Trackable.startTracking(event.getPlayer());
+		MemoryMonitor.EventStatistics.CLIENT_PLAYER_LOGOUT.increment();
+	}
+
+	@SubscribeEvent
 	public static void onClientPlayerClone(ClientPlayerNetworkEvent.Clone event){
 		Trackable.startTracking(event.getOldPlayer());
 		MemoryMonitor.EventStatistics.CLIENT_PLAYER_CLONE.increment();

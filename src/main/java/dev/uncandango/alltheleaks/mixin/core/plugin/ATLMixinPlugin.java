@@ -19,6 +19,7 @@ public class ATLMixinPlugin implements IMixinConfigPlugin {
     public void onLoad(String mixinPackage) {
 		MixinAnnotationAdjusterRegistrar.register(new ATLMixinAdjuster());
 		MixinCancellerRegistrar.register(new ATLMixinCanceller());
+		DebugThreadsStuck.start();
     }
 
     @Override

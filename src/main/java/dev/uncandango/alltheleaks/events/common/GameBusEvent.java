@@ -11,6 +11,7 @@ import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = AllTheLeaks.MOD_ID)
@@ -36,6 +37,7 @@ public class GameBusEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPlayerCloneLowest(PlayerEvent.Clone event){
 		if (event.getOriginal().getRemovalReason() == null) {
+			if (ModList.get().isLoaded("playerrevive")) return; // we skip if this mod is loaded
 			var error = new ATLIllegalState(ATLIllegalState.TYPE.NO_REMOVAL_REASON,"Cannot have null removal reason on Clone event!");
 			AllTheLeaks.LOGGER.error(error.getMessage());
 		}
