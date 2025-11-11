@@ -11,6 +11,7 @@ plugins {
     idea
     `maven-publish`
     id("net.neoforged.moddev") version "2.0.74"
+    id("com.diffplug.spotless") version "6.25.0"
 }
 
 val minecraftVersion: String by project
@@ -87,6 +88,25 @@ repositories {
 
     flatDir {
         dir("libs")
+    }
+}
+// credits to https://github.com/AppliedEnergistics/Applied-Energistics-2/blob/240d08f81c4ffd49a46ba9c0b505fbd22c1bed42/build.gradle#L305
+spotless {
+    java {
+        target("src/*/java/dev/uncandango/alltheleaks/**/*.java")
+
+        removeUnusedImports()
+        endWithNewline()
+        indentWithSpaces()
+        toggleOffOn()
+        eclipse().configFile("codeformat/codeformat.xml")
+        custom("noWildcardImports", {
+            if (it.contains("*;\n")) {
+                throw Error("No Wildcard import allowed!")
+            }
+            it
+        })
+        bumpThisNumberIfACustomStepChanges(1)
     }
 }
 
@@ -319,7 +339,7 @@ dependencies {
     compileOnly(badpackets)
     compileOnly(doggyTalents)
     compileOnly(transferLabels)
-    compileOnly("curse.maven:modernfix-790626:6766126") // modernfix-neoforge-5.24.3+mc1.21.1.jar
+    compileOnly("curse.maven:modernfix-790626:7200212") // modernfix-neoforge-5.25.1+mc1.21.1.jar
     compileOnly("curse.maven:create-328085:6323264")
     compileOnly("curse.maven:jonns-trophies-510170:6298097")
     compileOnly("curse.maven:relics-mod-445274:6444603")
@@ -350,11 +370,19 @@ dependencies {
     compileOnly("curse.maven:draconic-evolution-223565:6943035")
     compileOnly("curse.maven:oritech-1030830:6807350")
     // From mod Create
-    compileOnly("blank:flywheel-neoforge:1.21.1:1.0.2")
+    //compileOnly("blank:flywheel-neoforge:1.21.1:1.0.2")
+    compileOnly("blank:flywheel-neoforge:1.21.1:1.0.4")
     compileOnly("curse.maven:ftb-chunks-forge-314906:6900454")
     compileOnly("curse.maven:what-are-they-up-to-945479:6418577")
     compileOnly("curse.maven:apotheosis-313970:6926309")
     compileOnly("blank:accessories_compat_layer-neoforge:0.1.10+1.21.1")
+    compileOnly("curse.maven:ars-affinity-1319260:7188856")
+    compileOnly("curse.maven:malum-484064:6655805")
+    compileOnly("curse.maven:octo-lib-916747:6932487")
+    compileOnly("blank:irregular-implements:1.21.1:1.5.0-build.70")
+    compileOnly("curse.maven:replication-ae2-bridge-1264781:7202614")
+    compileOnly("curse.maven:replication-638351:7199349")
+    compileOnly("curse.maven:titanium-287342:6875285")
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
