@@ -4,6 +4,7 @@ import dev.uncandango.alltheleaks.AllTheLeaks;
 import dev.uncandango.alltheleaks.annotation.Issue;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -16,9 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Issue(modId = "minecraft", issueId = "Debug ChunkLoading", versionRange = "[1.21.1]", mixins = {"debug.ChunkStatusTasksMixin", "debug.LevelChunkMixin", "debug.accessor.LevelAccessor", "debug.ChunkMapMixin", "debug.ServerLevelMixin", "debug.DistanceManagerMixin", "debug.accessor.ChunkMapDistanceManagerAccessor", "debug.accessor.ChunkMapAccessor", "debug.TicketMixin"}, config = "debugChunkLoading")
+@Issue(modId = "minecraft", issueId = "Debug ChunkLoading", versionRange = "[1.21.1]", mixins = {"debug.ChunkStatusTasksMixin", "debug.LevelChunkMixin", "debug.accessor.LevelAccessor", "debug.ChunkMapMixin", "debug.ServerLevelMixin", "debug.DistanceManagerMixin", "debug.accessor.ChunkMapDistanceManagerAccessor", "debug.accessor.ChunkMapAccessor", "debug.TicketMixin", "debug.TicketOwnerMixin", "debug.LevelMixin"}, config = "debugChunkLoading")
 public class DebugChunkLoading {
 	private static final Map<ResourceKey<Level>, LongSet> trackingChunk = new HashMap<>();
+	public static BlockPos lastBlockPos = BlockPos.ZERO;
 
 	public DebugChunkLoading() {
 		var gameBus = NeoForge.EVENT_BUS;

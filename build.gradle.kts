@@ -383,6 +383,8 @@ dependencies {
     compileOnly("curse.maven:replication-ae2-bridge-1264781:7202614")
     compileOnly("curse.maven:replication-638351:7199349")
     compileOnly("curse.maven:titanium-287342:6875285")
+    compileOnly("curse.maven:eternal-starlight-1080592:7125945")
+    compileOnly("curse.maven:theurgy-kubejs-963206:7128751")
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
