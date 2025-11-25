@@ -27,6 +27,7 @@ public class ATLProperties {
 	public int memoryUsageWarningPercentage;
 	public boolean debugChunkLoading;
 	public boolean debugThreadsStuck;
+	public boolean disableEternalStarlightProgress;
 
 	private ATLProperties() {
 		load();
@@ -65,6 +66,7 @@ public class ATLProperties {
 		properties.addProperty("memoryUsageWarningPercentage", 90);
 		properties.addProperty("debugChunkLoading", false);
 		properties.addProperty("debugThreadsStuck", false);
+		properties.addProperty("disableEternalStarlightProgress", false);
 		return properties;
 	}
 
@@ -89,6 +91,7 @@ public class ATLProperties {
 			this.memoryUsageWarningPercentage = GsonHelper.getAsInt(properties, "memoryUsageWarningPercentage", 90);
 			this.debugChunkLoading = GsonHelper.getAsBoolean(properties, "debugChunkLoading", false);
 			this.debugThreadsStuck = GsonHelper.getAsBoolean(properties, "debugThreadsStuck", false);
+			this.disableEternalStarlightProgress = GsonHelper.getAsBoolean(properties, "disableEternalStarlightProgress", false);
 		} catch (Throwable e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 		} finally {

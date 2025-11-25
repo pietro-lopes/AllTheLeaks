@@ -9,6 +9,7 @@ import dev.uncandango.alltheleaks.config.ATLProperties;
 import dev.uncandango.alltheleaks.diag.common.mods.minecraft.DebugChunkLoading;
 import dev.uncandango.alltheleaks.diag.common.mods.minecraft.DebugNativeImage;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.SaveWithLoadedChunks;
 import dev.uncandango.alltheleaks.mixin.Trackable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
@@ -108,6 +109,14 @@ public final class ATLCommands {
 				.then(
 					Commands.literal("place_all_block_entities").requires(source -> AllTheLeaks.INDEV && source.getServer().isSingleplayer())
 						.executes(cmd -> placeAllBes(cmd.getSource()))
+				)
+				.then(
+					Commands.literal("backup_with_loaded_chunks").requires(source -> source.getServer().isSingleplayer() || source.hasPermission(2))
+						.executes(cmd -> SaveWithLoadedChunks.saveWorld(cmd.getSource()))
+				)
+				.then(
+					Commands.literal("load_chunks_from_backup").requires(source -> source.getServer().isSingleplayer() || source.hasPermission(2))
+						.executes(cmd -> SaveWithLoadedChunks.loadChunksFromSaveFile(cmd.getSource()))
 				)
 		);
 	}

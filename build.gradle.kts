@@ -246,9 +246,9 @@ dependencies {
     val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
     val jeiRuntime = "curse.maven:jei-238222:7057366" // jei-1.21.1-neoforge-19.25.0.322.jar
     val etf = "curse.maven:entity-texture-features-fabric-568563:5734430" // entity_texture_features_neoforge_1.21-6.2.5.jar
-    val etfRuntime = "curse.maven:entity-texture-features-fabric-568563:5874160" // entity_texture_features_neoforge_1.21.1-6.2.7.jar
+    val etfRuntime = "curse.maven:entity-texture-features-fabric-568563:7249555" // entity_texture_features_1.21-neoforge-7.0.6.jar
     val emf = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
-    val emfRuntime = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
+    val emfRuntime = "curse.maven:entity-model-features-844662:7245797" // entity_model_features_1.21-neoforge-3.0.6.jar
     val sereneSeasons = "curse.maven:serene-seasons-291874:5753503" // SereneSeasons-neoforge-1.21.1-10.1.0.1.jar
     val connectivity = "curse.maven:connectivity-470193:5728632" // connectivity-1.21-5.8.jar
     val emi = "curse.maven:emi-580555:5769216" // emi-1.1.14+1.21.1+neoforge.jar
@@ -436,6 +436,8 @@ dependencies {
     runtimeOnly("mezz.jei:jei-1.21.1-neoforge:19.25.0.322")
     runtimeOnly("curse.maven:minecolonies-245506:7110495")
     runtimeOnly("curse.maven:blockui-522992:7041877")
+    runtimeOnly("curse.maven:ender-io-64578:7036575")
+    runtimeOnly("curse.maven:crash-utilities-371813:5993450")
 }
 
 tasks {

@@ -9,7 +9,7 @@ import traben.entity_model_features.models.animation.EMFAnimationEntityContext;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "entity_model_features", versionRange = "[3.0.0,)")
+@Issue(modId = "entity_model_features", versionRange = "[3.0.0,3.0.6)")
 public class UntrackedIssue002 {
 	public static final VarHandle EMF$HELDITERATION;
 

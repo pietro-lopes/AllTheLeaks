@@ -33,7 +33,7 @@ import java.util.function.Consumer;
 
 import static dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor.EventStatistics.*;
 
-@Issue(modId = "minecraft", issueId = "Memory Monitor" ,versionRange = "1.20.1", mixins = {"main.PlayerMixin", "main.ChunkAccessMixin", "main.LevelMixin", "main.MinecraftServerMixin"})
+@Issue(modId = "minecraft", issueId = "Memory Monitor" ,versionRange = "1.21.1", mixins = {"main.PlayerMixin", "main.ChunkAccessMixin", "main.LevelMixin", "main.MinecraftServerMixin"})
 public class MemoryMonitor {
 	private static final boolean EXPLICIT_GC_DISABLED;
 	private static final AtomicLong LAST_RUN_GC = new AtomicLong(Util.getMillis());

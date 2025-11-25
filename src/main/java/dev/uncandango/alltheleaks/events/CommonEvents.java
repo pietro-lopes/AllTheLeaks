@@ -7,6 +7,7 @@ import dev.uncandango.alltheleaks.exceptions.ATLIllegalState;
 import dev.uncandango.alltheleaks.exceptions.ATLUnsupportedOperation;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.IngredientDedupe;
 import dev.uncandango.alltheleaks.feature.common.mods.minecraft.MemoryMonitor;
+import dev.uncandango.alltheleaks.feature.common.mods.minecraft.SaveWithLoadedChunks;
 import dev.uncandango.alltheleaks.leaks.IssueManager;
 import dev.uncandango.alltheleaks.mixin.Trackable;
 import dev.uncandango.alltheleaks.report.ReportManager;
@@ -25,6 +26,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.fml.event.lifecycle.InterModProcessEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.world.chunk.RegisterTicketControllersEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -217,5 +219,10 @@ public class CommonEvents {
 		if (ATLProperties.get().ingredientDedupe) {
 			event.addListener(IngredientDedupe.getInstance());
 		}
+	}
+
+	@SubscribeEvent
+	public static void registerChunkLoader(RegisterTicketControllersEvent event) {
+		event.register(SaveWithLoadedChunks.ATL_CHUNKLOADER);
 	}
 }
