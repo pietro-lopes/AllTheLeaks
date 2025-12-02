@@ -28,6 +28,7 @@ public class ATLProperties {
 	public boolean debugChunkLoading;
 	public boolean debugThreadsStuck;
 	public boolean disableEternalStarlightProgress;
+	public boolean skipTickingUnloadedFluxNetworks;
 
 	private ATLProperties() {
 		load();
@@ -67,6 +68,8 @@ public class ATLProperties {
 		properties.addProperty("debugChunkLoading", false);
 		properties.addProperty("debugThreadsStuck", false);
 		properties.addProperty("disableEternalStarlightProgress", false);
+		properties.addProperty("skipTickingUnloadedFluxNetworks", false);
+		// skipTickingUnloadedFluxNetworks
 		return properties;
 	}
 
@@ -92,6 +95,7 @@ public class ATLProperties {
 			this.debugChunkLoading = GsonHelper.getAsBoolean(properties, "debugChunkLoading", false);
 			this.debugThreadsStuck = GsonHelper.getAsBoolean(properties, "debugThreadsStuck", false);
 			this.disableEternalStarlightProgress = GsonHelper.getAsBoolean(properties, "disableEternalStarlightProgress", false);
+			this.skipTickingUnloadedFluxNetworks = GsonHelper.getAsBoolean(properties, "skipTickingUnloadedFluxNetworks", false);
 		} catch (Throwable e) {
 			AllTheLeaks.LOGGER.error("Failed to load config file", e);
 		} finally {

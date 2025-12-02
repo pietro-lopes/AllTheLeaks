@@ -438,6 +438,8 @@ dependencies {
     runtimeOnly("curse.maven:blockui-522992:7041877")
     runtimeOnly("curse.maven:ender-io-64578:7036575")
     runtimeOnly("curse.maven:crash-utilities-371813:5993450")
+    compileOnly("curse.maven:flux-networks-248020:6089446")
+    compileOnly("curse.maven:better-compatibility-checker-551894:7170665")
 }
 
 tasks {
