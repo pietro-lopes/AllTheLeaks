@@ -28,7 +28,7 @@ public class UntrackedIssue002 {
 
 	private void clearRemaining(ServerStoppedEvent event) {
 		try {
-			CLEAR_CACHE.invoke((Object)null);
+			CLEAR_CACHE.invoke();
 		} catch (Throwable e) {
 			AllTheLeaks.LOGGER.error("Error while invoking Supplementaries RoadSignStructure#clearCache", e);
 		}

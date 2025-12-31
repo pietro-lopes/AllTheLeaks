@@ -5,7 +5,7 @@ import dev.uncandango.alltheleaks.mixin.core.main.accessor.LookupHistoryJsonConf
 import dev.uncandango.alltheleaks.plugins.ATLJeiPlugin;
 import net.neoforged.neoforge.common.NeoForge;
 
-@Issue(modId = "jei", versionRange = "[19.25.0.318,)", mixins = {"main.accessor.LookupHistoryJsonConfigAccessor"})
+@Issue(modId = "jei", versionRange = "[19.25.0.318,19.27.0.336)", mixins = {"main.accessor.LookupHistoryJsonConfigAccessor"})
 public class UntrackedIssue005 {
 	public UntrackedIssue005() {
 		var gameBus = NeoForge.EVENT_BUS;
