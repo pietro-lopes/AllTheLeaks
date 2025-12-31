@@ -10,7 +10,7 @@ plugins {
     java
     idea
     `maven-publish`
-    id("net.neoforged.moddev") version "2.0.74"
+    id("net.neoforged.moddev") version "2.0.134"
     id("com.diffplug.spotless") version "6.25.0"
 }
 
@@ -209,10 +209,10 @@ val atlAgent: Configuration by configurations.creating
 dependencies {
     atlAgent(project(":atl-agent"))
 
-    // MixinExtras that supports @Expression
-    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0")?.let {
-        implementation(it)
-    }
+    // MixinExtras that supports @Expression - included in neoforge .195
+//    jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.0")?.let {
+//        implementation(it)
+//    }
 
     annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.3")?.let {
         compileOnly(it)
@@ -244,7 +244,7 @@ dependencies {
     val dummmmmmy = "curse.maven:mmmmmmmmmmmm-225738:5779508" // 1.21-2.0.6
     val jeiEmi = "curse.maven:jei-238222:5781415" // jei-1.21.1-neoforge-19.19.6.235.jar
     val jei = "curse.maven:jei-238222:5781938" // jei-1.21.1-neoforge-19.19.6.236.jar
-    val jeiRuntime = "curse.maven:jei-238222:7057366" // jei-1.21.1-neoforge-19.25.0.322.jar
+    val jeiRuntime = "curse.maven:jei-238222:7391682" // jei-1.21.1-neoforge-19.27.0.336.jar
     val etf = "curse.maven:entity-texture-features-fabric-568563:5734430" // entity_texture_features_neoforge_1.21-6.2.5.jar
     val etfRuntime = "curse.maven:entity-texture-features-fabric-568563:7249555" // entity_texture_features_1.21-neoforge-7.0.6.jar
     val emf = "curse.maven:entity-model-features-844662:5722727" // entity_model_features_neoforge_1.21-2.2.6.jar
@@ -440,6 +440,8 @@ dependencies {
     runtimeOnly("curse.maven:crash-utilities-371813:5993450")
     compileOnly("curse.maven:flux-networks-248020:6089446")
     compileOnly("curse.maven:better-compatibility-checker-551894:7170665")
+    compileOnly("curse.maven:inventory-tweaks-refoxed-976858:6407807")
+    compileOnly("curse.maven:the-twilight-forest-227639:7398100")
 }
 
 tasks {

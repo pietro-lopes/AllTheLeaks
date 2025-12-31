@@ -6,7 +6,7 @@ import dev.uncandango.alltheleaks.mixin.core.main.accessor.TypedIngredientCodecs
 import dev.uncandango.alltheleaks.plugins.ATLJeiPlugin;
 import net.neoforged.neoforge.common.NeoForge;
 
-@Issue(modId = "jei", versionRange = "[19.16.4.168,)", mixins = {"main.accessor.BookmarkJsonConfigAccessor","main.accessor.TypedIngredientCodecsAccessor"})
+@Issue(modId = "jei", versionRange = "[19.16.4.168,19.27.0.336)", mixins = {"main.accessor.BookmarkJsonConfigAccessor","main.accessor.TypedIngredientCodecsAccessor"})
 public class UntrackedIssue002 {
 	public UntrackedIssue002() {
 		var gameBus = NeoForge.EVENT_BUS;
