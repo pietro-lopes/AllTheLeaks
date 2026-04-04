@@ -317,8 +317,9 @@ dependencies {
     compileOnly(ambientsounds)
     compileOnly(occultism)
     compileOnly(mahou)
-    implementation("dev.latvian.mods:kubejs-neoforge:$kubejs")?.let {
-        interfaceInjectionData(it)
+    implementation("dev.latvian.mods:kubejs-neoforge:$kubejs") {
+        isTransitive = false
+        interfaceInjectionData(this)
     }
     implementation("dev.latvian.mods:rhino:$rhino")
     compileOnly(sophCore)
@@ -354,7 +355,8 @@ dependencies {
     // From mod All The Arcanist Gear
     compileOnly("blank:AdditionalEntityAttributes:2.0.0+1.21.1-neoforge")
     compileOnly("curse.maven:industrial-foregoing-266515:6626624")
-    compileOnly("curse.maven:corail-tombstone-243707:6398190")
+    compileOnly("blank:tombstone-1.20.1:9.0.9")
+    //compileOnly("curse.maven:corail-tombstone-243707:6398190")
     compileOnly("curse.maven:xycraft-653786:5601037")
     compileOnly("curse.maven:immersive-engineering-231951:6466513")
     compileOnly("curse.maven:cooking-for-blockheads-231484:6459070")
@@ -372,6 +374,8 @@ dependencies {
     // From mod Create
     //compileOnly("blank:flywheel-neoforge:1.21.1:1.0.2")
     compileOnly("blank:flywheel-neoforge:1.21.1:1.0.4")
+    compileOnly("blank:Ponder-NeoForge:1.21.1:1.0.46")
+    //compileOnly("blank:flywheel-neoforge:1.21.1:1.0.6")
     compileOnly("curse.maven:ftb-chunks-forge-314906:6900454")
     compileOnly("curse.maven:what-are-they-up-to-945479:6418577")
     compileOnly("curse.maven:apotheosis-313970:6926309")
@@ -398,6 +402,7 @@ dependencies {
         val nameId = addonJson.get("webSiteURL").asString.split("/").last()
         val fileId = addonJson.getAsJsonObject("installedFile").asJsonObject.get("id").asNumber
         if (nameId.contains("accessories")) return@forEach
+        if (nameId.contains("corail")) return@forEach
         runtimeOnly("curse.maven:$nameId-$cfId:$fileId")
     }
 
@@ -442,6 +447,11 @@ dependencies {
     compileOnly("curse.maven:better-compatibility-checker-551894:7170665")
     compileOnly("curse.maven:inventory-tweaks-refoxed-976858:6407807")
     compileOnly("curse.maven:the-twilight-forest-227639:7398100")
+
+    compileOnly("curse.maven:radical-cobblemon-trainers-api-1152792:7385021")
+    compileOnly("curse.maven:rctmod-1009534:7279672")
+    compileOnly("curse.maven:patchouli-306770:6842247")
+    //compileOnly("curse.maven:create-328085:7408951")
 }
 
 tasks {

@@ -272,10 +272,15 @@ public final class ATLCommands {
 			lines.add(Component.translatable("%s:", baseClazz.getSimpleName()));
 			summaryMap.forEach((innerClazz, count) -> {
 				var module = innerClazz.getModule();
+				var clazzName = innerClazz.getSimpleName();
+				if (clazzName.isEmpty()) {
+					var splitClazz = innerClazz.getName().split("\\.");
+					clazzName = splitClazz[splitClazz.length-1];
+				}
 				if (module != null) {
-					lines.add(Component.translatable("- %s (%s): %s", innerClazz.getSimpleName(), module.getName(), count));
+					lines.add(Component.translatable("- %s (%s): %s", clazzName, module.getName(), count));
 				} else {
-					lines.add(Component.translatable("- %s: %s", innerClazz.getSimpleName(), count));
+					lines.add(Component.translatable("- %s: %s", clazzName, count));
 				}
 			});
 		});

@@ -8,7 +8,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 import java.lang.invoke.MethodType;
 
-@Issue(modId = "sfm", versionRange = "[4.21.0,)")
+@Issue(modId = "sfm", versionRange = "[4.21.0,4.29.0)")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

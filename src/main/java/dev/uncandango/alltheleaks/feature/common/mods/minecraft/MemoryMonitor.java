@@ -174,10 +174,15 @@ public class MemoryMonitor {
 			CACHED_SUMMARY.add("| " + baseClazz.getSimpleName() + ":");
 			summaryMap.forEach((innerClazz, count) -> {
 				var module = innerClazz.getModule();
+				var clazzName = innerClazz.getSimpleName();
+				if (clazzName.isEmpty()) {
+					var splitClazz = innerClazz.getName().split("\\.");
+					clazzName = splitClazz[splitClazz.length-1];
+				}
 				if (module != null) {
-					CACHED_SUMMARY.add("|- " + innerClazz.getSimpleName() + " (" + module.getName() + "): " + count);
+					CACHED_SUMMARY.add("|- " + clazzName + " (" + module.getName() + "): " + count);
 				} else {
-					CACHED_SUMMARY.add("|- " + innerClazz.getSimpleName() + ": " + count);
+					CACHED_SUMMARY.add("|- " + clazzName + ": " + count);
 				}
 			});
 		});
