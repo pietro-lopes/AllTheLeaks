@@ -11,7 +11,7 @@ import java.util.Arrays;
 @Mixin(SmithingCategoryExtension.class)
 public class SmithingCategoryExtensionMixin {
 	@ModifyExpressionValue(method = "setOutput", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/crafting/Ingredient;getItems()[Lnet/minecraft/world/item/ItemStack;"))
-	private ItemStack[] safeCopy(ItemStack[] original){
+	private static ItemStack[] safeCopy(ItemStack[] original){
 		return Arrays.stream(original).map(ItemStack::copy).toArray(ItemStack[]::new);
 	}
 }
