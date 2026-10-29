@@ -343,7 +343,7 @@ dependencies {
     compileOnly("curse.maven:modernfix-790626:7200212") // modernfix-neoforge-5.25.1+mc1.21.1.jar
     compileOnly("curse.maven:create-328085:6323264")
     compileOnly("curse.maven:jonns-trophies-510170:6298097")
-    compileOnly("curse.maven:relics-mod-445274:6444603")
+    compileOnly("curse.maven:relics-mod-445274:7892241")
     compileOnly("curse.maven:lendercataclysm-551586:6429407")
     compileOnly("curse.maven:lionfish-api-1001614:6168249")
     compileOnly("curse.maven:pneumaticcraft-repressurized-281849:6288626")
@@ -389,6 +389,19 @@ dependencies {
     compileOnly("curse.maven:titanium-287342:6875285")
     compileOnly("curse.maven:eternal-starlight-1080592:7125945")
     compileOnly("curse.maven:theurgy-kubejs-963206:7128751")
+    compileOnly("curse.maven:guideme-1173950:8129788")
+    compileOnly("curse.maven:elemental-craft-395158:7789218")
+    compileOnly("curse.maven:reactive-815568:7673283")
+    compileOnly("curse.maven:primal-magick-545271:6677090")
+    compileOnly("curse.maven:coastal-waves-1155936:7208601")
+    compileOnly("curse.maven:hexerei-548599:6376510")
+    compileOnly("curse.maven:modopedia-1132038:8043293")
+    compileOnly("curse.maven:perception-1112793:7761238")
+    compileOnly("curse.maven:ars-hex-unity-1357380:7404679")
+    compileOnly("curse.maven:codechicken-lib-1-8-242818:7281427")
+    compileOnly("curse.maven:cb-multipart-258426:7280616")
+    compileOnly("curse.maven:all-the-tweaks-364120:8100595")
+
 
     // Testing at runtime from latest version reading a CF file
     val gson = GsonBuilder().create()
@@ -438,7 +451,7 @@ dependencies {
     runtimeOnly("curse.maven:extreme-reactors-250277:7093773")
     runtimeOnly("curse.maven:potionsmaster-356801:6826199")
     compileOnly("curse.maven:crafting-tweaks-233071:6784518")
-    runtimeOnly("mezz.jei:jei-1.21.1-neoforge:19.25.0.322")
+    runtimeOnly("mezz.jei:jei-1.21.1-neoforge:19.57.0.446")
     runtimeOnly("curse.maven:minecolonies-245506:7110495")
     runtimeOnly("curse.maven:blockui-522992:7041877")
     runtimeOnly("curse.maven:ender-io-64578:7036575")
@@ -452,6 +465,16 @@ dependencies {
     compileOnly("curse.maven:rctmod-1009534:7279672")
     compileOnly("curse.maven:patchouli-306770:6842247")
     //compileOnly("curse.maven:create-328085:7408951")
+    compileOnly("curse.maven:sable-1312371:8673825")
+
+    runtimeOnly("dev.latvian.mods:kubejs-neoforge:2101.7.2-build.374") {
+        isTransitive = false
+        //interfaceInjectionData(this)
+    }
+    runtimeOnly("dev.latvian.mods:rhino:2101.2.8-build.91")
+
+    runtimeOnly("curse.maven:relics-mod-445274:8158315")
+    runtimeOnly("curse.maven:eternal-starlight-1080592:8931080")
 }
 
 tasks {

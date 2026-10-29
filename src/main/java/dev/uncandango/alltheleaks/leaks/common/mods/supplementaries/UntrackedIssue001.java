@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 import java.lang.invoke.MethodType;
 
-@Issue(modId = "supplementaries", versionRange = "[1.21-3.1.8,)")
+@Issue(modId = "supplementaries", versionRange = "[1.21-3.1.8,1.21.1-3.6.0)")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

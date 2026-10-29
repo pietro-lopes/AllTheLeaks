@@ -12,7 +12,7 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import java.util.Map;
 import java.util.UUID;
 
-@Issue(issueId = "#1487", modId = "neoforge", versionRange = "[21.,)", mixins = {"main.ServerPlayerMixin", "main.PlayerListMixin","main.accessor.PlayerAdvancementsAccessor"})
+@Issue(issueId = "#1487", modId = "neoforge", versionRange = "[21.,21.1.239)", mixins = {"main.ServerPlayerMixin", "main.PlayerListMixin","main.accessor.PlayerAdvancementsAccessor"})
 public class Issue1487 {
 	public static final Map<UUID, PlayerAdvancements> atl$fakeAdvancements = Maps.newHashMap();
 

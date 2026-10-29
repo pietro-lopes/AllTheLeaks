@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "jei", versionRange = "[19.22.1.316,)")
+@Issue(modId = "jei", versionRange = "[19.22.1.316,19.28)")
 public class UntrackedIssue004 {
 	public static final VarHandle GRINDSTONE_MENU;
 

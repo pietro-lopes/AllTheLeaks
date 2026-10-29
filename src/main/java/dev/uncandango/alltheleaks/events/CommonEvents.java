@@ -15,9 +15,11 @@ import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.CrashReportCallables;
@@ -32,6 +34,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
@@ -44,7 +47,9 @@ import org.spongepowered.asm.util.perf.Profiler;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @EventBusSubscriber(modid = AllTheLeaks.MOD_ID)
@@ -189,7 +194,8 @@ public class CommonEvents {
 	public static void onPlayerCloneLowest(PlayerEvent.Clone event){
 		if (event.getOriginal().getRemovalReason() == null) {
 			if (ModList.get().isLoaded("playerrevive")) return; // we skip if this mod is loaded
-			AllTheLeaks.LOGGER.error("Cloned player is invalid, removal reason is null!", new ATLIllegalState(ATLIllegalState.TYPE.NO_REMOVAL_REASON,"Cannot have null removal reason on Clone event!"));
+			var error = new ATLIllegalState(ATLIllegalState.TYPE.NO_REMOVAL_REASON,"Cannot have null removal reason on Clone event!");
+			AllTheLeaks.LOGGER.warn(error.getMessage());
 		}
 	}
 
@@ -224,5 +230,21 @@ public class CommonEvents {
 	@SubscribeEvent
 	public static void registerChunkLoader(RegisterTicketControllersEvent event) {
 		event.register(SaveWithLoadedChunks.ATL_CHUNKLOADER);
+	}
+
+	@SubscribeEvent
+	public static void onServerStart(ServerStartedEvent event){
+		if (AllTheLeaks.INDEV) {
+			AllTheLeaks.LOGGER.info("Logging blockstate counts...");
+			Map<String, Long> blockStateCount = new HashMap<>();
+			for (var blockState : Block.BLOCK_STATE_REGISTRY) {
+				var modId = BuiltInRegistries.BLOCK.getKey(blockState.getBlock()).getNamespace();
+				blockStateCount.compute(modId, (k, v) -> v == null ? 1L : v + 1L);
+			}
+			var list = blockStateCount.entrySet().stream().sorted(Map.Entry.comparingByValue()).toList();
+			list.forEach(entry -> {
+				AllTheLeaks.LOGGER.info("Mod \"{}\" has {} blockstates.", entry.getKey(), entry.getValue());
+			});
+		}
 	}
 }

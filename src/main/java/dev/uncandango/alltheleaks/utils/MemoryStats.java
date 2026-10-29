@@ -23,6 +23,7 @@ public class MemoryStats {
 			if (status) {
 				try {
 					PsApi.getLibrary();
+					Kernel32.GetCurrentProcess();
 				} catch (Throwable e) {
 					AllTheLeaks.LOGGER.error("Error while instancing PsApi: {}", e.getMessage());
 					status = false;

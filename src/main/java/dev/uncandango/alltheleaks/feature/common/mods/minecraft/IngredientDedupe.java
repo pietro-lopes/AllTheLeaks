@@ -15,6 +15,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackLinkedSet;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.fml.loading.LoadingModList;
+import org.apache.maven.artifact.versioning.ArtifactVersion;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
+import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
+import org.apache.maven.artifact.versioning.VersionRange;
 import org.embeddedt.modernfix.core.ModernFixMixinPlugin;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -97,11 +101,28 @@ public class IngredientDedupe implements PreparableReloadListener {
 			}
 		};
 		INGREDIENT_CACHE = new ObjectOpenCustomHashSet<>(BASIC_HASH_STRATEGY);
+		boolean modernFixDeduplication = false;
 		if (LoadingModList.get().getModFileById("modernfix") != null) {
-			MODERNFIX_DEDUPLICATION = ModernFixMixinPlugin.instance.isOptionEnabled("perf.ingredient_item_deduplication.IngredientMixin");
-		} else {
-			MODERNFIX_DEDUPLICATION = false;
+			var versionString = LoadingModList.get().getModFileById("modernfix").versionString();
+			var version = new DefaultArtifactVersion(versionString);
+			try {
+				var versionRange = VersionRange.createFromVersionSpec("[5.27.15,)");
+				var shouldCheckBeta = versionRange.containsVersion(version);
+				if (shouldCheckBeta) {
+					//var featureLevelClass = Class.forName("org.embeddedt.modernfix.annotation.FeatureLevel");
+					var featureLevelMethod = ModernFixMixinPlugin.class.getMethod("activeFeatureLevel");
+					var isBetaEnabled = ((Enum<?>)featureLevelMethod.invoke(null)).name().equals("BETA");
+					if (isBetaEnabled) {
+						modernFixDeduplication = ModernFixMixinPlugin.instance.isOptionEnabled("perf.ingredient_item_deduplication.IngredientMixin");
+					}
+				} else {
+					modernFixDeduplication = ModernFixMixinPlugin.instance.isOptionEnabled("perf.ingredient_item_deduplication.IngredientMixin");
+				}
+			} catch (Exception e) {
+				AllTheLeaks.LOGGER.error("Failed to check ModernFix version", e);
+			}
 		}
+		MODERNFIX_DEDUPLICATION = modernFixDeduplication;
 	}
 
 	public static IngredientDedupe getInstance() {
