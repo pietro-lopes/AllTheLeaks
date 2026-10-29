@@ -129,7 +129,7 @@ public class MemoryMonitor {
 		logger.accept("Listing events...");
 		events.forEach(logger);
 		logger.accept("Listing memory leaks so far...");
-		getFullSummary("", false).forEach(logger);
+		getFullSummary("", false, true).forEach(logger);
 	}
 
 	public static String getMemoryStatistics(){
@@ -149,9 +149,16 @@ public class MemoryMonitor {
 	}
 
 	public static List<String> getFullSummary(String prefix, boolean padding){
+		return getFullSummary(prefix, padding, false);
+	}
+
+	public static List<String> getFullSummary(String prefix, boolean padding, boolean forceUpdate){
 		List<String> lines = new ArrayList<>();
 		if (padding) lines.add(" ");
 		lines.add(prefix + getMemoryStatistics());
+		if (forceUpdate) {
+			updateLeakSummary();
+		}
 		var formattedSummary = getFormattedSummary(prefix);
 		if (formattedSummary.isEmpty()) {
 			lines.add(prefix + "No memory leak detected!");

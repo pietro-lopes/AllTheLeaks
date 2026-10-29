@@ -4,6 +4,7 @@ import dev.uncandango.alltheleaks.AllTheLeaks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ReportManager {
 	static int currentTick;
@@ -15,8 +16,12 @@ public class ReportManager {
 	}
 
 	public static void registerTask(String name, int tickInterval, Runnable task){
+		registerTask(name, tickInterval, task, () -> true);
+	}
+
+	public static void registerTask(String name, int tickInterval, Runnable task, Supplier<Boolean> condition){
 		if (tickInterval <= 0) return;
-		tasks.put(name, new ReportTask(name, tickInterval, task));
+		tasks.put(name, new ReportTask(name, tickInterval, task, condition));
 	}
 
 	public static boolean isRegistered(String name){
@@ -43,12 +48,14 @@ public class ReportManager {
 		private final String name;
 		private int lastTickReported;
 		private boolean stopped;
+		private final Supplier<Boolean> condition;
 
-		public ReportTask(String name, int tickInterval, Runnable task) {
+		public ReportTask(String name, int tickInterval, Runnable task, Supplier<Boolean> condition) {
 			this.tickInterval = tickInterval;
 			this.task = task;
 			this.name = name;
 			this.stopped = false;
+			this.condition = condition;
 		}
 
 		public void stop(){
@@ -56,7 +63,7 @@ public class ReportManager {
 		}
 
 		void tick(){
-			if (this.shouldRun()) {
+			if (this.shouldRun() && condition.get()) {
 				try {
 					this.task.run();
 				} catch (Throwable e) {

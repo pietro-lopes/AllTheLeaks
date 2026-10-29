@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
-@Issue(modId = "jei", versionRange = "[19.19.5.232,)", mixins = "main.accessor.RecipeTransferManagerAccessor")
+@Issue(modId = "jei", versionRange = "[19.19.5.232,19.70)", mixins = "main.accessor.RecipeTransferManagerAccessor")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = NeoForge.EVENT_BUS;

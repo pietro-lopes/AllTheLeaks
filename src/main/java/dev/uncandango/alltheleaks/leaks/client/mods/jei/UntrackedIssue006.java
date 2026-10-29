@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import java.lang.invoke.VarHandle;
 
-@Issue(modId = "jei", versionRange = "[19.32.0.358,)")
+@Issue(modId = "jei", versionRange = "[19.32.0.358,19.70)")
 public class UntrackedIssue006 {
 	public static final VarHandle GRINDSTONE_MENU;
 	public static final VarHandle ANVIL_MENU;

@@ -70,7 +70,10 @@ public class CommonEvents {
 			CrashReportCallables.registerCrashCallable("AllTheLeaks", CommonEvents::generateReportForCrashReport);
 			var logIntervalInTicks = ATLProperties.get().logIntervalInMinutes * 60 * 20;
 			ReportManager.registerTask("passive_memory_leak_report", logIntervalInTicks, () -> MemoryMonitor.logFullSummary(AllTheLeaks.LOGGER::info));
-			ReportManager.registerTask("update_leak_summary", 100, MemoryMonitor::updateLeakSummary);
+			if (FMLEnvironment.dist.isClient()) {
+				ReportManager.registerTask("update_leak_summary", 100, MemoryMonitor::updateLeakSummary, () -> Minecraft.getInstance().getDebugOverlay().showDebugScreen());
+			}
+
 			if (ATLProperties.get().memoryUsageWarningPercentage > 0) {
 				ReportManager.registerTask("too_much_memory_usage", 100, MemoryMonitor::tooMuchMemoryUsage);
 			}
