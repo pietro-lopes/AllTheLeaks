@@ -460,6 +460,9 @@ dependencies {
     compileOnly("curse.maven:better-compatibility-checker-551894:7170665")
     compileOnly("curse.maven:inventory-tweaks-refoxed-976858:6407807")
     compileOnly("curse.maven:the-twilight-forest-227639:7398100")
+    compileOnly("curse.maven:cooking-for-blockheads-231484:8404453")
+    compileOnly("curse.maven:alexs-mobs-1-21-1-port-1415721:7528193")
+    compileOnly("curse.maven:citadel-1-21-1-port-1415723:7982052")
 
     compileOnly("curse.maven:radical-cobblemon-trainers-api-1152792:7385021")
     compileOnly("curse.maven:rctmod-1009534:7279672")
