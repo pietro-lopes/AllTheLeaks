@@ -5,7 +5,7 @@ import dev.uncandango.alltheleaks.annotation.Issue;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
 
-@Issue(modId = "emi", versionRange = "[1.0.21,)", description = "Clears `EmiHistory` when client player cloned or logout")
+@Issue(modId = "emi", versionRange = "[1.0.21,1.1.23)", description = "Clears `EmiHistory` when client player cloned or logout")
 public class UntrackedIssue001 {
 	public UntrackedIssue001() {
 		var gameBus = MinecraftForge.EVENT_BUS;

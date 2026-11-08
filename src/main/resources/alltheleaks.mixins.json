@@ -80,6 +80,7 @@
     "main.ATLItemStackMixin",
     "main.BrewingCauldronJeiCategoryMixin",
     "main.BrewingCauldronRecipeMixin",
+    "main.BuilderEntityRenderForwarderMixin",
     "main.ByteArrayTagMixin",
     "main.CasterTomeRegistryMixin",
     "main.ChunkAccessMixin",
@@ -93,6 +94,9 @@
     "main.DroneEntityMixin",
     "main.DroppedItemCapabilityMixin",
     "main.ElementalUpgradeRecipeCategoryMixin",
+    "main.EntityMixin",
+    "main.EntityMixin2",
+    "main.EntityMixin3",
     "main.EntityTickListMixin",
     "main.EventHandlerMixin",
     "main.EventHandlersMixin",
@@ -127,6 +131,7 @@
     "main.PlayerMixin",
     "main.ProductiveBeeMixin",
     "main.ProgrammableControllerBlockEntityMixin",
+    "main.RandomizableContainerBlockEntityMixin",
     "main.RebindableTickingBlockEntityWrapperMixin",
     "main.RecipeCrawlHandlerMixin",
     "main.RecipeFluidContainerCombinationMixin",
@@ -141,7 +146,8 @@
     "main.StackFixRecipeCrawlHandlerMixin",
     "main.SynchedEntityDataMixin",
     "main.VillagesTradelistMixin",
-    "main.WrappedEnchanterRecipeMixin"
+    "main.WrappedEnchanterRecipeMixin",
+    "main.WrapperWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 0

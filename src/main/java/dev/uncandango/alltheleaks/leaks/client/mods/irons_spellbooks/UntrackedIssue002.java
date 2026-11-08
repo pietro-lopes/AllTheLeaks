@@ -8,7 +8,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import java.lang.invoke.MethodType;
 
-@Issue(modId = "irons_spellbooks", versionRange = "[1.20.1-3.4.0,)",
+@Issue(modId = "irons_spellbooks", versionRange = "[1.20.1-3.4.0,1.20.1-3.15.0)",
 	description = "Clears `DeadKingMusicManager#INSTANCE` on client level update")
 public class UntrackedIssue002 {
 	public UntrackedIssue002() {

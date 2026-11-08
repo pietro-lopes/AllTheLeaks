@@ -9,7 +9,7 @@ import net.minecraftforge.event.server.ServerStoppingEvent;
 import java.lang.invoke.VarHandle;
 import java.util.Map;
 
-@Issue(modId = "citadel", versionRange = "[2.5.4,)", description = "Clears server from `CitadelServerData#dataMap` on stop")
+@Issue(modId = "citadel", versionRange = "[2.5.4,2.6.3)", description = "Clears server from `CitadelServerData#dataMap` on stop")
 public class UntrackedIssue001 {
 	public static final VarHandle DATA_MAP;
 

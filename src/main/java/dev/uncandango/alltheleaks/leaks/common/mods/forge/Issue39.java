@@ -24,7 +24,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Issue(modId = "forge", issueId = "eventbus-#39", versionRange = "[47.2,)",
+@Issue(modId = "forge", issueId = "eventbus-#39", versionRange = "[47.2,47.4.16)",
 	description = "Regenerate listeners cache on server stopped")
 public class Issue39 {
 	public static final MethodHandle GET_LISTENERS;

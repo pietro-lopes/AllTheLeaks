@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface LevelChunkAccessor {
 	@Accessor("NULL_TICKER")
 	static TickingBlockEntity atl$getNullTicker(){
-		throw new AssertionException("Accessor not applied");
+		return null;
 	}
 
 	@Invoker("isInLevel")

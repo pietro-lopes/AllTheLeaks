@@ -26,17 +26,17 @@ public class ClearLeakedLevelChunks {
 	}
 
 	static boolean isNullTicker(TickingBlockEntity tickingBlockEntity) {
-		if (tickingBlockEntity == LevelChunkAccessor.atl$getNullTicker()) {
-			if (tickingBlockEntity instanceof RebindableTickingBlockEntityWrapperExtended tickingAccessor) {
+		//if (tickingBlockEntity == LevelChunkAccessor.atl$getNullTicker()) {
+			if (tickingBlockEntity instanceof RebindableTickingBlockEntityWrapperExtended tickingAccessor && tickingAccessor.atl$getTicker() == LevelChunkAccessor.atl$getNullTicker()) {
 				var levelChunk = tickingAccessor.atl$getLevelChunk();
 				if (levelChunk instanceof LevelChunkAccessor chunkAccessor) {
 					if (!chunkAccessor.atl$isInLevel()) {
-						AllTheLeaks.LOGGER.debug("Cleared leaked chunk at {} from dimension {}", levelChunk.getPos(), levelChunk.getLevel().dimension().location());
+						AllTheLeaks.LOGGER.debug("Cleared leaked ticker {} at chunk {} from dimension {}", tickingBlockEntity, levelChunk.getPos(), levelChunk.getLevel().dimension().location());
 						return true;
 					}
 				}
 			}
-		}
+		//}
 		return false;
 	}
 

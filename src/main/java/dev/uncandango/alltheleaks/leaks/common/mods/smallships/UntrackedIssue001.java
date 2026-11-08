@@ -9,7 +9,7 @@ import java.lang.invoke.VarHandle;
 import java.util.List;
 
 @Issue(
-	modId = "smallships", versionRange = "[2.0.0-b1.4,)", mixins = "main.ChunkMapMixin",
+	modId = "smallships", versionRange = "[2.0.0-b1.4]", mixins = "main.ChunkMapMixin",
 	description = "Clears Smallships mixin variables `ChunkMap#serverPlayer/list` after usage")
 public class UntrackedIssue001 {
 	private static final VarHandle SERVER_PLAYER_HANDLE;

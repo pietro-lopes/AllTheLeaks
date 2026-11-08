@@ -10,14 +10,17 @@ import dev.uncandango.alltheleaks.utils.ReflectionHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.CrashReportCallables;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.spongepowered.asm.logging.ILogger;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -28,6 +31,8 @@ import org.spongepowered.asm.util.perf.Profiler;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = AllTheLeaks.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -49,6 +54,7 @@ public class ModEvent {
 			}
 
 			if (AllTheLeaks.INDEV) {
+				AllTheLeaks.LOGGER.info("Dev args is ON");
 				auditMyMixinsOnly();
 			}
 		});

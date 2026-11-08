@@ -97,6 +97,10 @@ repositories {
         }
     }
 
+    maven {
+        url = uri("https://packages.jetbrains.team/maven/p/ij/intellij-dependencies")
+    }
+
     flatDir {
         dir("libs")
     }
@@ -222,6 +226,18 @@ dependencies {
         implementation(it)
     }
 
+    jarJar("blank:gcpath-api:0.1.0-SNAPSHOT")?.let {
+        implementation(it)
+    }
+
+    jarJar("blank:gcpath-capture:0.1.0-SNAPSHOT")?.let {
+        implementation(it)
+    }
+
+    jarJar("blank:gcpath-protocol:0.1.0-SNAPSHOT")?.let {
+        implementation(it)
+    }
+
     // Minimum version
     modCompileOnly("curse.maven:create-328085:4625535") // create-1.20.1-0.5.1.c.jar
     modCompileOnly("curse.maven:createaddition-439890:4685223") // "createaddition-1.20.1-1.0.0b.jar"
@@ -261,7 +277,8 @@ dependencies {
     modCompileOnly("curse.maven:ftb-library-forge-404465:5364190") // ftb-library-forge-2001.2.2.jar
     modCompileOnly("curse.maven:easy-villagers-400514:5153629") //
     modCompileOnly("curse.maven:journeymap-32274:5293067")
-    modCompileOnly("curse.maven:corail-tombstone-243707:4575470") // tombstone-8.5.0-1.20.jar
+    //modCompileOnly("curse.maven:corail-tombstone-243707:4575470") // tombstone-8.5.0-1.20.jar
+    modCompileOnly("blank:tombstone:8.5.0-1.20")
     modCompileOnly("curse.maven:blue-skies-312918:5010316")
     modCompileOnly("curse.maven:just-enough-resources-jer-240630:5057220") // JustEnoughResources-1.20.1-1.4.0.247.jar
 //    modCompileOnly("curse.maven:minecolonies-245506:5661958") // minecolonies-1.20.1-1.1.647-beta.jar
@@ -331,6 +348,11 @@ dependencies {
     modCompileOnly("curse.maven:spark-361579:4738952")
     modCompileOnly("curse.maven:clientsort-1049891:7120739")
     modCompileOnly("curse.maven:octo-lib-916747:6274623")
+    modCompileOnly("curse.maven:minecraft-transport-simulator-286703:7926604")
+    modCompileOnly("curse.maven:endfield-industry-1364504:8172647")
+    modCompileOnly("curse.maven:touhou-little-maid-355044:8061847")
+    modCompileOnly("curse.maven:enigmatic-legacy-336184:5600004")
+    modCompileOnly("curse.maven:powah-rearchitected-633483:6828054")
 
     // Middle versions
 //    modCompileOnly("curse.maven:createaddition-439890:5099752") // not fixed 1.20.1-1.2.3
@@ -339,7 +361,7 @@ dependencies {
     // Latest versions
     modRuntimeOnly("curse.maven:create-328085:6641603") // create-1.20.1-6.0.6.jar
     modRuntimeOnly("curse.maven:createaddition-439890:6306951") // createaddition-1.20.1-1.3.1.jar
-    modRuntimeOnly("curse.maven:citadel-331936:5633260")// citadel-2.6.0-1.20.1.jar
+    modRuntimeOnly("curse.maven:citadel-331936:7476570")// citadel-2.6.3-1.20.1.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-223794:5641282") // appliedenergistics2-forge-15.2.13.jar
     modRuntimeOnly("curse.maven:applied-energistics-2-wireless-terminals-459929:5217955") // ae2wtlib-15.2.3-forge.jar
     modCompileOnly("curse.maven:jei-238222:5846810") // jei-1.20.1-forge-15.20.0.105.jar
@@ -354,7 +376,7 @@ dependencies {
 
 
     modRuntimeOnly("curse.maven:architectury-api-419699:5137938") // architectury-9.2.14-forge.jar
-    modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:5838009") // irons_spellbooks-1.20.1-3.4.0.4.jar
+    modRuntimeOnly("curse.maven:irons-spells-n-spellbooks-855414:7402504") // irons_spellbooks-1.20.1-3.4.0.4.jar
     modRuntimeOnly("curse.maven:aether-255308:5786709") // aether-1.20.1-1.5.0-neoforge.jar
 //    modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.4.8") // 1.20.1:4.4.9
     modRuntimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.8.2")
